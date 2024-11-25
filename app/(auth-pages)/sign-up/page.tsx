@@ -1,10 +1,11 @@
+import Link from 'next/link';
 import { signUpAction } from '@/app/actions';
 import { FormMessage, Message } from '@/components/form-message';
 import { SubmitButton } from '@/components/submit-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Link from 'next/link';
 import { SmtpMessage } from '../smtp-message';
+import { TwitterSignUp } from '@/components/ui/twitter-sign-up';
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
@@ -42,6 +43,11 @@ export default async function Signup(props: {
           <SubmitButton formAction={signUpAction} pendingText='Signing up...'>
             Sign up
           </SubmitButton>
+
+          <div className='mt-4'>
+            <TwitterSignUp />
+          </div>
+
           <FormMessage message={searchParams} />
         </div>
       </form>

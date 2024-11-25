@@ -132,3 +132,39 @@ export const signOutAction = async () => {
   await supabase.auth.signOut();
   return redirect('/sign-in');
 };
+
+// Twitter sign-up/sign-in actions
+export const signUpWithTwitterAction = async () => {
+  const supabase = await createClient();
+
+  const { error, data } = await supabase.auth.signInWithOAuth({
+    provider: 'twitter',
+    options: {
+      redirectTo: 'http://localhost:3000/auth/callback'
+    }
+  });
+
+  if (error) {
+    return encodedRedirect('error', '/sign-up', error.message);
+  }
+
+  if (data?.url) {
+    return redirect(data.url);
+  }
+
+  return encodedRedirect('error', '/sign-up', 'Could not connect to Twitter');
+};
+
+export const signInWithTwitterAction = async () => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'twitter',
+    options: {
+      redirectTo: 'http://localhost:3000/auth/callback'
+    }
+  });
+
+  if (error) return encodedRedirect('error', '/sign-in', error.message);
+  if (data?.url) return redirect(data.url);
+  return encodedRedirect('error', '/sign-in', 'Could not connect to Twitter');
+};
