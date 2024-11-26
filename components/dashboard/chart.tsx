@@ -77,7 +77,7 @@ export const SentimentChart = () => {
       .datum(sentimentData)
       .attr('fill', 'none')
       .attr('stroke', `url(#${gradientId})`)
-      .attr('stroke-width', 2.5) // Slightly thicker for visibility
+      .attr('stroke-width', 3) // Slightly thicker for visibility
       .attr(
         'd',
         d3
