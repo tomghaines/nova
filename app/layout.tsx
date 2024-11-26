@@ -1,66 +1,53 @@
-import { EnvVarWarning } from '@/components/env-var-warning';
-import HeaderAuth from '@/components/header-auth';
-import { hasEnvVars } from '@/utils/supabase/check-env-vars';
-import { GeistSans } from 'geist/font/sans';
-import { ThemeProvider } from 'next-themes';
-import Link from 'next/link';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/dashboard/sidebar';
+import { SentimentChart } from '@/components/dashboard/chart';
+import { CommandDemo } from '@/components/dashboard/command';
+import { SwitchDemo } from '@/components/dashboard/switch';
 import './globals.css';
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
-
-export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase'
-};
-
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className={GeistSans.className} suppressHydrationWarning>
-      <body className='bg-background text-foreground'>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className='min-h-screen flex flex-col items-center'>
-            <div className='flex-1 w-full flex flex-col gap-20 items-center'>
-              <nav className='w-full flex justify-center border-b border-b-foreground/10 h-16'>
-                <div className='w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm'>
-                  <div className='flex gap-5 items-center font-semibold'>
-                    <Link href={'/'}>LOGO HERE</Link>
-                    <div className='flex items-center gap-2'></div>
-                  </div>
-                  {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
-                </div>
-              </nav>
-              <div className='flex flex-col gap-20 max-w-5xl p-5'>
-                {children}
+    <html lang='en'>
+      <body>
+        <SidebarProvider>
+          <div className='flex min-h-screen'>
+            {/* Sidebar */}
+            <AppSidebar />
+            {/* Main Content Area */}
+            <div className='flex-1 relative w-full'>
+              {/* Switch Component with Night/Day Mode */}
+              <div className='fixed top-4 right-6'>
+                <SwitchDemo />
               </div>
-
-              <footer className='w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16'>
-                <p>
-                  Powered by{' '}
-                  <a
-                    href='https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs'
-                    target='_blank'
-                    className='font-bold hover:underline'
-                    rel='noreferrer'
-                  >
-                    Supabase
-                  </a>
-                </p>
-              </footer>
+              {/* Sidebar Toggle Button */}
+              <div className='top-0 left-0 p-2'>
+                <SidebarTrigger />
+              </div>
+              {/* Main Content Area */}
+              <div className='flex-1 flex items-center justify-center'>
+                {/* Content Wrapper */}
+                <div className='w-[80%] max-w-3xl text-center px-6'>
+                  {/* Command Component */}
+                  <div className='mb-8'>
+                    <CommandDemo />
+                  </div>
+                  {/* Title */}
+                  <h1 className='text-4xl font-bold mb-4 text-gray-800'>
+                    Sentiment Analysis
+                  </h1>
+                  {/* Description */}
+                  <p className='mb-6 text-gray-600'>
+                    The use of natural language processing, text analysis,
+                    computational linguistics based on X (formerly Twitter) to
+                    systematically study the market behaviors.
+                  </p>
+                  {/* Chart Component */}
+                  <SentimentChart />
+                </div>
+              </div>
             </div>
-          </main>
-        </ThemeProvider>
+          </div>
+        </SidebarProvider>
       </body>
     </html>
   );
