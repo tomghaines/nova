@@ -27,31 +27,26 @@ export const SentimentChart = () => {
     // Parse and scale data
     const x = d3
       .scaleTime()
-      .domain(d3.extent(sentimentData, (d) => new Date(d.date)) as [Date, Date])
+      .domain(d3.extent(sentimentData, d => new Date(d.date)) as [Date, Date])
       .range([margin.left, width - margin.right]);
 
     const y = d3
       .scaleLinear()
-      .domain(
-        d3.extent(sentimentData, (d) => d.sentimentValue) as [number, number]
-      )
+      .domain(d3.extent(sentimentData, d => d.sentimentValue) as [number, number])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
     // Axes
-    svg
-      .append('g')
+    svg.append('g')
       .attr('transform', `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).ticks(6).tickSizeOuter(0));
 
-    svg
-      .append('g')
+    svg.append('g')
       .attr('transform', `translate(${margin.left},0)`)
       .call(d3.axisLeft(y));
 
     // Horizontal line at y = 0
-    svg
-      .append('line')
+    svg.append('line')
       .attr('x1', margin.left)
       .attr('x2', width - margin.right)
       .attr('y1', y(0))
@@ -68,41 +63,42 @@ export const SentimentChart = () => {
       .attr('id', gradientId)
       .attr('gradientUnits', 'userSpaceOnUse')
       .attr('x1', 0)
-      .attr('y1', 0)
       .attr('x2', 0)
+      .attr('y1', 0)
       .attr('y2', height);
 
-    // Gradient stops with increased opacity for better visibility
+    // Define stops for gradient
     gradient
       .append('stop')
       .attr('offset', '0%')
-      .attr('stop-color', '#F25D27')
-      .attr('stop-opacity', 0.9); // Darker orange
+      .attr('stop-color', '#F25D27') // Dark orange for positive sentiment
+      .attr('stop-opacity', 0.9);
+
     gradient
       .append('stop')
       .attr('offset', '50%')
-      .attr('stop-color', '#FFFFFF')
-      .attr('stop-opacity', 0.9); // White
+      .attr('stop-color', '#FFFFFF') // Neutral white for zero sentiment
+      .attr('stop-opacity', 0.9);
+
     gradient
       .append('stop')
       .attr('offset', '100%')
-      .attr('stop-color', '#2D76BA')
-      .attr('stop-opacity', 0.9); // Darker blue
+      .attr('stop-color', '#2D76BA') // Dark blue for negative sentiment
+      .attr('stop-opacity', 0.9);
 
     // Draw smoothed path with gradient
-    svg
-      .append('path')
+    svg.append('path')
       .datum(sentimentData)
       .attr('fill', 'none')
       .attr('stroke', `url(#${gradientId})`)
-      .attr('stroke-width', 3) // Slightly thicker for visibility
+      .attr('stroke-width', 2.5)
       .attr(
         'd',
         d3
           .line<any>()
-          .curve(d3.curveCatmullRom) // Use curveCatmullRom for smoother but accurate alignment
-          .x((d) => x(new Date(d.date)))
-          .y((d) => y(d.sentimentValue))
+          .curve(d3.curveCatmullRom) // Smooth path
+          .x(d => x(new Date(d.date)))
+          .y(d => y(d.sentimentValue))
       );
 
     // Tooltip elements
@@ -110,9 +106,11 @@ export const SentimentChart = () => {
       .select(chartRef.current)
       .append('div')
       .style('position', 'absolute')
+      .style('width', '150px') 
       .style('background', '#fff')
       .style('border', '1px solid #ccc')
       .style('padding', '8px')
+      .style('text-align', 'left') 
       .style('border-radius', '4px')
       .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
       .style('pointer-events', 'none')
@@ -121,10 +119,10 @@ export const SentimentChart = () => {
     const focusDot = svg
       .append('circle')
       .attr('r', 5)
-      .attr('fill', 'black')
+      .attr('fill', 'grey')
       .style('opacity', 0);
 
-    // Add hover interaction
+    // hover interaction
     svg
       .append('rect')
       .attr('width', width)
@@ -140,14 +138,21 @@ export const SentimentChart = () => {
         const index = bisect(sentimentData, date, 1);
         const d0 = sentimentData[index - 1];
         const d1 = sentimentData[index];
-        const d =
-          d1 && date - new Date(d0.date) > new Date(d1.date) - date ? d1 : d0;
+        const d = d1 && date - new Date(d0.date) > new Date(d1.date) - date ? d1 : d0;
 
-        // Update focus dot and tooltip
+        // Update focus dot position
         focusDot
           .attr('cx', x(new Date(d.date)))
           .attr('cy', y(d.sentimentValue))
           .style('opacity', 1);
+
+        // Calculate tooltip position
+        const tooltipX = x(new Date(d.date)) + 10; // Offset from dot
+        const tooltipY = y(d.sentimentValue) + 10; // Above the dot
+
+        // Adjust tooltip if it overflows on the right
+        const overflowRight = tooltipX + 150 > width; // Assuming tooltip width is 150px
+        const adjustedX = overflowRight ? tooltipX - 170 : tooltipX;
 
         tooltip
           .style('opacity', 1)
@@ -157,8 +162,8 @@ export const SentimentChart = () => {
              <strong>Price:</strong> ${d.price}<br>
              <strong>Analysis:</strong> ${d.analysis}`
           )
-          .style('left', `${x(new Date(d.date)) + 50}px`) // Close to the dot
-          .style('top', `${y(d.sentimentValue) - 28}px`);
+          .style('left', `${adjustedX}px`) // Adjust position dynamically
+          .style('top', `${tooltipY}px`);
       })
       .on('mouseout', () => {
         focusDot.style('opacity', 0);
