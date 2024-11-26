@@ -138,7 +138,7 @@ export const SentimentChart = () => {
         const index = bisect(sentimentData, date, 1);
         const d0 = sentimentData[index - 1];
         const d1 = sentimentData[index];
-        const d = d1 && date - new Date(d0.date) > new Date(d1.date) - date ? d1 : d0;
+        const d = d1 && date.getTime() - new Date(d0.date).getTime() > new Date(d1.date).getTime() - date.getTime() ? d1 : d0;
 
         // Update focus dot position
         focusDot
