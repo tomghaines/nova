@@ -16,6 +16,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 // Menu items.
 const items = [
@@ -66,9 +67,16 @@ export function AppSidebar() {
       <SidebarFooter>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton>
-              <User2 /> Username
-              <ChevronUp className='ml-auto' />
+            <SidebarMenuButton className='flex items-center gap-2'>
+              <Avatar className='w-6 h-6'>
+                <AvatarImage
+                  src='https://github.com/shadcn.png'
+                  alt='@shadcn'
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <span className='flex-1'>Username</span>
+              <ChevronUp className='ml-2' />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
