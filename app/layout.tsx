@@ -14,9 +14,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* Sidebar */}
             <AppSidebar />
             {/* Main Content Area */}
-            <div className='flex-1 relative'>
+            <div className='flex-1 relative w-full'>
               {/* Switch Component with Night/Day Mode */}
-              <div className='absolute top-4 right-0'>
+              <div className='fixed top-4 right-6'>
                 <SwitchDemo />
               </div>
               {/* Sidebar Toggle Button */}
