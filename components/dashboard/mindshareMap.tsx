@@ -14,7 +14,7 @@ export const MindshareMap = () => {
     }
 
     const width = 800;
-    const height = 400;
+    const height = 550;
     const cellPadding = 2;
 
     const svg = d3
@@ -50,7 +50,7 @@ export const MindshareMap = () => {
       .append('rect')
       .attr('width', (d) => d.x1 - d.x0)
       .attr('height', (d) => d.y1 - d.y0)
-      .attr('fill', (d) => d3.interpolateOrRd(d.value)) // Color scheme for heatmap
+      .attr('fill', (d) => d3.interpolateOrRd(d.value*4)) // Color scheme for heatmap
       .attr('stroke', '#ffffff');
 
     // Add text labels inside cells
