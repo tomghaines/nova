@@ -21,21 +21,23 @@ npm install
 
 To configure the application, create and populate the environment variables:
 
-1.	Create a `.env.local` file in the root directory:
+1. Create a `.env.local` file in the root directory:
+
 ```bash
 touch .env.local
 ```
 
 2. Populate the new `.env.local` file with the following variables:
 
-| Variable                         | Description                      |
-| ---------------------------------| -------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`       | Your Supabase Project URL.       |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY`  | Your Supabase Project API Key.   |
+| Variable                        | Description                    |
+| ------------------------------- | ------------------------------ |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase Project URL.     |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase Project API Key. |
 
 ## Running the Project
 
 Start the development server:
+
 ```bash
 npm run dev
 ```

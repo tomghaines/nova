@@ -2,7 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import pluginReact from 'eslint-plugin-react';
-import eslintConfigNext from "eslint-config-next";
+import eslintConfigNext from 'eslint-config-next';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -38,28 +38,31 @@ export default [
 
       // React rules
       'react/function-component-definition': [
-      'error',
-      {
-        namedComponents: 'function-declaration',
-        unnamedComponents: 'function-declaration',
-      },
-    ],
+        'error',
+        {
+          namedComponents: 'function-declaration',
+          unnamedComponents: 'function-declaration'
+        }
+      ],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
 
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': ['warn', {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_'
-      }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ],
       '@typescript-eslint/no-explicit-any': 'warn',
 
       // General rules
-      "indent": ["error", 2],
+      indent: ['error', 2],
       'no-unused-vars': 'off',
-      'quotes': ['error', 'single'],
+      quotes: ['error', 'single'],
       'no-console': ['warn', { allow: ['warn', 'error'] }]
     },
     settings: {

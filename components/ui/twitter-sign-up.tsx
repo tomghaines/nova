@@ -8,7 +8,7 @@ export function TwitterSignUp() {
     <button
       onClick={() => signUpWithTwitterAction()}
       type='button'
-      className='w-full py-2 px-4 bg-gray-900 text-white rounded-md flex items-center justify-center gap-2 hover:bg-gray-700'
+      className='flex w-full items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-white hover:bg-gray-700'
     >
       <FaTwitter />
       Sign up with Twitter
