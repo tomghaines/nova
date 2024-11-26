@@ -7,10 +7,7 @@
     "lint": "npx eslint . --fix",
     "prettier": "npx prettier --write .",
     "prepare": "husky",
-    "start": "next start",
-    "test": "vitest",
-    "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage"
+    "start": "next start"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.1",
