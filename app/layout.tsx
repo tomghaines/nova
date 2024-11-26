@@ -12,7 +12,7 @@ import './globals.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  
   const handleAuthentication = () => {
     setIsAuthenticated(true); // Update state when Auth signals success
   };
@@ -30,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               
               {/* Main Content Area */}
               <div className='flex-1 relative w-full mt-10 mb-2 ml-2 mr-2'>
-                {/* sidebar toggle switch */}
+                {/* dark mode switch */}
                 <div className='fixed top-4 right-6'>
                   <SwitchDemo />
                 </div>
