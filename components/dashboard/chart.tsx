@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { sentimentData } from './mockdata'; 
+import { sentimentData } from './mockdata';
 
 export const SentimentChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -67,26 +67,27 @@ export const SentimentChart = () => {
       .attr('x2', 0)
       .attr('y2', height);
 
-    // Define the stops for the gradient (orange to white to blue)
-    gradient.append('stop').attr('offset', '0%').attr('stop-color', '#F57643'); // Orange
-    gradient.append('stop').attr('offset', '50%').attr('stop-color', '#FFFFFF'); // White
-    gradient.append('stop').attr('offset', '100%').attr('stop-color', '#3A92CC'); // Blue
+    // Gradient stops with increased opacity for better visibility
+    gradient.append('stop').attr('offset', '0%').attr('stop-color', '#F25D27').attr('stop-opacity', 0.9); // Darker orange
+    gradient.append('stop').attr('offset', '50%').attr('stop-color', '#FFFFFF').attr('stop-opacity', 0.9); // White
+    gradient.append('stop').attr('offset', '100%').attr('stop-color', '#2D76BA').attr('stop-opacity', 0.9); // Darker blue
 
-    // Draw path with gradient stroke
+    // Draw smoothed path with gradient
     svg.append('path')
       .datum(sentimentData)
       .attr('fill', 'none')
       .attr('stroke', `url(#${gradientId})`)
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 2.5) // Slightly thicker for visibility
       .attr(
         'd',
         d3
           .line<any>()
+          .curve(d3.curveCatmullRom) // Use curveCatmullRom for smoother but accurate alignment
           .x(d => x(new Date(d.date)))
           .y(d => y(d.sentimentValue))
       );
 
-    // Tooltip
+    // Tooltip elements
     const tooltip = d3
       .select(chartRef.current)
       .append('div')
@@ -99,15 +100,36 @@ export const SentimentChart = () => {
       .style('pointer-events', 'none')
       .style('opacity', 0);
 
-    // Add points and interactivity
-    svg.selectAll('circle')
-      .data(sentimentData)
-      .join('circle')
-      .attr('cx', d => x(new Date(d.date)))
-      .attr('cy', d => y(d.sentimentValue))
+    const focusDot = svg
+      .append('circle')
       .attr('r', 5)
-      .attr('fill', d => (d.sentimentValue >= 0 ? '#F57643' : '#3A92CC')) // Match gradient colors
-      .on('mouseover', (event, d) => {
+      .attr('fill', 'black')
+      .style('opacity', 0);
+
+    // Add hover interaction
+    svg
+      .append('rect')
+      .attr('width', width)
+      .attr('height', height)
+      .style('fill', 'none')
+      .style('pointer-events', 'all')
+      .on('mousemove', (event) => {
+        const [mouseX] = d3.pointer(event);
+        const date = x.invert(mouseX);
+
+        // Find the closest data point
+        const bisect = d3.bisector((d: any) => new Date(d.date)).left;
+        const index = bisect(sentimentData, date, 1);
+        const d0 = sentimentData[index - 1];
+        const d1 = sentimentData[index];
+        const d = d1 && date - new Date(d0.date) > new Date(d1.date) - date ? d1 : d0;
+
+        // Update focus dot and tooltip
+        focusDot
+          .attr('cx', x(new Date(d.date)))
+          .attr('cy', y(d.sentimentValue))
+          .style('opacity', 1);
+
         tooltip
           .style('opacity', 1)
           .html(
@@ -116,15 +138,11 @@ export const SentimentChart = () => {
              <strong>Price:</strong> ${d.price}<br>
              <strong>Analysis:</strong> ${d.analysis}`
           )
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY - 28}px`);
-      })
-      .on('mousemove', event => {
-        tooltip
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY - 28}px`);
+          .style('left', `${x(new Date(d.date)) + 50}px`) // Close to the dot
+          .style('top', `${y(d.sentimentValue) - 28}px`);
       })
       .on('mouseout', () => {
+        focusDot.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
   }, []);
