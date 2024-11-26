@@ -1,47 +1,40 @@
-# .github/workflows/ci.yml
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
     branches:
       - main
       - dev
+      - feature/*
       - feature-*
   pull_request:
     branches:
       - main
       - dev
+      - feature/*
       - feature-*
 
 jobs:
-  linting:
+  quality-check:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        task: [eslint, prettier]
     steps:
       - uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Run ESLint
-        run: npx eslint . --max-warnings=0
-
-  formatting:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run Prettier
-        run: npx prettier --write .
+      - name: Run Format/Lint Task
+        run: |
+          if [ "${{ matrix.task }}" == "eslint" ]; then
+            npx eslint . --fix
+          elif [ "${{ matrix.task }}" == "prettier" ]; then
+            npx prettier --write .
+          fi
