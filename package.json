@@ -5,7 +5,7 @@
     "build": "npm run prettier && next build",
     "dev": "next dev",
     "lint": "npx eslint . --fix",
-    "prettier": "npx prettier --write .",
+    "format": "npx prettier --write .",
     "prepare": "husky",
     "start": "next start",
     "test": "vitest",

@@ -47,7 +47,7 @@ You can access the appplication in your browser at http://localhost:3000.
 - `npm run dev`: Start the development server.
 - `npm run build`: Build the project for production.
 - `npm run lint`: Lint the code with ESLint.
-- `npm run prettier`: Format the code using Prettier.
+- `npm run format`: Format the code using Prettier.
 - `npm run test`: Run Vitest testing suite.
 - `npm run test:full`: Run the Vitest testing suite in verbose mode, showing all test names and passing tests.
 - `npm run test:ui`: Run the Vitest interactive testing UI.
