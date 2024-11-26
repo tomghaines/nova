@@ -120,3 +120,17 @@ export const sentimentData = [
     analysis: "Sentiment fell slightly due to geopolitical uncertainties."
   }
 ];
+
+export const mindshareData = [
+  // Percentages for 2024-11-26T14:30:00Z
+  { name: "ZKP", date: "2024-11-26T14:30:00Z", percentage: 0.123 },
+  { name: "DAO", date: "2024-11-26T14:30:00Z", percentage: 0.180 },
+  { name: "NFT", date: "2024-11-26T14:30:00Z", percentage: 0.164 },
+  { name: "Defi", date: "2024-11-26T14:30:00Z", percentage: 0.123 },
+  { name: "BTC", date: "2024-11-26T14:30:00Z", percentage: 0.082 },
+  { name: "Network States", date: "2024-11-26T15:00:00Z", percentage: 0.246 },
+  { name: "AI", date: "2024-11-26T15:00:00Z", percentage: 0.205 },
+  { name: "VR/AR", date: "2024-11-26T15:00:00Z", percentage: 0.164 },
+  { name: "cryptography", date: "2024-11-26T15:00:00Z", percentage: 0.123 },
+  { name: "sharding", date: "2024-11-26T15:00:00Z", percentage: 0.082 }
+];
