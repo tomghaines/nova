@@ -1,6 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/dashboard/app-sidebar';
-import { Component as ChartComponent } from '@/components/dashboard/chart';
+import { SentimentChart } from '@/components/dashboard/chart';
 import './globals.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     systematically study the market behaviors.
                   </p>
                   {/* Chart Component */}
-                  <ChartComponent />
+                  <SentimentChart />
                 </div>
               </div>
             </div>
