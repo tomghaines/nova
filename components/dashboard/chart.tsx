@@ -157,8 +157,8 @@ export const SentimentChart = () => {
              <strong>Price:</strong> ${d.price}<br>
              <strong>Analysis:</strong> ${d.analysis}`
           )
-          .style('left', `${x(new Date(d.date)) + 50}px`) // Close to the dot
-          .style('top', `${y(d.sentimentValue) - 28}px`);
+          .style('left', `${x(new Date(d.date)) + 10}px`) // Close to the dot
+          .style('top', `${y(d.sentimentValue) - 10}px`);
       })
       .on('mouseout', () => {
         focusDot.style('opacity', 0);
