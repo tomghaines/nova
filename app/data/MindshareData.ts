@@ -1,11 +1,5 @@
 import { supabase } from '@/utils/supabase';
-
-interface MindshareData {
-  id: number;
-  name: string;
-  date: string;
-  percentage: number;
-}
+import { MindshareData } from '../types/data/MindshareData.types';
 
 export default async function fetchMindshareData() {
   try {

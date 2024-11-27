@@ -1,13 +1,5 @@
 import { supabase } from '@/utils/supabase';
-
-interface SentimentData {
-  id: number;
-  createdAt: string;
-  sentimentValue: number;
-  date: string;
-  price: number;
-  analysis: string;
-}
+import { SentimentData } from '../types/data/SentimentData.types';
 
 export default async function fetchSentimentData() {
   try {
