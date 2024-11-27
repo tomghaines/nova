@@ -37,16 +37,16 @@ const items = [
   }
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
             <img
-              src='/logo/logo.png'
+              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo.png'}
               alt='Logo'
-              className='mx-auto mt-24 h-12 w-auto'
+              className='ml-10 mt-24 h-12'
             />
           </SidebarGroupLabel>
           <SidebarGroupContent className='ml-10 mt-24'>

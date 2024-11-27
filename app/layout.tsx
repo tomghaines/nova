@@ -1,16 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/dashboard/sidebar';
 import { SwitchDemo } from '@/components/dashboard/switch';
 import './globals.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isNightMode, setIsNightMode] = useState(false);
 
-  const handleAuthentication = () => {
-    setIsAuthenticated(true); // Update state when Auth signals success
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+    setIsNightMode(storedTheme === 'dark');
+  }, []);
+
+  const handleThemeChange = (newMode: boolean) => {
+    setIsNightMode(newMode);
   };
 
   return (
@@ -19,12 +24,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SidebarProvider>
           <div className='flex min-h-screen'>
             {/* Sidebar */}
-            <AppSidebar />
+            <AppSidebar isNightMode={isNightMode} />
             {/* Main Content Area */}
             <div className='relative mb-2 ml-2 mr-2 mt-10 w-full flex-1'>
               {/* dark mode switch */}
               <div className='fixed right-12 top-12'>
-                <SwitchDemo />
+                <SwitchDemo onThemeChange={handleThemeChange} />
               </div>
 
               {/* Sidebar Trigger */}

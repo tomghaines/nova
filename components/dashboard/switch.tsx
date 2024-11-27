@@ -3,18 +3,27 @@
 import React, { useState } from 'react';
 import { Switch } from '@/components/ui/switch';
 
-export function SwitchDemo() {
+export function SwitchDemo({
+  onThemeChange
+}: {
+  onThemeChange: (isNightMode: boolean) => void;
+}) {
   const [isNightMode, setIsNightMode] = useState(false);
 
   const toggleTheme = () => {
-    setIsNightMode((prevMode) => !prevMode);
-    if (isNightMode) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
+    const newMode = !isNightMode;
+    setIsNightMode(newMode);
+
+    // Update document class and localStorage
+    if (newMode) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
+
+    onThemeChange(newMode);
   };
 
   return (
