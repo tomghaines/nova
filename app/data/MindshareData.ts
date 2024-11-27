@@ -1,11 +1,15 @@
 import { supabase } from '@/utils/supabase';
-import { MindshareData } from '../types/data/MindshareData.types';
 
 export default async function fetchMindshareData() {
   try {
     const { data, error } = await supabase.from('mindshare_table').select('*');
     if (error) throw error;
-    return data as MindshareData[];
+    return data.map((item) => ({
+      id: item.id,
+      name: item.name,
+      date: item.date,
+      percentage: item.percentage
+    }));
   } catch (err) {
     console.error('Error fetching mindshare data:', err);
     return [];
