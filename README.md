@@ -33,7 +33,8 @@ touch .env.local
 | ------------------------------- | ------------------------------ |
 | `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase Project URL.     |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase Project API key. |
-| `OPENAI_API_KEY`                | Your OpenAI API key.           |
+| `OPENAI_KEY`                    | Your OpenAI API key.           |
+| `APIFY_TOKEN `                  | Your Apify API token.          |
 
 ## Running the Project
 
