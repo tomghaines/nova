@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/dashboard/sidebar';
 import { SwitchDemo } from '@/components/dashboard/switch';
-import Auth from '@/components/features/auth';
 import './globals.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
