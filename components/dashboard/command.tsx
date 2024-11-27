@@ -24,7 +24,7 @@ export function CommandDemo() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Command
-      className='rounded-lg border shadow-md md:min-w-[450px]'
+      className='rounded-lg border shadow-md md:min-w-[450px] dark:shadow-lg dark:shadow-gray-500'
       onBlur={() => setIsOpen(false)} // Close dropdown when losing focus
     >
       {/* Command Input */}

@@ -51,10 +51,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     
                     {/* Sentiment Chart Section */}
                     <div className='mb-16'>
-                      <h1 className='text-4xl font-bold mb-4 heading'>
+                      <h1 className='text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100'>
                         Sentiment Analysis
                       </h1>
-                      <p className='mb-6 paragraph'>
+                      <p className='mb-6 text-gray-600 dark:text-gray-400'>
                         The use of natural language processing, text analysis,
                         computational linguistics based on X (formerly Twitter) to
                         systematically study the market behaviors.
@@ -64,10 +64,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     
                     {/* Mindshare Map Section */}
                     <div>
-                      <h1 className='text-4xl font-bold mb-4 heading'>
+                      <h1 className='text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100'>
                         Mindshare Map
                       </h1>
-                      <p className='mb-6 paragraph'>
+                      <p className='mb-6 text-gray-600 dark:text-gray-400'>
                         A systematic representation of how the collective
                         attention on X shifts across critical concepts, aiding in
                         understanding market trends and focus distribution.
