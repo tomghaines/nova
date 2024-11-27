@@ -1,75 +1,38 @@
 'use client';
 import { useState } from 'react';
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User
-} from 'lucide-react';
 
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut
-} from '@/components/ui/command';
+import { Command, CommandInput } from '@/components/ui/command';
 
 export function CommandDemo() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isTokenOpen, setIsTokenOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   return (
-    <Command
-      className='rounded-lg border shadow-md md:min-w-[450px] dark:shadow-lg dark:shadow-gray-500'
-      onBlur={() => setIsOpen(false)} // Close dropdown when losing focus
-    >
-      {/* Command Input */}
-      <CommandInput
-        placeholder='Type a command or search...'
-        onFocus={() => setIsOpen(true)} // Open dropdown on focus
-      />
-      {/* Command List */}
-      {isOpen && (
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading='Suggestions'>
-            <CommandItem>
-              <Calendar />
-              <span>Calendar</span>
-            </CommandItem>
-            <CommandItem>
-              <Smile />
-              <span>Search Emoji</span>
-            </CommandItem>
-            <CommandItem disabled>
-              <Calculator />
-              <span>Calculator</span>
-            </CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading='Settings'>
-            <CommandItem>
-              <User />
-              <span>Profile</span>
-              <CommandShortcut>⌘P</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <CreditCard />
-              <span>Billing</span>
-              <CommandShortcut>⌘B</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <Settings />
-              <span>Settings</span>
-              <CommandShortcut>⌘S</CommandShortcut>
-            </CommandItem>
-          </CommandGroup>
-        </CommandList>
-      )}
-    </Command>
+    <div className='flex w-full gap-5'>
+      <div className='w-1/5'>
+        <Command
+          className='h-auto rounded-lg border shadow-md dark:shadow-lg dark:shadow-gray-500'
+          onBlur={() => setIsTokenOpen(false)}
+        >
+          <CommandInput
+            onFocus={() => setIsTokenOpen(true)}
+            className='w-full'
+          />
+        </Command>
+      </div>
+
+      <div className='w-4/5'>
+        <Command
+          className='h-auto rounded-lg border shadow-md dark:shadow-lg dark:shadow-gray-500'
+          onBlur={() => setIsSearchOpen(false)}
+        >
+          <CommandInput
+            placeholder='Type keywords or topics...'
+            onFocus={() => setIsSearchOpen(true)}
+            className='w-full'
+          />
+        </Command>
+      </div>
+    </div>
   );
 }
