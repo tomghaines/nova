@@ -22,17 +22,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 const items = [
   {
     title: 'Home',
-    url: '#',
+    url: '/',
     icon: Home
   },
   {
     title: 'Seek',
-    url: '#',
+    url: 'seek',
     icon: Search
   },
   {
     title: 'Wander',
-    url: '#',
+    url: 'wander',
     icon: Settings
   }
 ];

@@ -1,3 +1,7 @@
+import { SentimentChart } from '@/components/dashboard/sentimentChart';
+import { MindshareMap } from '@/components/dashboard/mindshareMap';
+import { CommandDemo } from '@/components/dashboard/command';
+
 export default function page () {
   return (
     <div className='flex w-full flex-col items-center justify-start'>
