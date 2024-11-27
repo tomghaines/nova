@@ -1,7 +1,12 @@
 'use client';
 import { useState } from 'react';
 
-import { Command, CommandInput } from '@/components/ui/command';
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandItem
+} from '@/components/ui/command';
 
 export function CommandDemo() {
   const [isTokenOpen, setIsTokenOpen] = useState(false);
@@ -18,6 +23,19 @@ export function CommandDemo() {
             onFocus={() => setIsTokenOpen(true)}
             className='w-full'
           />
+          {isTokenOpen && (
+            <CommandList>
+              <CommandItem>
+                <span>$BTC</span>
+              </CommandItem>
+              <CommandItem>
+                <span>$ETH</span>
+              </CommandItem>
+              <CommandItem>
+                <span>$SOL</span>
+              </CommandItem>
+            </CommandList>
+          )}
         </Command>
       </div>
 

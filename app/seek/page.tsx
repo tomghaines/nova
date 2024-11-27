@@ -8,12 +8,12 @@ export default function page() {
       {/* Inner Container for Charts and Search */}
       <div className='w-[90%] max-w-4xl px-6 pl-[100px] text-center'>
         {/* Search Bar */}
-        <div className='mb-16 ml-10'>
+        <div className='absolute mb-16 ml-10'>
           <CommandDemo />
         </div>
 
         {/* Sentiment Chart Section */}
-        <div className='mb-16'>
+        <div className='mb-16 mt-20'>
           <h1 className='mb-4 ml-20 text-4xl font-bold text-gray-800 dark:text-gray-100'>
             Sentiment Analysis
           </h1>
