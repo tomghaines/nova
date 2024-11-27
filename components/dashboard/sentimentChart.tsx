@@ -1,13 +1,27 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { sentimentData } from './mockdata';
+import fetchSentimentData from '@/app/data/SentimentData';
+
+import { SentimentData } from '@/app/types/data/SentimentData.types';
 
 export const SentimentChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
+  const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
   useEffect(() => {
+    const getData = async () => {
+      const data = await fetchSentimentData();
+      setSentimentData(data);
+    };
+    getData();
+  }, []);
+
+  useEffect(() => {
+    // Check for empty data
+    if (!sentimentData || sentimentData.length === 0) return;
+
     // Clear existing chart
     if (chartRef.current) {
       d3.select(chartRef.current).selectAll('*').remove();
@@ -27,26 +41,31 @@ export const SentimentChart = () => {
     // Parse and scale data
     const x = d3
       .scaleTime()
-      .domain(d3.extent(sentimentData, d => new Date(d.date)) as [Date, Date])
+      .domain(d3.extent(sentimentData, (d) => new Date(d.date)) as [Date, Date])
       .range([margin.left, width - margin.right]);
 
     const y = d3
       .scaleLinear()
-      .domain(d3.extent(sentimentData, d => d.sentimentValue) as [number, number])
+      .domain(
+        d3.extent(sentimentData, (d) => d.sentimentValue) as [number, number]
+      )
       .nice()
       .range([height - margin.bottom, margin.top]);
 
     // Axes
-    svg.append('g')
+    svg
+      .append('g')
       .attr('transform', `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).ticks(6).tickSizeOuter(0));
 
-    svg.append('g')
+    svg
+      .append('g')
       .attr('transform', `translate(${margin.left},0)`)
       .call(d3.axisLeft(y));
 
     // Horizontal line at y = 0
-    svg.append('line')
+    svg
+      .append('line')
       .attr('x1', margin.left)
       .attr('x2', width - margin.right)
       .attr('y1', y(0))
@@ -87,7 +106,8 @@ export const SentimentChart = () => {
       .attr('stop-opacity', 0.9);
 
     // Draw smoothed path with gradient
-    svg.append('path')
+    svg
+      .append('path')
       .datum(sentimentData)
       .attr('fill', 'none')
       .attr('stroke', `url(#${gradientId})`)
@@ -95,10 +115,10 @@ export const SentimentChart = () => {
       .attr(
         'd',
         d3
-          .line<any>()
+          .line<SentimentData>()
           .curve(d3.curveCatmullRom) // Smooth path
-          .x(d => x(new Date(d.date)))
-          .y(d => y(d.sentimentValue))
+          .x((d) => x(new Date(d.date)))
+          .y((d) => y(d.sentimentValue))
       );
 
     // Tooltip elements
@@ -106,11 +126,11 @@ export const SentimentChart = () => {
       .select(chartRef.current)
       .append('div')
       .style('position', 'absolute')
-      .style('width', '150px') 
+      .style('width', '150px')
       .style('background', '#fff')
       .style('border', '1px solid #ccc')
       .style('padding', '8px')
-      .style('text-align', 'left') 
+      .style('text-align', 'left')
       .style('border-radius', '4px')
       .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
       .style('pointer-events', 'none')
@@ -134,11 +154,16 @@ export const SentimentChart = () => {
         const date = x.invert(mouseX);
 
         // Find the closest data point
-        const bisect = d3.bisector((d: any) => new Date(d.date)).left;
+        const bisect = d3.bisector((d: SentimentData) => new Date(d.date)).left;
         const index = bisect(sentimentData, date, 1);
         const d0 = sentimentData[index - 1];
         const d1 = sentimentData[index];
-        const d = d1 && date.getTime() - new Date(d0.date).getTime() > new Date(d1.date).getTime() - date.getTime() ? d1 : d0;
+        const d =
+          d1 &&
+          date.getTime() - new Date(d0.date).getTime() >
+            new Date(d1.date).getTime() - date.getTime()
+            ? d1
+            : d0;
 
         // Update focus dot position
         focusDot
@@ -169,7 +194,7 @@ export const SentimentChart = () => {
         focusDot.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
-  }, []);
+  }, [sentimentData]);
 
   return <div ref={chartRef}></div>;
 };
