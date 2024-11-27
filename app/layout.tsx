@@ -26,11 +26,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <SidebarProvider>
             <div className='flex min-h-screen'>
               {/* Sidebar */}
-              <AppSidebar className='w-64 flex-none' />
+              <AppSidebar />
               {/* Main Content Area */}
               <div className='relative mb-2 ml-2 mr-2 mt-10 w-full flex-1'>
                 {/* dark mode switch */}
-                <div className='fixed right-6 top-12'>
+                <div className='fixed right-12 top-12'>
                   <SwitchDemo />
                 </div>
 
@@ -49,11 +49,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
 
                     {/* Sentiment Chart Section */}
-                    <div className='mb-16'>
-                      <h1 className='mb-4 text-4xl font-bold text-gray-800 dark:text-gray-100'>
+                    <div className='mb-20 mt-20'>
+                      <h1 className='mb-4 ml-16 text-4xl font-bold text-gray-800 dark:text-gray-100'>
                         Sentiment Analysis
                       </h1>
-                      <p className='mb-6 text-gray-600 dark:text-gray-400'>
+                      <p className='mb-6 ml-16 text-gray-600 dark:text-gray-400'>
                         The use of natural language processing, text analysis,
                         computational linguistics based on X (formerly Twitter)
                         to systematically study the market behaviors.
@@ -63,10 +63,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                     {/* Mindshare Map Section */}
                     <div>
-                      <h1 className='mb-4 text-4xl font-bold text-gray-800 dark:text-gray-100'>
+                      <h1 className='mb-4 ml-16 text-4xl font-bold text-gray-800 dark:text-gray-100'>
                         Mindshare Map
                       </h1>
-                      <p className='mb-6 text-gray-600 dark:text-gray-400'>
+                      <p className='mb-6 ml-16 text-gray-600 dark:text-gray-400'>
                         A systematic representation of how the collective
                         attention on X shifts across critical concepts, aiding
                         in understanding market trends and focus distribution.

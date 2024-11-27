@@ -17,8 +17,8 @@ const Auth: React.FC<AuthProps> = ({ onAuthenticate }) => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-50'>
-      <div className='w-full max-w-md bg-white rounded-lg shadow-md p-6'>
+    <div className='flex min-h-screen items-center justify-center bg-gray-50'>
+      <div className='w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
         <h1 className='text-2xl font-semibold text-gray-800'>Create Account</h1>
         <p className='mt-2 text-sm text-gray-600'>
           Sign up today and unlock a world of possibilities. Your adventure
@@ -29,21 +29,21 @@ const Auth: React.FC<AuthProps> = ({ onAuthenticate }) => {
           {/* Twitter SSO */}
           <button
             onClick={handleTwitterLogin}
-            className='w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-gray-700 bg-white hover:bg-gray-50'
+            className='flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 shadow-sm hover:bg-gray-50'
           >
             <img
               src='https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023_original.svg'
               alt='Twitter Icon'
-              className='w-5 h-5 mr-2'
+              className='mr-2 h-5 w-5'
             />
             Continue with Twitter
           </button>
         </div>
 
-        <div className='flex items-center justify-center mt-6'>
-          <div className='border-t border-gray-300 w-full'></div>
+        <div className='mt-6 flex items-center justify-center'>
+          <div className='w-full border-t border-gray-300'></div>
           <span className='mx-4 text-sm text-gray-500'>OR</span>
-          <div className='border-t border-gray-300 w-full'></div>
+          <div className='w-full border-t border-gray-300'></div>
         </div>
 
         <form className='mt-6'>
@@ -59,7 +59,7 @@ const Auth: React.FC<AuthProps> = ({ onAuthenticate }) => {
               type='text'
               id='username'
               placeholder='Your username'
-              className='mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-grey-500 focus:border-grey-500 sm:text-sm border-gray-300'
+              className='focus:ring-grey-500 focus:border-grey-500 mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm sm:text-sm'
             />
           </div>
 
@@ -75,7 +75,7 @@ const Auth: React.FC<AuthProps> = ({ onAuthenticate }) => {
               type='email'
               id='email'
               placeholder='Enter email'
-              className='mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300'
+              className='mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm'
             />
           </div>
 
@@ -91,14 +91,14 @@ const Auth: React.FC<AuthProps> = ({ onAuthenticate }) => {
               type='password'
               id='password'
               placeholder='Create a password'
-              className='mt-1 block w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300'
+              className='mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm'
             />
           </div>
 
           {/* Submit Button */}
           <button
             type='submit'
-            className='w-full px-4 py-2 text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200'
+            className='w-full rounded-lg bg-blue-600 px-4 py-2 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200'
           >
             Create Account
           </button>

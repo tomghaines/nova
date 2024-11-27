@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { mindshareData } from './mockdata'; 
+import { mindshareData } from './mockdata';
 
 export const MindshareMap = () => {
   const heatmapRef = useRef<HTMLDivElement>(null);
@@ -30,14 +30,12 @@ export const MindshareMap = () => {
     const names = Array.from(new Set(mindshareData.map((d) => d.name)));
 
     // Create a treemap layout to occupy full space
-    const root = d3.hierarchy({ values: mindshareData }, (d: any) => d.values)
+    const root = d3
+      .hierarchy({ values: mindshareData }, (d: any) => d.values)
       .sum((d: any) => d.percentage)
       .sort((a, b) => b.value - a.value);
 
-    d3.treemap()
-      .size([width, height])
-      .padding(cellPadding)
-      .round(true)(root);
+    d3.treemap().size([width, height]).padding(cellPadding).round(true)(root);
 
     // Draw cells
     const nodes = svg
@@ -50,7 +48,7 @@ export const MindshareMap = () => {
       .append('rect')
       .attr('width', (d) => d.x1 - d.x0)
       .attr('height', (d) => d.y1 - d.y0)
-      .attr('fill', (d) => d3.interpolateOrRd(d.value*4)) // Color scheme for heatmap
+      .attr('fill', (d) => d3.interpolateOrRd(d.value * 4)) // Color scheme for heatmap
       .attr('stroke', '#ffffff');
 
     // Add text labels inside cells
@@ -63,7 +61,6 @@ export const MindshareMap = () => {
       .style('fill', '#ffffff') // White text for visibility
       .style('font-size', '10px')
       .text((d) => `${d.data.name}\n${(d.data.percentage * 100).toFixed(1)}%`);
-
   }, []);
 
   return <div ref={heatmapRef}></div>;

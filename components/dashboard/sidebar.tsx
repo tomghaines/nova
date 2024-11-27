@@ -26,17 +26,12 @@ const items = [
     icon: Home
   },
   {
-    title: 'Inbox',
-    url: '#',
-    icon: Inbox
-  },
-  {
-    title: 'Search',
+    title: 'Seek',
     url: '#',
     icon: Search
   },
   {
-    title: 'Settings',
+    title: 'Wander',
     url: '#',
     icon: Settings
   }
@@ -47,15 +42,23 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+          <SidebarGroupLabel>
+            <img
+              src='/logo/logo.png'
+              alt='Logo'
+              className='mx-auto mt-24 h-12 w-auto'
+            />
+          </SidebarGroupLabel>
+          <SidebarGroupContent className='ml-10 mt-24'>
+            <SidebarMenu className='space-y-2'>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className='p-3 text-2xl font-extralight'>
+                        {item.title}
+                      </span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -68,7 +71,7 @@ export function AppSidebar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton className='flex items-center gap-2'>
-              <Avatar className='w-6 h-6'>
+              <Avatar className='h-6 w-6'>
                 <AvatarImage
                   src='https://github.com/shadcn.png'
                   alt='@shadcn'
