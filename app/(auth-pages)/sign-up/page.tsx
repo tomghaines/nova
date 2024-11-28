@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { SubmitButton } from '@/components/submit-button';
 import { TwitterSignUp } from '@/components/ui/twitter-sign-up';
