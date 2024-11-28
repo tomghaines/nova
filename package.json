@@ -67,8 +67,6 @@
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.10",
     "postcss": "8.4.49",
-    "@types/d3": "^7.4.3",
-    "autoprefixer": "^10.4.20",
     "prettier": "^3.4.1",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwind-merge": "^2.5.2",
