@@ -128,6 +128,13 @@ export const SentimentChart = () => {
       .attr('fill', 'grey')
       .style('opacity', 0);
 
+    const focusLine = svg
+    .append('line')
+    .attr('stroke', 'black')
+    .attr('stroke-width', 1)
+    .attr('stroke-dasharray', '4,4')
+    .style('opacity', 0);
+
     // hover interaction
     svg
       .append('rect')
@@ -156,6 +163,7 @@ export const SentimentChart = () => {
           .attr('cx', x(new Date(d.date)))
           .attr('cy', y(d.sentimentValue))
           .style('opacity', 1);
+
 
         // Calculate tooltip position
         const tooltipX = x(new Date(d.date)) + 10; // Offset from dot
