@@ -44,7 +44,7 @@ const items = [
   }
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClient();
   const router = useRouter();
@@ -85,7 +85,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>
             <img
-              src='/logo/logo.png'
+              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo.png'}
               alt='Logo'
               className='mx-auto mt-24 h-12 w-auto'
             />

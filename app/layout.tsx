@@ -2,8 +2,9 @@
 'use client';
 
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SwitchMode } from '@/components/dashboard/switch';
 import { AppSidebar } from '@/components/dashboard/sidebar';
-import { SwitchDemo } from '@/components/dashboard/switch';
+import { useState } from 'react';
 import './globals.css';
 
 export default function RootLayout({
@@ -11,16 +12,35 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [isNightMode, setIsNightMode] = useState(false);
+
+  const handleThemeToggle = () => {
+    setIsNightMode((prevMode) => {
+      const newMode = !prevMode;
+      if (newMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      return newMode;
+    });
+  };
+
   return (
     <html lang='en'>
       <body>
         <SidebarProvider>
           <div className='flex min-h-screen w-full'>
-            <AppSidebar />
+            <AppSidebar isNightMode={isNightMode} />
 
             <div className='relative mr-10 mt-10 flex flex-1 justify-center'>
               <div className='fixed right-12 top-12'>
-                <SwitchDemo />
+                <SwitchMode
+                  isNightMode={isNightMode}
+                  onThemeToggle={handleThemeToggle}
+                />
               </div>
 
               <div className='absolute left-4 top-0 p-0'>
