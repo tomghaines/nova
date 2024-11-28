@@ -70,7 +70,7 @@ export const SentimentChart = () => {
       .attr('x2', width - margin.right)
       .attr('y1', y(0))
       .attr('y2', y(0))
-      .attr('stroke', 'D3D3D3')
+      .attr('stroke', '#D3D3D3')
       .attr('stroke-width', 1)
       .attr('stroke-dasharray', '4,4');
 
@@ -96,7 +96,7 @@ export const SentimentChart = () => {
     gradient
       .append('stop')
       .attr('offset', '50%')
-      .attr('stop-color', '#D3D3D3') // Neutral white for zero sentiment
+      .attr('stop-color', '#D3D3D3') // Neutral grey for zero sentiment
       .attr('stop-opacity', 0.9);
 
     gradient
@@ -134,7 +134,7 @@ export const SentimentChart = () => {
       .style('border-radius', '4px')
       .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
       .style('pointer-events', 'none')
-      .style('opacity', 80);
+      .style('opacity', 0.8);
 
     const focusDot = svg
       .append('circle')
@@ -149,7 +149,7 @@ export const SentimentChart = () => {
       .attr('stroke-dasharray', '4,4')
       .style('opacity', 0);
 
-    // hover interaction
+    // Hover interaction
     svg
       .append('rect')
       .attr('width', width)
@@ -157,7 +157,7 @@ export const SentimentChart = () => {
       .style('fill', 'none')
       .style('pointer-events', 'all')
       .on('mousemove', (event) => {
-        const [mouseX] = d3.pointer(event);
+        const [mouseX, mouseY] = d3.pointer(event);
         const date = x.invert(mouseX);
 
         // Find the closest data point
@@ -180,14 +180,15 @@ export const SentimentChart = () => {
 
         // Calculate tooltip position
         const tooltipX = x(new Date(d.date)) + 10; // Offset from dot
-        const tooltipY = y(d.sentimentValue) + 10; // Above the dot
+        const tooltipY = mouseY + 10; // Track the mouse's Y position
 
         // Adjust tooltip if it overflows on the right
-        const overflowRight = tooltipX + 150 > width; // Assuming tooltip width is 150px
-        const adjustedX = overflowRight ? tooltipX - 170 : tooltipX;
+        const overflowRight = tooltipX + 20 > width; // Assuming tooltip width is 150px
+        const adjustedX = overflowRight ? tooltipX - 20 : tooltipX;
 
         tooltip
           .style('opacity', 1)
+          .style('font-size', '12px')
           .html(
             `<strong>Date:</strong> ${new Date(d.date).toLocaleString()}<br>
              <strong>Sentiment:</strong> ${d.sentimentValue}<br>
@@ -199,6 +200,7 @@ export const SentimentChart = () => {
       })
       .on('mouseout', () => {
         focusDot.style('opacity', 0);
+        focusLine.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
   }, [sentimentData]);
