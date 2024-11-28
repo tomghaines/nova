@@ -85,9 +85,9 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>
             <img
-              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo.png'}
+              src='/logo/logo.png'
               alt='Logo'
-              className='ml-10 mt-24 h-12'
+              className='mx-auto mt-24 h-12 w-auto'
             />
           </SidebarGroupLabel>
           <SidebarGroupContent className='ml-10 mt-24'>
