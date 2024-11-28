@@ -1,3 +1,4 @@
+// app/auth/callback/route.ts
 import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
 
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
     }
 
     if (data.session) {
-      return NextResponse.redirect(`${origin}/protected`);
+      return NextResponse.redirect(`${origin}/seek`);
     }
   }
 
