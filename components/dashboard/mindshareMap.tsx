@@ -16,7 +16,7 @@ interface TreemapNode extends d3.HierarchyRectangularNode<unknown> {
   };
 }
 
-export const MindshareMap = () => {
+export const MindshareMap = ({onLoad}) => {
   const heatmapRef = useRef<HTMLDivElement>(null);
   const [mindshareData, setMindshareData] = useState<MindshareData[]>([]);
 
@@ -24,9 +24,10 @@ export const MindshareMap = () => {
     const getData = async () => {
       const data = await fetchMindshareData();
       setMindshareData(data);
+      if (onLoad) onLoad();
     };
     getData();
-  }, []);
+  }, [onLoad]);
 
   useEffect(() => {
     // Check for empty data

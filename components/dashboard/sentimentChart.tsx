@@ -3,10 +3,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import fetchSentimentData from '@/app/data/SentimentData';
+import { ProgressBar } from "@/components/dashboard/progress";
 
 import { SentimentData } from '@/app/types/data/SentimentData.types';
 
-export const SentimentChart = () => {
+export const SentimentChart = ( {onLoad}) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
@@ -14,9 +15,10 @@ export const SentimentChart = () => {
     const getData = async () => {
       const data = await fetchSentimentData();
       setSentimentData(data);
+      if (onLoad) onLoad();
     };
     getData();
-  }, []);
+  }, [onLoad]);
 
   useEffect(() => {
     // Check for empty data
