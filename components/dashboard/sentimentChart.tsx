@@ -1,13 +1,27 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { sentimentData } from './mockdata';
+import fetchSentimentData from '@/app/data/SentimentData';
+
+import { SentimentData } from '@/app/types/data/SentimentData.types';
 
 export const SentimentChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
+  const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
   useEffect(() => {
+    const getData = async () => {
+      const data = await fetchSentimentData();
+      setSentimentData(data);
+    };
+    getData();
+  }, []);
+
+  useEffect(() => {
+    // Check for empty data
+    if (!sentimentData || sentimentData.length === 0) return;
+
     // Clear existing chart
     if (chartRef.current) {
       d3.select(chartRef.current).selectAll('*').remove();
@@ -101,7 +115,7 @@ export const SentimentChart = () => {
       .attr(
         'd',
         d3
-          .line<any>()
+          .line<SentimentData>()
           .curve(d3.curveCatmullRom) // Smooth path
           .x((d) => x(new Date(d.date)))
           .y((d) => y(d.sentimentValue))
@@ -120,12 +134,19 @@ export const SentimentChart = () => {
       .style('border-radius', '4px')
       .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
       .style('pointer-events', 'none')
-      .style('opacity', 0);
+      .style('opacity', 80);
 
     const focusDot = svg
       .append('circle')
       .attr('r', 5)
       .attr('fill', 'grey')
+      .style('opacity', 0);
+
+    const focusLine = svg
+      .append('line')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '4,4')
       .style('opacity', 0);
 
     // hover interaction
@@ -140,7 +161,7 @@ export const SentimentChart = () => {
         const date = x.invert(mouseX);
 
         // Find the closest data point
-        const bisect = d3.bisector((d: any) => new Date(d.date)).left;
+        const bisect = d3.bisector((d: SentimentData) => new Date(d.date)).left;
         const index = bisect(sentimentData, date, 1);
         const d0 = sentimentData[index - 1];
         const d1 = sentimentData[index];
@@ -180,7 +201,7 @@ export const SentimentChart = () => {
         focusDot.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
-  }, []);
+  }, [sentimentData]);
 
   return <div ref={chartRef}></div>;
 };
