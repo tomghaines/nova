@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { SubmitButton } from '@/components/submit-button';
 import { TwitterSignUp } from '@/components/ui/twitter-sign-up';
@@ -21,7 +19,7 @@ export default async function Signup(props: {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-50'>
+    <div className='mt-100 flex min-h-screen items-center justify-center bg-gray-50'>
       <div className='w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
         <h1 className='text-2xl font-semibold text-gray-800'>Create Account</h1>
         <p className='mt-2 text-sm text-gray-600'>

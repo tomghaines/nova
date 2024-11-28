@@ -1,43 +1,53 @@
+// app/layout.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SwitchMode } from '@/components/dashboard/switch';
 import { AppSidebar } from '@/components/dashboard/sidebar';
-import { SwitchDemo } from '@/components/dashboard/switch';
+import { useState } from 'react';
 import './globals.css';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   const [isNightMode, setIsNightMode] = useState(false);
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    setIsNightMode(storedTheme === 'dark');
-  }, []);
-
-  const handleThemeChange = (newMode: boolean) => {
-    setIsNightMode(newMode);
+  const handleThemeToggle = () => {
+    setIsNightMode((prevMode) => {
+      const newMode = !prevMode;
+      if (newMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      return newMode;
+    });
   };
 
   return (
     <html lang='en'>
       <body>
         <SidebarProvider>
-          <div className='flex min-h-screen'>
-            {/* Sidebar */}
+          <div className='flex min-h-screen w-full'>
             <AppSidebar isNightMode={isNightMode} />
-            {/* Main Content Area */}
-            <div className='relative mb-2 ml-2 mr-2 mt-10 w-full flex-1'>
-              {/* dark mode switch */}
+
+            <div className='relative mr-10 mt-10 flex flex-1 justify-center'>
               <div className='fixed right-12 top-12'>
-                <SwitchDemo onThemeChange={handleThemeChange} />
+                <SwitchMode
+                  isNightMode={isNightMode}
+                  onThemeToggle={handleThemeToggle}
+                />
               </div>
 
-              {/* Sidebar Trigger */}
               <div className='absolute left-4 top-0 p-0'>
                 <SidebarTrigger />
               </div>
 
-              <div>{children}</div>
+              <div className='flex items-start justify-center'>{children}</div>
             </div>
           </div>
         </SidebarProvider>
