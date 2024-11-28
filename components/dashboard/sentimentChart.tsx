@@ -70,7 +70,7 @@ export const SentimentChart = () => {
       .attr('x2', width - margin.right)
       .attr('y1', y(0))
       .attr('y2', y(0))
-      .attr('stroke', 'black')
+      .attr('stroke', 'D3D3D3')
       .attr('stroke-width', 1)
       .attr('stroke-dasharray', '4,4');
 
@@ -96,7 +96,7 @@ export const SentimentChart = () => {
     gradient
       .append('stop')
       .attr('offset', '50%')
-      .attr('stop-color', '#FFFFFF') // Neutral white for zero sentiment
+      .attr('stop-color', '#D3D3D3') // Neutral white for zero sentiment
       .attr('stop-opacity', 0.9);
 
     gradient
