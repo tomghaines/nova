@@ -57,7 +57,9 @@ export const updateSession = async (request: NextRequest) => {
     request.nextUrl.pathname.startsWith('/forgot-password');
 
   const isPublicPage =
-    request.nextUrl.pathname === '/home' || request.nextUrl.pathname === '/';
+    request.nextUrl.pathname === '/home' ||
+    request.nextUrl.pathname === '/' ||
+    request.nextUrl.pathname.startsWith('/api/');
 
   if (isAuthPage && user) {
     return NextResponse.redirect(new URL('/seek', request.url));
