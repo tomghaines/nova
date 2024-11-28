@@ -12,35 +12,37 @@ import { Button } from '@/components/ui/button';
 
 export function SearchBar() {
   const [isTokenOpen, setIsTokenOpen] = useState(false);
+  // const [selectedToken, setSelectedToken] = useState('$BTC');
 
   return (
     <div className='flex w-full items-center gap-5'>
       <div className='w-1/4'>
         <Command
           className='h-auto rounded-lg border shadow-md dark:shadow-lg dark:shadow-gray-500'
-          onBlur={() => setIsTokenOpen(false)}
+          // onBlur={() => setIsTokenOpen(false)}
         >
           <CommandInput
+            // value={selectedToken}
             onFocus={() => setIsTokenOpen(true)}
-            className='w-full'
+            className='w-full cursor-pointer'
           />
           {isTokenOpen && (
             <CommandList className='absolute top-full z-50 w-1/5 bg-white shadow-lg dark:bg-gray-800'>
-              <CommandItem>
+              <CommandItem onClick={() => setSelectedToken('$BTC')}>
                 <img
                   src='https://cryptologos.cc/logos/bitcoin-btc-logo.png'
                   className='h-4 w-4'
                 />
                 <span className='text-base font-semibold'>$BTC</span>
               </CommandItem>
-              <CommandItem>
+              <CommandItem onClick={() => setSelectedToken('$ETH')}>
                 <img
                   src='https://cdn.worldvectorlogo.com/logos/ethereum-eth.svg'
                   className='h-4 w-4'
                 />
                 <span className='text-base font-semibold'>$ETH</span>
               </CommandItem>
-              <CommandItem>
+              <CommandItem onClick={() => setSelectedToken('$SOL')}>
                 <img
                   src='https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png'
                   className='h-4 w-4'
@@ -60,7 +62,7 @@ export function SearchBar() {
           />
         </Command>
       </div>
-      <Button className='grey-400 ml-auto font-semibold shadow-md'>
+      <Button className='grey-400 ml-auto h-11 font-semibold shadow-md dark:shadow-lg dark:shadow-gray-500'>
         ENTER
       </Button>
     </div>
