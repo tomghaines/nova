@@ -17,6 +17,7 @@ export default function RootLayout({
         <SidebarProvider>
           <div className='flex min-h-screen'>
             <AppSidebar />
+
             <div className='relative mb-2 ml-2 mr-2 mt-10 w-full flex-1'>
               <div className='fixed right-12 top-12'>
                 <SwitchDemo />
@@ -26,9 +27,9 @@ export default function RootLayout({
                 <SidebarTrigger />
               </div>
 
-              <div>{children}</div>
+              <div className='flex justify-center align-center'>{children}</div>
             </div>
-          </div>
+            </div>
         </SidebarProvider>
       </body>
     </html>

@@ -6,7 +6,7 @@ export default function page () {
   return (
     <div className='flex w-full flex-col items-center justify-start'>
       {/* Inner Container for Charts and Search */}
-      <div className='w-[90%] max-w-4xl px-6 pl-[100px] text-center'>
+      <div className='w-[90%] max-w-5xl px-6 pl-[100px] text-center'>
         {/* Search Bar */}
         <div className='mb-8'>
           <CommandDemo />
