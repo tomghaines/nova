@@ -120,7 +120,7 @@ export const SentimentChart = () => {
       .style('border-radius', '4px')
       .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
       .style('pointer-events', 'none')
-      .style('opacity', 0);
+      .style('opacity', 80);
 
     const focusDot = svg
       .append('circle')
