@@ -188,23 +188,23 @@ export const SentimentChart = () => {
 
         // Calculate tooltip position
         const tooltipX = x(new Date(d.date)) - 20; // Offset from dot
-        const tooltipY = mouseY; // Track the mouse's Y position
+        const tooltipY = mouseY + 20; // Track the mouse's Y position
 
         // Adjust tooltip if it overflows on the right
-        const overflowRight = tooltipX + 20 > width; // Assuming tooltip width is 150px
+        const overflowRight = tooltipX + 20 > width;
         const adjustedX = overflowRight ? tooltipX - 20 : tooltipX;
 
-        const overflowTop = tooltipY + 30 > height;
-        const adjustedY= overflowTop ? tooltipY - 30 : tooltipY;
+        const overflowTop = tooltipY > height;
+        const adjustedY= overflowTop ? tooltipY - 20 : tooltipY;
 
         tooltip
           .style('opacity', 1)
           .style('font-size', '12px')
           .html(
-            `<strong>Date:</strong> ${new Date(d.date).toLocaleString()}<br>
-             <strong>Sentiment:</strong> ${d.sentimentValue}<br>
-             <strong>Price:</strong> ${d.price}<br>
-             <strong>Analysis:</strong> ${d.analysis}`
+            `<strong>Sentiment:</strong> ${d.sentimentValue}<br>
+            <strong>Price:</strong> ${d.price}<br>
+            <strong>Date:</strong> ${new Date(d.date).toLocaleString()}<br>
+            <strong>Analysis:</strong> ${d.analysis}`
           )
           .style('left', `${adjustedX}px`) // Adjust position dynamically
           .style('top', `${adjustedY}px`);
