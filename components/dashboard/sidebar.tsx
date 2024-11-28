@@ -4,10 +4,7 @@ import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { Home, Search, Settings, ChevronUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { signOutAction } from '@/app/actions';
-import { createClient } from '@/utils/supabase/client';
 import {
   Sidebar,
   SidebarContent,
@@ -25,6 +22,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
+import supabase from '@/utils/supabase/client';
+import { signOutAction } from '@/app/actions';
+import Link from 'next/link';
 
 const items = [
   {
@@ -46,7 +46,6 @@ const items = [
 
 export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
   const [user, setUser] = useState<User | null>(null);
-  const supabase = createClient();
   const router = useRouter();
 
   useEffect(() => {
