@@ -1,15 +1,15 @@
 import { SentimentChart } from '@/components/dashboard/sentimentChart';
 import { MindshareMap } from '@/components/dashboard/mindshareMap';
-import { CommandDemo } from '@/components/dashboard/command';
+import { SearchBar } from '@/components/dashboard/command';
 
 export default function page() {
   return (
     <div className='flex w-full flex-col items-center justify-start'>
       {/* Inner Container for Charts and Search */}
-      <div className='w-[90%] max-w-4xl px-6 pl-[100px] text-center'>
+      <div className='w-[100%] max-w-4xl px-6 pl-[100px] text-center'>
         {/* Search Bar */}
         <div className='absolute mb-16 ml-10'>
-          <CommandDemo />
+          <SearchBar />
         </div>
 
         {/* Sentiment Chart Section */}
