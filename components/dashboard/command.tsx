@@ -19,7 +19,7 @@ export function SearchBar() {
       <div className='w-1/4'>
         <Command
           className='h-auto rounded-lg border shadow-md dark:shadow-lg dark:shadow-gray-500'
-          // onBlur={() => setIsTokenOpen(false)}
+          onBlur={() => setIsTokenOpen(false)}
         >
           <CommandInput
             // value={selectedToken}
@@ -28,21 +28,21 @@ export function SearchBar() {
           />
           {isTokenOpen && (
             <CommandList className='absolute top-full z-50 w-1/5 bg-white shadow-lg dark:bg-gray-800'>
-              <CommandItem onClick={() => setSelectedToken('$BTC')}>
+              <CommandItem>
                 <img
                   src='https://cryptologos.cc/logos/bitcoin-btc-logo.png'
                   className='h-4 w-4'
                 />
                 <span className='text-base font-semibold'>$BTC</span>
               </CommandItem>
-              <CommandItem onClick={() => setSelectedToken('$ETH')}>
+              <CommandItem>
                 <img
                   src='https://cdn.worldvectorlogo.com/logos/ethereum-eth.svg'
                   className='h-4 w-4'
                 />
                 <span className='text-base font-semibold'>$ETH</span>
               </CommandItem>
-              <CommandItem onClick={() => setSelectedToken('$SOL')}>
+              <CommandItem>
                 <img
                   src='https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png'
                   className='h-4 w-4'

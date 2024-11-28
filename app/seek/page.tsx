@@ -8,7 +8,7 @@ export default function page() {
       {/* Inner Container for Charts and Search */}
       <div className='w-[100%] max-w-4xl px-6 pl-[100px] text-center'>
         {/* Search Bar */}
-        <div className='absolute mb-16 ml-10'>
+        <div className='relative mb-16 ml-10'>
           <SearchBar />
         </div>
 
