@@ -143,7 +143,7 @@ export const SentimentChart = () => {
       .style('fill', 'none')
       .style('pointer-events', 'all')
       .on('mousemove', (event) => {
-        const [mouseX] = d3.pointer(event);
+        const [mouseX, mouseY] = d3.pointer(event);
         const date = x.invert(mouseX);
 
         // Find the closest data point
@@ -164,17 +164,25 @@ export const SentimentChart = () => {
           .attr('cy', y(d.sentimentValue))
           .style('opacity', 1);
 
+        // Update vertical line position
+        focusLine
+        .attr('x1', x(new Date(d.date)))
+        .attr('x2', x(new Date(d.date)))
+        .attr('y1', margin.top)
+        .attr('y2', height - margin.bottom)
+        .style('opacity', 1);
 
         // Calculate tooltip position
         const tooltipX = x(new Date(d.date)) + 10; // Offset from dot
-        const tooltipY = y(d.sentimentValue) + 10; // Above the dot
+        const tooltipY = mouseY + 10; // Track the mouse's Y position
 
         // Adjust tooltip if it overflows on the right
-        const overflowRight = tooltipX + 150 > width; // Assuming tooltip width is 150px
-        const adjustedX = overflowRight ? tooltipX - 170 : tooltipX;
+        const overflowRight = tooltipX + 20 > width; // Assuming tooltip width is 20px
+        const adjustedX = overflowRight ? tooltipX - 20 : tooltipX;
 
         tooltip
           .style('opacity', 1)
+          .style('font-size', '12px')
           .html(
             `<strong>Date:</strong> ${new Date(d.date).toLocaleString()}<br>
              <strong>Sentiment:</strong> ${d.sentimentValue}<br>
@@ -186,6 +194,7 @@ export const SentimentChart = () => {
       })
       .on('mouseout', () => {
         focusDot.style('opacity', 0);
+        focusLine.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
   }, []);
