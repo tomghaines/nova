@@ -84,7 +84,7 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
         <SidebarGroup>
           <SidebarGroupLabel>
             <img
-              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo.png'}
+              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo-light.png'}
               alt='Logo'
               className='mx-auto mt-24 h-12 w-auto'
             />

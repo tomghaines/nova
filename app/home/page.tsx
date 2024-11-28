@@ -1,7 +1,11 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import ParticleSystem from '@/components/home/particle';
+import { useTheme } from '@/app/context/theme';
 
 export default function Home() {
+  const { isNightMode } = useTheme();
   return (
     <div className='flex h-screen w-full items-center'>
       <div className='absolute left-24 -translate-y-16 transform'>
@@ -21,7 +25,7 @@ export default function Home() {
       </div>
 
       <img
-        src='bg-blue.png'
+        src={isNightMode ? '/bg/bg-dark.png' : '/bg/bg-light.png'}
         className='absolute left-0 top-0 -z-10 h-full w-full object-cover'
         alt='Background'
       />
