@@ -144,7 +144,7 @@ export const SentimentChart = () => {
 
     const focusLine = svg
       .append('line')
-      .attr('stroke', 'black')
+      .attr('stroke', '#D3D3D3')
       .attr('stroke-width', 1)
       .attr('stroke-dasharray', '4,4')
       .style('opacity', 0);
@@ -178,13 +178,24 @@ export const SentimentChart = () => {
           .attr('cy', y(d.sentimentValue))
           .style('opacity', 1);
 
+        // Update focus line position
+        focusLine
+        .attr('x1', x(new Date(d.date)))
+        .attr('x2', x(new Date(d.date)))
+        .attr('y1', margin.top)
+        .attr('y2', height - margin.bottom)
+        .style('opacity', 1);
+
         // Calculate tooltip position
-        const tooltipX = x(new Date(d.date)) + 10; // Offset from dot
-        const tooltipY = mouseY + 10; // Track the mouse's Y position
+        const tooltipX = x(new Date(d.date)) - 20; // Offset from dot
+        const tooltipY = mouseY; // Track the mouse's Y position
 
         // Adjust tooltip if it overflows on the right
         const overflowRight = tooltipX + 20 > width; // Assuming tooltip width is 150px
         const adjustedX = overflowRight ? tooltipX - 20 : tooltipX;
+
+        const overflowTop = tooltipY + 30 > height;
+        const adjustedY= overflowTop ? tooltipY - 30 : tooltipY;
 
         tooltip
           .style('opacity', 1)
@@ -196,7 +207,7 @@ export const SentimentChart = () => {
              <strong>Analysis:</strong> ${d.analysis}`
           )
           .style('left', `${adjustedX}px`) // Adjust position dynamically
-          .style('top', `${tooltipY}px`);
+          .style('top', `${adjustedY}px`);
       })
       .on('mouseout', () => {
         focusDot.style('opacity', 0);
