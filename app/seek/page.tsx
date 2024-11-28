@@ -5,8 +5,6 @@ import { MindshareMap } from '@/components/dashboard/mindshareMap';
 import { SearchBar } from '@/components/dashboard/command';
 import { SkeletonBar } from '@/components/dashboard/skeleton';
 import React, { useState, useEffect } from 'react';
-/* import { ProgressBar } from '@/components/dashboard/progress';
-import { Progress } from '@radix-ui/react-progress'; */
 
 export default function page() {
   const [isSentimentChartLoading, setIsSentimentChartLoading] = useState(true);
@@ -32,7 +30,6 @@ export default function page() {
             the market behaviors.
           </p>
             {isSentimentChartLoading && <SkeletonBar />}
-            {/* {isSentimentChartLoading && <Progress value={33} />} */}
             <SentimentChart onLoadComplete={() => setIsSentimentChartLoading(false)}/>
         </div>
 
@@ -47,7 +44,6 @@ export default function page() {
             trends and focus distribution.
           </p>
           {isMindshareMapLoading && <SkeletonBar />}
-         {/*  {isMindshareMapLoading && <Progress value={33}/>} */}
           <MindshareMap onLoadComplete={() => setIsMindshareMapLoading(false)}/>
         </div>
       </div>
