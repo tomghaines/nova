@@ -134,12 +134,19 @@ export const SentimentChart = () => {
       .style('border-radius', '4px')
       .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
       .style('pointer-events', 'none')
-      .style('opacity', 0);
+      .style('opacity', 80);
 
     const focusDot = svg
       .append('circle')
       .attr('r', 5)
       .attr('fill', 'grey')
+      .style('opacity', 0);
+
+    const focusLine = svg
+      .append('line')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '4,4')
       .style('opacity', 0);
 
     // hover interaction

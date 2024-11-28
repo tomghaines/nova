@@ -1,75 +1,70 @@
 'use client';
 import { useState } from 'react';
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User
-} from 'lucide-react';
 
 import {
   Command,
-  CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut
+  CommandItem
 } from '@/components/ui/command';
 
-export function CommandDemo() {
-  const [isOpen, setIsOpen] = useState(false);
+import { Button } from '@/components/ui/button';
+
+export function SearchBar() {
+  const [isTokenOpen, setIsTokenOpen] = useState(false);
+  // const [selectedToken, setSelectedToken] = useState('$BTC');
+
   return (
-    <Command
-      className='rounded-lg border shadow-md md:min-w-[450px] dark:shadow-lg dark:shadow-gray-500'
-      onBlur={() => setIsOpen(false)} // Close dropdown when losing focus
-    >
-      {/* Command Input */}
-      <CommandInput
-        placeholder='Type a command or search...'
-        onFocus={() => setIsOpen(true)} // Open dropdown on focus
-      />
-      {/* Command List */}
-      {isOpen && (
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading='Suggestions'>
-            <CommandItem>
-              <Calendar />
-              <span>Calendar</span>
-            </CommandItem>
-            <CommandItem>
-              <Smile />
-              <span>Search Emoji</span>
-            </CommandItem>
-            <CommandItem disabled>
-              <Calculator />
-              <span>Calculator</span>
-            </CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading='Settings'>
-            <CommandItem>
-              <User />
-              <span>Profile</span>
-              <CommandShortcut>⌘P</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <CreditCard />
-              <span>Billing</span>
-              <CommandShortcut>⌘B</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <Settings />
-              <span>Settings</span>
-              <CommandShortcut>⌘S</CommandShortcut>
-            </CommandItem>
-          </CommandGroup>
-        </CommandList>
-      )}
-    </Command>
+    <div className='flex w-full items-center gap-5'>
+      <div className='w-1/4'>
+        <Command
+          className='h-auto rounded-lg border shadow-md dark:shadow-lg dark:shadow-gray-500'
+          onBlur={() => setIsTokenOpen(false)}
+        >
+          <CommandInput
+            // value={selectedToken}
+            onFocus={() => setIsTokenOpen(true)}
+            className='w-full cursor-pointer'
+          />
+          {isTokenOpen && (
+            <CommandList className='absolute top-full z-50 w-1/5 bg-white shadow-lg dark:bg-gray-800'>
+              <CommandItem>
+                <img
+                  src='https://cryptologos.cc/logos/bitcoin-btc-logo.png'
+                  className='h-4 w-4'
+                />
+                <span className='text-base font-semibold'>$BTC</span>
+              </CommandItem>
+              <CommandItem>
+                <img
+                  src='https://cdn.worldvectorlogo.com/logos/ethereum-eth.svg'
+                  className='h-4 w-4'
+                />
+                <span className='text-base font-semibold'>$ETH</span>
+              </CommandItem>
+              <CommandItem>
+                <img
+                  src='https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png'
+                  className='h-4 w-4'
+                />
+                <span className='text-base font-semibold'>$SOL</span>
+              </CommandItem>
+            </CommandList>
+          )}
+        </Command>
+      </div>
+
+      <div className='w-3/4'>
+        <Command className='h-auto rounded-lg border shadow-md dark:shadow-lg dark:shadow-gray-500'>
+          <CommandInput
+            placeholder='Type keywords or topics...'
+            className='w-full'
+          />
+        </Command>
+      </div>
+      <Button className='grey-400 ml-auto h-11 font-semibold shadow-md dark:shadow-lg dark:shadow-gray-500'>
+        ENTER
+      </Button>
+    </div>
   );
 }

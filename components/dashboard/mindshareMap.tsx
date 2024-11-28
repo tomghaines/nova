@@ -80,6 +80,7 @@ export const MindshareMap = () => {
       .attr('width', (d) => d.x1 - d.x0)
       .attr('height', (d) => d.y1 - d.y0)
       .attr('fill', (d) => d3.interpolateOrRd(d.value * 4)) // Color scheme for heatmap
+      .attr('fill', (d) => d3.interpolateOrRd(d.value * 4)) // Color scheme for heatmap
       .attr('stroke', '#ffffff');
 
     // Add text labels inside cells
