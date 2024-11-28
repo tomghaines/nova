@@ -1,22 +1,11 @@
-"use client";
-
-import * as React from "react";
 import { Progress } from "@/components/ui/progress";
 
-export function ProgressBar({ loading }) {
-  const [progress, setProgress] = React.useState(0);
-
-  React.useEffect(() => {
-    if (loading) {
-      const interval = setInterval(() => {
-        setProgress((prev) => (prev < 90 ? prev + 10 : prev));
-      }, 500);
-
-      return () => clearInterval(interval);
-    } else {
-      setProgress(100);
-    }
-  }, [loading]);
-
-  return <Progress value={progress} className="w-[60%]" />;
+export const ProgressBar = ({ progress }) => {
+  return (
+    <div className='flex justify-center items-center h-[400px] w-[800px] border border-gray-200 '>
+      <div className="w-[200px]">
+      <Progress value={progress} />
+      </div>
+    </div>
+  )
 }

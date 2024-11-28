@@ -3,11 +3,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import fetchSentimentData from '@/app/data/SentimentData';
-import { ProgressBar } from "@/components/dashboard/progress";
-
 import { SentimentData } from '@/app/types/data/SentimentData.types';
 
-export const SentimentChart = ( {onLoad}) => {
+
+export const SentimentChart = ({onLoadComplete}) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
@@ -15,10 +14,9 @@ export const SentimentChart = ( {onLoad}) => {
     const getData = async () => {
       const data = await fetchSentimentData();
       setSentimentData(data);
-      if (onLoad) onLoad();
     };
     getData();
-  }, [onLoad]);
+  }, []);
 
   useEffect(() => {
     // Check for empty data
@@ -53,7 +51,8 @@ export const SentimentChart = ( {onLoad}) => {
       )
       .nice()
       .range([height - margin.bottom, margin.top]);
-
+    
+    onLoadComplete();
     // Axes
     svg
       .append('g')
@@ -123,6 +122,8 @@ export const SentimentChart = ( {onLoad}) => {
           .y((d) => y(d.sentimentValue))
       );
 
+    
+
     // Tooltip elements
     const tooltip = d3
       .select(chartRef.current)
@@ -189,8 +190,8 @@ export const SentimentChart = ( {onLoad}) => {
           .style('opacity', 1);
 
         // Calculate tooltip position
-        const tooltipX = x(new Date(d.date)) - 20; // Offset from dot
-        const tooltipY = mouseY + 20; // Track the mouse's Y position
+        const tooltipX = x(new Date(d.date)); // Offset from dot
+        const tooltipY = mouseY; // Track the mouse's Y position
 
         // Adjust tooltip if it overflows on the right
         const overflowRight = tooltipX + 20 > width;
@@ -216,7 +217,8 @@ export const SentimentChart = ( {onLoad}) => {
         focusLine.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
-  }, [sentimentData]);
+
+  }, [sentimentData, onLoadComplete]);
 
   return <div ref={chartRef}></div>;
 };
