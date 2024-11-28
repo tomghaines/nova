@@ -1,13 +1,27 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { sentimentData } from './mockdata';
+import fetchSentimentData from '@/app/data/SentimentData';
+
+import { SentimentData } from '@/app/types/data/SentimentData.types';
 
 export const SentimentChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
+  const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
   useEffect(() => {
+    const getData = async () => {
+      const data = await fetchSentimentData();
+      setSentimentData(data);
+    };
+    getData();
+  }, []);
+
+  useEffect(() => {
+    // Check for empty data
+    if (!sentimentData || sentimentData.length === 0) return;
+
     // Clear existing chart
     if (chartRef.current) {
       d3.select(chartRef.current).selectAll('*').remove();
@@ -56,7 +70,7 @@ export const SentimentChart = () => {
       .attr('x2', width - margin.right)
       .attr('y1', y(0))
       .attr('y2', y(0))
-      .attr('stroke', 'black')
+      .attr('stroke', '#D3D3D3')
       .attr('stroke-width', 1)
       .attr('stroke-dasharray', '4,4');
 
@@ -82,7 +96,7 @@ export const SentimentChart = () => {
     gradient
       .append('stop')
       .attr('offset', '50%')
-      .attr('stop-color', '#FFFFFF') // Neutral white for zero sentiment
+      .attr('stop-color', '#D3D3D3') // Neutral grey for zero sentiment
       .attr('stop-opacity', 0.9);
 
     gradient
@@ -101,7 +115,7 @@ export const SentimentChart = () => {
       .attr(
         'd',
         d3
-          .line<any>()
+          .line<SentimentData>()
           .curve(d3.curveCatmullRom) // Smooth path
           .x((d) => x(new Date(d.date)))
           .y((d) => y(d.sentimentValue))
@@ -120,7 +134,7 @@ export const SentimentChart = () => {
       .style('border-radius', '4px')
       .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
       .style('pointer-events', 'none')
-      .style('opacity', 80);
+      .style('opacity', 0.8);
 
     const focusDot = svg
       .append('circle')
@@ -130,12 +144,12 @@ export const SentimentChart = () => {
 
     const focusLine = svg
       .append('line')
-      .attr('stroke', 'black')
+      .attr('stroke', '#D3D3D3')
       .attr('stroke-width', 1)
       .attr('stroke-dasharray', '4,4')
       .style('opacity', 0);
 
-    // hover interaction
+    // Hover interaction
     svg
       .append('rect')
       .attr('width', width)
@@ -143,11 +157,11 @@ export const SentimentChart = () => {
       .style('fill', 'none')
       .style('pointer-events', 'all')
       .on('mousemove', (event) => {
-        const [mouseX] = d3.pointer(event);
+        const [mouseX, mouseY] = d3.pointer(event);
         const date = x.invert(mouseX);
 
         // Find the closest data point
-        const bisect = d3.bisector((d: any) => new Date(d.date)).left;
+        const bisect = d3.bisector((d: SentimentData) => new Date(d.date)).left;
         const index = bisect(sentimentData, date, 1);
         const d0 = sentimentData[index - 1];
         const d1 = sentimentData[index];
@@ -164,30 +178,43 @@ export const SentimentChart = () => {
           .attr('cy', y(d.sentimentValue))
           .style('opacity', 1);
 
+        // Update focus line position
+        focusLine
+          .attr('x1', x(new Date(d.date)))
+          .attr('x2', x(new Date(d.date)))
+          .attr('y1', margin.top)
+          .attr('y2', height - margin.bottom)
+          .style('opacity', 1);
+
         // Calculate tooltip position
-        const tooltipX = x(new Date(d.date)) + 10; // Offset from dot
-        const tooltipY = y(d.sentimentValue) + 10; // Above the dot
+        const tooltipX = x(new Date(d.date)) - 20; // Offset from dot
+        const tooltipY = mouseY + 20; // Track the mouse's Y position
 
         // Adjust tooltip if it overflows on the right
-        const overflowRight = tooltipX + 150 > width; // Assuming tooltip width is 150px
-        const adjustedX = overflowRight ? tooltipX - 170 : tooltipX;
+        const overflowRight = tooltipX + 20 > width;
+        const adjustedX = overflowRight ? tooltipX - 20 : tooltipX;
+
+        const overflowTop = tooltipY > height;
+        const adjustedY = overflowTop ? tooltipY - 20 : tooltipY;
 
         tooltip
           .style('opacity', 1)
+          .style('font-size', '12px')
           .html(
-            `<strong>Date:</strong> ${new Date(d.date).toLocaleString()}<br>
-             <strong>Sentiment:</strong> ${d.sentimentValue}<br>
-             <strong>Price:</strong> ${d.price}<br>
-             <strong>Analysis:</strong> ${d.analysis}`
+            `<strong>Sentiment:</strong> ${d.sentimentValue}<br>
+            <strong>Price:</strong> ${d.price}<br>
+            <strong>Date:</strong> ${new Date(d.date).toLocaleString()}<br>
+            <strong>Analysis:</strong> ${d.analysis}`
           )
           .style('left', `${adjustedX}px`) // Adjust position dynamically
-          .style('top', `${tooltipY}px`);
+          .style('top', `${adjustedY}px`);
       })
       .on('mouseout', () => {
         focusDot.style('opacity', 0);
+        focusLine.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
-  }, []);
+  }, [sentimentData]);
 
   return <div ref={chartRef}></div>;
 };

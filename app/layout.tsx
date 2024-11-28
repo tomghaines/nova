@@ -35,7 +35,7 @@ export default function RootLayout({
           <div className='flex min-h-screen w-full'>
             <AppSidebar isNightMode={isNightMode} />
 
-            <div className='relative mr-10 mt-10 flex flex-1 justify-center'>
+            <div className='relative mt-10 flex flex-1 justify-center'>
               <div className='fixed right-12 top-12'>
                 <SwitchMode
                   isNightMode={isNightMode}
@@ -43,7 +43,7 @@ export default function RootLayout({
                 />
               </div>
 
-              <div className='absolute left-4 top-0 p-0'>
+              <div className='absolute left-7 top-0 p-0'>
                 <SidebarTrigger />
               </div>
 

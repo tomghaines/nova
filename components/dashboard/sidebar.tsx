@@ -80,7 +80,7 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
   };
 
   return (
-    <Sidebar>
+    <Sidebar className='bg-blue-500'>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
@@ -90,7 +90,7 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
               className='mx-auto mt-24 h-12 w-auto'
             />
           </SidebarGroupLabel>
-          <SidebarGroupContent className='ml-10 mt-24'>
+          <SidebarGroupContent className='ml-10 mt-24 w-40'>
             <SidebarMenu className='space-y-2'>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
