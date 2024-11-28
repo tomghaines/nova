@@ -108,7 +108,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      {user ? (
+      {user && (
         <SidebarFooter>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -143,12 +143,6 @@ export function AppSidebar() {
               </form>
             </DropdownMenuContent>
           </DropdownMenu>
-        </SidebarFooter>
-      ) : (
-        <SidebarFooter>
-          <Link href='/sign-in' className='flex items-center gap-2 px-4 py-2'>
-            <span>Sign in</span>
-          </Link>
         </SidebarFooter>
       )}
     </Sidebar>
