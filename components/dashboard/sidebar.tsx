@@ -128,10 +128,7 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
               className='w-[--radix-popper-anchor-width]'
             >
               <DropdownMenuItem>
-                <span>Account</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span>Billing</span>
+                <Link href='/account'>Account</Link>
               </DropdownMenuItem>
               <form action={signOutAction} onSubmit={handleSignOut}>
                 <DropdownMenuItem asChild>
