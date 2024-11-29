@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import fetchMindshareData from '@/app/data/MindshareData';
-import { MindshareData } from '@/app/types/data/MindshareData.types';
+import fetchMindshareData from '@/lib/database/MindshareData';
+import { MindshareData } from '@/@types/data/MindshareData';
 
 interface HierarchyDatum {
   values: MindshareData[];
@@ -16,7 +16,7 @@ interface TreemapNode extends d3.HierarchyRectangularNode<unknown> {
   };
 }
 
-export const MindshareMap = ({onLoadComplete}) => {
+export const MindshareMap = ({ onLoadComplete }) => {
   const heatmapRef = useRef<HTMLDivElement>(null);
   const [mindshareData, setMindshareData] = useState<MindshareData[]>([]);
 
@@ -95,8 +95,7 @@ export const MindshareMap = ({onLoadComplete}) => {
       .text((d) => `${d.data.name}\n${(d.data.percentage * 100).toFixed(1)}%`);
   }, [mindshareData]);
 
-
   onLoadComplete();
-  
+
   return <div ref={heatmapRef}></div>;
 };

@@ -2,11 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import fetchSentimentData from '@/app/data/SentimentData';
-import { SentimentData } from '@/app/types/data/SentimentData.types';
+import fetchSentimentData from '@/lib/database/SentimentData';
+import { SentimentData } from '@/@types/data/SentimentData';
 
-
-export const SentimentChart = ({onLoadComplete}) => {
+export const SentimentChart = ({ onLoadComplete }) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
@@ -51,7 +50,7 @@ export const SentimentChart = ({onLoadComplete}) => {
       )
       .nice()
       .range([height - margin.bottom, margin.top]);
-    
+
     onLoadComplete();
     // Axes
     svg
@@ -121,8 +120,6 @@ export const SentimentChart = ({onLoadComplete}) => {
           .x((d) => x(new Date(d.date)))
           .y((d) => y(d.sentimentValue))
       );
-
-    
 
     // Tooltip elements
     const tooltip = d3
@@ -217,7 +214,6 @@ export const SentimentChart = ({onLoadComplete}) => {
         focusLine.style('opacity', 0);
         tooltip.style('opacity', 0);
       });
-
   }, [sentimentData, onLoadComplete]);
 
   return <div ref={chartRef}></div>;

@@ -12,7 +12,7 @@ export default async function fetchSentimentData() {
       analysis: item.analysis
     }));
   } catch (err) {
-    console.error('Error fetching sentimend data:', err);
+    console.error('Error fetching sentiment data:', err);
     return [];
   }
 }
