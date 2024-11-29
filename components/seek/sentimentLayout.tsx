@@ -1,6 +1,6 @@
 'use client';
 
-import { SentimentChart } from '@/components/dashboard/sentimentChart';
+import { SentimentChart2 } from '@/components/dashboard/sentiment2';
 import { SkeletonBar } from '@/components/dashboard/skeleton';
 import { ChartLine, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import React, { useState } from 'react';
@@ -22,7 +22,7 @@ export default function SentimentLayout() {
       {/* Sentiment Chart Section - Inner */}
       <div className='mb-8 ml-6 mr-6 mt-4 flex flex-col items-center justify-start border'>
         {isSentimentChartLoading && <SkeletonBar />}
-        <SentimentChart
+        <SentimentChart2
           onLoadComplete={() => setIsSentimentChartLoading(false)}
         />
       </div>
