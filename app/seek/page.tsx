@@ -30,9 +30,10 @@ export default function page() {
             linguistics based on X (formerly Twitter) to systematically study
             the market behaviors.
           </p>
-          <SentimentChart2/>
+          
             {isSentimentChartLoading && <SkeletonBar />}
-            <SentimentChart onLoadComplete={() => setIsSentimentChartLoading(false)}/>
+            <SentimentChart2 onLoadComplete={() => setIsSentimentChartLoading(false)}/>
+            {/* <SentimentChart onLoadComplete={() => setIsSentimentChartLoading(false)}/> */}
             
         </div>
 

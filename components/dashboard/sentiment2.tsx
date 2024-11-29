@@ -3,10 +3,10 @@ import * as d3 from 'd3';
 import fetchSentimentData from '@/app/data/SentimentData';
 import { SentimentData } from '@/app/types/data/SentimentData.types';
 
-export const SentimentChart2 = () => {
+export const SentimentChart2 = ({onLoadComplete}) => {
   const svgRef = useRef();
 
-/*   const chartRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
   useEffect(() => {
@@ -24,16 +24,16 @@ export const SentimentChart2 = () => {
     // Clear existing chart
     if (chartRef.current) {
       d3.select(chartRef.current).selectAll('*').remove();
-    } */
-    useEffect(() => {
-      const data = [
+    }
+
+/*       const data = [
         { date: new Date(2024, 0, 1), value: 0.1 },
         { date: new Date(2024, 1, 1), value: 0.3 },
         { date: new Date(2024, 2, 1), value: -0.2 },
         { date: new Date(2024, 3, 1), value: -0.4 },
         { date: new Date(2024, 4, 1), value: 0.5 },
         { date: new Date(2024, 5, 1), value: 0.2 },
-      ];
+      ]; */
 
       const priceData = [
         { date: new Date(2024, 0, 1), price: 1.5 },
@@ -46,9 +46,9 @@ export const SentimentChart2 = () => {
 
     // Dimensions and margins
     const width = 800;
-    const height = 400;
-    const margin = { top: 20, right: 30, bottom: 40, left: 50 };
-
+    const height = 450; // Increased height to provide more space for the legend
+    const margin = { top: 80, right: 60, bottom: 40, left: 50 };
+    
     // Create scales
     const xScale = d3
       .scaleTime()
@@ -69,13 +69,14 @@ export const SentimentChart2 = () => {
       ])
       .nice()
       .range([height - margin.bottom, margin.top]);
-
-    // Line generator for sentiment
+    
+    onLoadComplete();
+/*     // Line generator for sentiment
     const line = d3
       .line()
       .x((d) => xScale(d.date))
       .y((d) => yScaleSentiment(d.value))
-      .curve(d3.curveMonotoneX);
+      .curve(d3.curveMonotoneX); */
 
     // Line generator for price
     const priceLine = d3
@@ -85,12 +86,12 @@ export const SentimentChart2 = () => {
     .curve(d3.curveMonotoneX);
 
     // Area generator for positive and negative areas
-    const area = d3
+/*     const area = d3
       .area()
       .x((d) => xScale(d.date))
       .y0((d) => yScaleSentiment(0))
       .y1((d) => yScaleSentiment(d.value))
-      .curve(d3.curveMonotoneX);
+      .curve(d3.curveMonotoneX); */
 
     // Function to calculate intersection points with y=0
     const getIntersectionPoints = (data) => {
@@ -133,55 +134,61 @@ export const SentimentChart2 = () => {
     // Set SVG dimensions
     svg.attr('viewBox', `0 0 ${width} ${height}`);
 
+    
   // Append legend
-  const legend = svg.append('g').attr('transform', `translate(${width - 250}, ${margin.top - 60})`);
+  const legend = svg.append('g').attr('transform', `translate(${margin.left + 30}, ${margin.top - 10})`);
 
-  // Legend for price line
-  legend
-    .append('line')
-    .attr('x1', 0)
-    .attr('y1', 0)
-    .attr('x2', 20)
-    .attr('y2', 0)
-    .attr('stroke', 'gray')
-    .attr('stroke-width', 2);
-  legend
-    .append('text')
-    .attr('x', 30)
-    .attr('y', 5)
-    .text('Price')
-    .attr('fill', 'white')
-    .style('font-size', '12px')
-    .style('alignment-baseline', 'middle');
+    // Legend for price line
+    legend
+      .append('g')
+      .attr('transform', 'translate(0, 0)')
+      .call((g) => {
+        g.append('line')
+          .attr('x1', 0)
+          .attr('y1', 0)
+          .attr('x2', 20)
+          .attr('y2', 0)
+          .attr('stroke', 'gray')
+          .attr('stroke-width', 4);
+        g.append('text')
+          .attr('x', 30)
+          .attr('y', 1)
+          .text('Price')
+          .attr('fill', 'grey')
+          .style('font-size', '12px')
+          .style('alignment-baseline', 'middle');
+      });
 
-  // Legend for sentiment area
-  legend
-    .append('line')
-    .attr('x1', 100)
-    .attr('y1', 0)
-    .attr('x2', 120)
-    .attr('y2', 0)
-    .attr('stroke', 'green')
-    .attr('stroke-width', 6)
-    .attr('stroke-linecap', 'round');
-  legend
-    .append('line')
-    .attr('x1', 100)
-    .attr('y1', 0)
-    .attr('x2', 120)
-    .attr('y2', 0)
-    .attr('stroke', 'red')
-    .attr('stroke-width', 6)
-    .attr('stroke-linecap', 'round')
-    .attr('opacity', 0.5);
-  legend
-    .append('text')
-    .attr('x', 130)
-    .attr('y', 5)
-    .text('Sentiment analytics')
-    .attr('fill', 'white')
-    .style('font-size', '12px')
-    .style('alignment-baseline', 'middle');
+    // Legend for sentiment area
+    legend
+      .append('g')
+      .attr('transform', 'translate(150, 0)')
+      .call((g) => {
+        g.append('line')
+          .attr('x1', 0)
+          .attr('y1', 0)
+          .attr('x2', 10)
+          .attr('y2', 0)
+          .attr('stroke', 'green')
+          .attr('stroke-width', 4)
+          .attr('stroke-linecap', 'round');
+        g.append('line')
+          .attr('x1', 10)
+          .attr('y1', 0)
+          .attr('x2', 20)
+          .attr('y2', 0)
+          .attr('stroke', 'red')
+          .attr('stroke-width', 4)
+          .attr('stroke-linecap', 'round')
+          .attr('opacity', 0.5);
+        g.append('text')
+          .attr('x', 30)
+          .attr('y', 1)
+          .text('Sentiment analytics')
+          .attr('fill', 'grey')
+          .style('font-size', '12px')
+          .style('alignment-baseline', 'middle');
+      });
 
     // Append positive area
     svg
@@ -199,7 +206,7 @@ export const SentimentChart2 = () => {
     .attr('opacity', 0.5)
     .attr('d', negativeArea);
 
-    // Append line path
+    // Append sentiment line path
 /*     svg
       .append('path')
       .datum(mergedData)
@@ -254,7 +261,8 @@ export const SentimentChart2 = () => {
       .call(yAxisRight)
       .selectAll('.tick text')
       .attr('fill', (d) => (d >= 0 ? 'green' : 'red'));
-  }, []);
+
+  }, [sentimentData, onLoadComplete]);
 
   return <svg ref={svgRef} ></svg>;
-};
+  };
