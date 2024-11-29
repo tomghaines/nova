@@ -5,6 +5,7 @@ import { MindshareMap } from '@/components/dashboard/mindshareMap';
 import { SearchBar } from '@/components/dashboard/command';
 import { SkeletonBar } from '@/components/dashboard/skeleton';
 import React, { useState, useEffect } from 'react';
+import { SentimentChart2 } from '@/components/dashboard/sentiment2';
 
 export default function page() {
   const [isSentimentChartLoading, setIsSentimentChartLoading] = useState(true);
@@ -29,8 +30,10 @@ export default function page() {
             linguistics based on X (formerly Twitter) to systematically study
             the market behaviors.
           </p>
+          <SentimentChart2/>
             {isSentimentChartLoading && <SkeletonBar />}
             <SentimentChart onLoadComplete={() => setIsSentimentChartLoading(false)}/>
+            
         </div>
 
         {/* Mindshare Map Section */}
