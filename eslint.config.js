@@ -20,7 +20,10 @@ export default [
       }
     },
     rules: {
-      'no-console': 'warn',
+      'no-console': [
+        'warn',
+        { allow: ['warn', 'log', 'info', 'debug', 'error'] }
+      ],
       'react/jsx-uses-vars': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/no-unescaped-entities': 'off',
