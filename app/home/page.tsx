@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import ParticleSystem from '@/components/home/particle';
+import ParticleSystem from '@/components/features/home/particle';
 import { useTheme } from '@/app/context/theme';
 
 export default function Home() {

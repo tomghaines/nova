@@ -1,7 +1,7 @@
 'use client';
 
-import { SentimentChart2 } from '@/components/dashboard/sentiment2';
-import { SkeletonBar } from '@/components/dashboard/skeleton';
+import { SentimentChart2 } from '@/components/features/seek/sentiment2';
+import { SkeletonBar } from '@/components/features/dashboard/skeleton';
 import { ChartLine, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import React, { useState } from 'react';
 

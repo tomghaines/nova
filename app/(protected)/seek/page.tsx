@@ -1,9 +1,9 @@
 'use client';
 
-import { MindshareMap } from '@/components/dashboard/mindshareMap';
-import { SearchBar } from '@/components/dashboard/command';
-import { SkeletonBar } from '@/components/dashboard/skeleton';
-import SentimentLayout from '@/components/seek/sentimentLayout';
+import { MindshareMap } from '@/components/features/dashboard/mindshareMap';
+import { SearchBar } from '@/components/features/dashboard/command';
+import { SkeletonBar } from '@/components/features/dashboard/skeleton';
+import SentimentLayout from '@/components/features/seek/sentimentLayout';
 import React, { useState } from 'react';
 
 export default function page() {

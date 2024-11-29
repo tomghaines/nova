@@ -3,7 +3,7 @@ import { SubmitButton } from '@/components/ui/submit-button';
 import { TwitterSignUp } from '@/components/ui/twitter-sign-up';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { FormMessage, Message } from '@/components/form-message';
+import { FormMessage, Message } from '@/components/ui/form-message';
 import { signUpAction } from '@/app/actions';
 
 export default async function Signup(props: {

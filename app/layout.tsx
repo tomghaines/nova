@@ -1,8 +1,8 @@
 'use client';
 
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { SwitchMode } from '@/components/dashboard/switch';
-import { AppSidebar } from '@/components/dashboard/sidebar';
+import { SwitchMode } from '@/components/features/dashboard/switch';
+import { AppSidebar } from '@/components/features/dashboard/sidebar';
 import { ThemeProvider, useTheme } from '@/app/context/theme';
 import './globals.css';
 

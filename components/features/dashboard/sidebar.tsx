@@ -4,7 +4,11 @@ import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { Home, Search, Settings, ChevronUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage
+} from '@/components/features/sidebar/avatar';
 import {
   Sidebar,
   SidebarContent,
