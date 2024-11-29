@@ -18,7 +18,7 @@ export default function Home() {
         >
           Dashboard
         </p>
-        <h1 className='mb-4 text-3xl text-5xl leading-tight'>
+        <h1 className='mb-4 text-5xl leading-tight'>
           Your Real-time Lens into <br />
           Web3 Trends.
         </h1>
