@@ -11,7 +11,8 @@ export default function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,10 +23,12 @@ export default function Signup() {
       formData.append('email', email);
       formData.append('password', password);
       const message = await signUpAction(formData);
-      setErrorMessage(message);
+      setMessage(message);
+      setIsSuccess(message.startsWith('Thanks for signing up'));
     } catch (err) {
       const error = err as Error;
-      setErrorMessage(error.message);
+      setMessage(error.message);
+      setIsSuccess(false);
     }
   };
 
@@ -62,7 +65,7 @@ export default function Signup() {
               type='text'
               id='username'
               value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder='Your username'
               className='focus:ring-grey-500 focus:border-grey-500 mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm sm:text-sm'
               required
@@ -81,7 +84,7 @@ export default function Signup() {
               type='email'
               id='email'
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder='Enter email'
               required
             />
@@ -99,7 +102,7 @@ export default function Signup() {
               type='password'
               id='password'
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder='Create a password'
               minLength={6}
               required
@@ -112,26 +115,44 @@ export default function Signup() {
           </SubmitButton>
         </form>
 
-        {errorMessage && (
-          <div className='mt-4 rounded-md bg-red-50 p-4'>
+        {message && (
+          <div
+            className={`mt-4 rounded-md p-4 ${
+              isSuccess
+                ? 'bg-green-50 text-green-800'
+                : 'bg-red-50 text-red-800'
+            }`}
+          >
             <div className='flex'>
               <div className='flex-shrink-0'>
-                <svg
-                  className='h-5 w-5 text-red-400'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path
-                    fillRule='evenodd'
-                    d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
-                    clipRule='evenodd'
-                  />
-                </svg>
+                {isSuccess ? (
+                  <svg
+                    className='h-5 w-5 text-green-400'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className='h-5 w-5 text-red-400'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                )}
               </div>
               <div className='ml-3'>
-                <h3 className='text-sm font-medium text-red-800'>
-                  {errorMessage}
-                </h3>
+                <h3 className='text-sm font-medium'>{message}</h3>
               </div>
             </div>
           </div>
