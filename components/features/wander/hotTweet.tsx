@@ -19,9 +19,12 @@ const HotTweet: React.FC<CardProps> = ({ label, title, content }) => {
         {/* Content */}
         <h1 className='mb-2 text-2xl font-bold'>{title}</h1>
         <p className='text-md font-thin'>{content}</p>
-        <Button variant='link' className='mt-2 text-2xl'>
-          ▶▶▶
-        </Button>
+        {/* Button */}
+        <div className='w-full text-right'>
+          <Button variant='link' className='mt-4 text-2xl'>
+            ▶▶▶
+          </Button>
+        </div>
       </div>
     </div>
   );

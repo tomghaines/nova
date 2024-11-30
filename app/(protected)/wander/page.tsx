@@ -71,7 +71,7 @@ export default function Page() {
     },
     {
       type: 'narrative',
-      label: '#HALVINGCIRCLE'
+      label: '#HALVING'
     }
   ];
 
