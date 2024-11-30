@@ -67,6 +67,10 @@ export const MindshareMap = ({ onLoadComplete }) => {
       .size([width, height])
       .padding(cellPadding)
       .round(true)(root);
+    
+    // Define the color scale from dark brown to red
+    const colorScale = d3.scaleSequential(d3.interpolateHcl("#654321", "#ff0000"))
+    .domain([0, d3.max(root.leaves(), (d) => d.value) || 1]);
 
     // Draw cells
     const nodes = svg
@@ -79,8 +83,7 @@ export const MindshareMap = ({ onLoadComplete }) => {
       .append('rect')
       .attr('width', (d) => d.x1 - d.x0)
       .attr('height', (d) => d.y1 - d.y0)
-      .attr('fill', (d) => d3.interpolateOrRd(d.value * 4)) // Color scheme for heatmap
-      .attr('fill', (d) => d3.interpolateOrRd(d.value * 4)) // Color scheme for heatmap
+      .attr('fill', (d) => colorScale(d.value || 0)) 
       .attr('stroke', '#ffffff');
 
     // Add text labels inside cells
