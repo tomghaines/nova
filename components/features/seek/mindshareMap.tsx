@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import fetchMindshareData from '@/lib/database/MindshareData';
 import { MindshareData } from '@/@types/data/MindshareData';
-
+import { TextBox } from 'd3plus-text';
 interface HierarchyDatum {
   values: MindshareData[];
 }
@@ -68,37 +68,71 @@ export const MindshareMap = ({ onLoadComplete }) => {
       .padding(cellPadding)
       .round(true)(root);
     
-    // Define the color scale from dark brown to red
-    const colorScale = d3.scaleSequential(d3.interpolateHcl("#654321", "#ff0000"))
-    .domain([0, d3.max(root.leaves(), (d) => d.value) || 1]);
+    // Define the custom color scale with multiple color stops
+    const colorScale = d3.scaleLinear()
+      .domain([0, 0.5, 1]) // Divide the range into parts
+      .range(["#300a0d","#801a22", "#bf2633"]); // The color stops
+
+    // Normalize data values to range [0, 1]
+    const maxValue = d3.max(root.leaves(), (d) => d.value) || 1;
+    const normalizedValue = (value) => value / maxValue;
 
     // Draw cells
     const nodes = svg
       .selectAll<SVGGElement, TreemapNode>('g')
       .data(root.leaves() as unknown as TreemapNode)
       .join('g')
-      .attr('transform', (d) => `translate(${d.x0},${d.y0})`);
-
+      .attr('transform', (d) => `translate(${d.x0},${d.y0})`)
+      .on('mouseover', function (event, d) {
+        // Calculate the width and height of each cell
+        const width = d.x1 - d.x0;
+        const height = d.y1 - d.y0;
+    
+        // Calculate the center coordinates of the cell
+        const centerX = width / 2;
+        const centerY = height / 2;
+    
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr(
+            'transform',
+            `translate(${d.x0 + centerX},${d.y0 + centerY}) scale(1.05) translate(${-centerX},${-centerY})`
+          );
+      })
+      .on('mouseout', function () {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('transform', (d) => `translate(${d.x0},${d.y0}) scale(1)`);
+      });
+    
+    // draw rectangles for each cell
     nodes
       .append('rect')
       .attr('width', (d) => d.x1 - d.x0)
       .attr('height', (d) => d.y1 - d.y0)
-      .attr('fill', (d) => colorScale(d.value || 0)) 
-      .attr('stroke', '#ffffff');
+      .attr('fill', (d) => colorScale(normalizedValue(d.value || 0))) 
+      .attr('class', 'treemap-cell');
 
-    // Add text labels inside cells
+    // Append foreignObject for HTML content
     nodes
-      .append('text')
-      .attr('x', (d) => (d.x1 - d.x0) / 2)
-      .attr('y', (d) => (d.y1 - d.y0) / 2)
-      .attr('dy', '.35em')
-      .style('text-anchor', 'middle')
-      .style('fill', '#ffffff') // White text for visibility
-      .style('font-size', '10px')
-      .text((d) => `${d.data.name}\n${(d.data.percentage * 100).toFixed(1)}%`);
-  }, [mindshareData]);
+      .append('foreignObject')
+      .attr('width', (d) => d.x1 - d.x0)
+      .attr('height', (d) => d.y1 - d.y0)
+      .attr('x', 10)
+      .attr('y', 10)
+      .append('xhtml:div')
+      .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+      .attr('class', 'w-full h-full p-2 text-white text-xs text-left break-normal text-wrap flex flex-col justify-start')
+      .html((d) => `
+        <div class="font-bold text-base">${d.data.name}</div>
+        <div class="mt-1">${(d.data.percentage * 100).toFixed(1)}%</div>
+      `);
+        
+    onLoadComplete();
 
-  onLoadComplete();
+      }, [mindshareData]);
 
   return <div ref={heatmapRef}></div>;
 };
