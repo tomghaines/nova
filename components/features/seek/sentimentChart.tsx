@@ -166,7 +166,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
           .attr('y1', 0)
           .attr('x2', 10)
           .attr('y2', 0)
-          .attr('stroke', '#00BF84')  // green
+          .attr('stroke', '#00d97f')  // green
           .attr('stroke-width', 4)
           .attr('stroke-linecap', 'round');
         g.append('line')
@@ -174,7 +174,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
           .attr('y1', 0)
           .attr('x2', 20)
           .attr('y2', 0)
-          .attr('stroke', '#bf003b')  // red
+          .attr('stroke', '#ff3344')  // red
           .attr('stroke-width', 4)
           .attr('stroke-linecap', 'round')
         g.append('text')
@@ -190,7 +190,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
     svg
     .append('path')
     .datum(mergedData)
-    .attr('fill', '#00BF84')  // green
+    .attr('fill', '#00d97f')  // green
     .attr('opacity', 1)
     .attr('d', positiveArea);
   
@@ -198,7 +198,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
     svg
     .append('path')
     .datum(mergedData)
-    .attr('fill', '#bf003b')  // red
+    .attr('fill', '#ff3344')  // red
     .attr('opacity', 1)
     .attr('d', negativeArea);
 
@@ -216,7 +216,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
       .append('path')
       .datum(priceData)
       .attr('fill', 'none')
-      .attr('stroke', '#ced2d9')
+      .attr('stroke', '#ced2d9') // grey
       .attr('stroke-width', 2)
       .attr('d', priceLine);
 
@@ -230,7 +230,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
       .attr('cx', (d) => xScale(d.date))
       .attr('cy', (d) => yScaleSentiment(d.value))
       .attr('r', 3)
-      .attr('fill', '#ebecef');
+      .attr('fill', '#ebecef');  // light grey
       /* .attr('stroke', '#d3d3d3')
       .attr('stroke-width', 1); */
 
@@ -256,7 +256,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
       .attr('transform', `translate(${width - margin.right},0)`)
       .call(yAxisRight)
       .selectAll('.tick text')
-      .attr('fill', (d) => (d >= 0 ? '#00BF84' : '#bf003b')); // 'green' : 'red'
+      .attr('fill', (d) => (d >= 0 ? '#00d97f' : '#ff3344')); // 'green' : 'red'
 
   }, [/* sentimentData, */ onLoadComplete]);
 
