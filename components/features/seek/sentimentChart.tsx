@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import fetchSentimentData from '@/app/data/SentimentData';
 import { SentimentData } from '@/app/types/data/SentimentData.types';
 import { data, priceData } from '../dashboard/mockdata';
+import { Info } from 'lucide-react';
 
 export const SentimentChart = ({timePeriod, onLoadComplete}) => {
   const svgRef = useRef();
@@ -40,7 +41,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
       data = data.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 1)));
       priceData = priceData.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 1)));
     }
-    console.log(now, data, priceData);
+
     // Dimensions and margins
     const width = 1100;
     const height = 600; 
@@ -68,12 +69,6 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
       .range([height - margin.bottom, margin.top]);
     
     onLoadComplete();
-/*     // Line generator for sentiment
-    const line = d3
-      .line()
-      .x((d) => xScale(d.date))
-      .y((d) => yScaleSentiment(d.value))
-      .curve(d3.curveMonotoneX); */
 
     // Line generator for price
     const priceLine = d3
@@ -81,14 +76,6 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
     .x((d) => xScale(d.date))
     .y((d) => yScalePrice(d.price))
     .curve(d3.curveMonotoneX);
-
-    // Area generator for positive and negative areas
-/*     const area = d3
-      .area()
-      .x((d) => xScale(d.date))
-      .y0((d) => yScaleSentiment(0))
-      .y1((d) => yScaleSentiment(d.value))
-      .curve(d3.curveMonotoneX); */
 
     // Function to calculate intersection points with y=0
     const getIntersectionPoints = (data) => {
@@ -135,56 +122,56 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
   // Append legend
   const legend = svg.append('g').attr('transform', `translate(${margin.left + 30}, ${margin.top - 10})`);
 
-    // Legend for price line
-    legend
-      .append('g')
-      .attr('transform', 'translate(0, 0)')
-      .call((g) => {
-        g.append('line')
-          .attr('x1', 0)
-          .attr('y1', 0)
-          .attr('x2', 20)
-          .attr('y2', 0)
-          .attr('stroke', '#ced2d9') // gray
-          .attr('stroke-width', 4);
-        g.append('text')
-          .attr('x', 30)
-          .attr('y', 1)
-          .text('Price')
-          .attr('fill', 'grey')
-          .style('font-size', '16px')
-          .style('alignment-baseline', 'middle');
-      });
+  // Legend for price line
+  legend
+    .append('g')
+    .attr('transform', 'translate(0, 0)')
+    .call((g) => {
+      g.append('line')
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', 20)
+        .attr('y2', 0)
+        .attr('stroke', '#ced2d9') // gray
+        .attr('stroke-width', 4);
+      g.append('text')
+        .attr('x', 30)
+        .attr('y', 1)
+        .text('Price')
+        .attr('fill', 'grey')
+        .style('font-size', '16px')
+        .style('alignment-baseline', 'middle');
+    });
 
-    // Legend for sentiment area
-    legend
-      .append('g')
-      .attr('transform', 'translate(100, 0)')
-      .call((g) => {
-        g.append('line')
-          .attr('x1', 0)
-          .attr('y1', 0)
-          .attr('x2', 10)
-          .attr('y2', 0)
-          .attr('stroke', '#00d97f')  // green
-          .attr('stroke-width', 4)
-          .attr('stroke-linecap', 'round');
-        g.append('line')
-          .attr('x1', 11)
-          .attr('y1', 0)
-          .attr('x2', 20)
-          .attr('y2', 0)
-          .attr('stroke', '#ff3344')  // red
-          .attr('stroke-width', 4)
-          .attr('stroke-linecap', 'round')
-        g.append('text')
-          .attr('x', 30)
-          .attr('y', 1)
-          .text('Sentiment analytics')
-          .attr('fill', 'grey')
-          .style('font-size', '16px')
-          .style('alignment-baseline', 'middle');
-      });
+  // Legend for sentiment area
+  legend
+    .append('g')
+    .attr('transform', 'translate(100, 0)')
+    .call((g) => {
+      g.append('line')
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', 10)
+        .attr('y2', 0)
+        .attr('stroke', '#00d97f')  // green
+        .attr('stroke-width', 4)
+        .attr('stroke-linecap', 'round');
+      g.append('line')
+        .attr('x1', 11)
+        .attr('y1', 0)
+        .attr('x2', 20)
+        .attr('y2', 0)
+        .attr('stroke', '#ff3344')  // red
+        .attr('stroke-width', 4)
+        .attr('stroke-linecap', 'round')
+      g.append('text')
+        .attr('x', 30)
+        .attr('y', 1)
+        .text('Sentiment analytics')
+        .attr('fill', 'grey')
+        .style('font-size', '16px')
+        .style('alignment-baseline', 'middle');
+    });
 
     // Append positive area
     svg
@@ -200,7 +187,105 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
     .datum(mergedData)
     .attr('fill', '#ff3344')  // red
     .attr('opacity', 1)
-    .attr('d', negativeArea);
+    .attr('d', negativeArea)
+
+    // Append vertical line for tracking
+    const trackingLine = svg
+    .append('line')
+    .attr('stroke', '#ced2d9')
+    .attr('id', 'trackingLine')
+    .attr('stroke-width', 1)
+    .attr('opacity', 0)
+    .attr('y1', margin.top)
+    .attr('y2', height - margin.bottom);
+
+    // Append a transparent rectangle for capturing mouse events
+    svg
+    .append('rect')
+    .attr('width', width - margin.left - margin.right)
+    .attr('height', height - margin.top - margin.bottom)
+    .attr('x', margin.left)
+    .attr('y', margin.top)
+    .attr('fill', 'none')
+    .attr('pointer-events', 'all')
+    .on('mouseover', (event, d) => {
+      // Create tooltip for sentiment information if it doesn't exist
+      if (!d3.select('#sentiment-tooltip').node()) {
+        d3.select('body')
+          .append('div')
+          .attr('id', 'sentiment-tooltip')
+          .attr('class', 'fixed p-2 bg-gray-800 text-white rounded text-xs shadow-md')
+          .style('opacity', 0.9)
+          .style('position', 'absolute');
+      }
+
+      // Create tooltip for AI analysis if it doesn't exist
+      if (!d3.select('#ai-tooltip').node()) {
+        d3.select('body')
+          .append('div')
+          .attr('id', 'ai-tooltip')
+          .attr('class', 'fixed p-2 mt-2 max-w-xs bg-gray-800 text-white rounded text-xs shadow-md')
+          .style('opacity', 0.9)
+          .style('position', 'absolute');
+      }
+
+      // Make tracking line visible
+       trackingLine.attr('opacity', 1);
+    })
+    .on('mousemove', (event) => {
+      // Get mouse X position in the SVG coordinate space
+      const mouseX = d3.pointer(event)[0];
+      const mouseDate = xScale.invert(mouseX);
+
+      // Find the nearest sentiment data point
+      const bisectDate = d3.bisector((d) => d.date).left;
+      const index = bisectDate(data, mouseDate);
+      const nearestData = data[Math.max(0, Math.min(index, data.length - 1))];
+      const formattedDate = nearestData.date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+
+      // Find the matching priceData for the nearest date
+      const matchingPriceData = priceData.find(
+        (price) => price.date.getTime() === nearestData.date.getTime()
+      );
+
+      const priceText = matchingPriceData ? `$${matchingPriceData.price.toFixed(2)}` : 'N/A';
+
+      // Update tooltips
+      d3.select('#sentiment-tooltip')
+        .style('left', `${Math.min(event.pageX + 10, window.innerWidth - 100)}px`)
+        .style('top', `${Math.min(event.pageY - 28, window.innerHeight - 50)}px`)
+        .html(`Sentiment: ${nearestData.value.toFixed(2)}<br>Price: ${priceText}<br>Date: ${formattedDate}`);
+
+      d3.select('#ai-tooltip')
+        .style('left', `${Math.min(event.pageX + 10, window.innerWidth - 100)}px`)
+        .style('top', `${Math.min(event.pageY + 30, window.innerHeight - 70)}px`)
+        .html(`
+          Ⓘ Generated by AI: <br> The sentiment for this data point is ${nearestData.value.toFixed(2)} with a price of ${priceText}.
+        `);
+      
+      // Update the vertical tracking line position
+      trackingLine
+        .attr('x1', mouseX)
+        .attr('x2', mouseX);
+
+      // Update the circle radius based on proximity to mouse
+      circles.attr('r', (d) => {
+        const circleX = xScale(d.date);
+        const distance = Math.abs(circleX - mouseX);
+        return distance < 5 ? 6 : 3; // Increase radius if close to the mouse, otherwise keep it normal
+    });
+    })
+    .on('mouseout', () => {
+      // Remove tooltips and trackingLine
+      trackingLine.attr('opacity', 0);
+      d3.select('#sentiment-tooltip').remove();
+      d3.select('#ai-tooltip').remove();
+      circles.attr('r', 3);
+    });
 
     // Append sentiment line path
 /*     svg
@@ -221,7 +306,7 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
       .attr('d', priceLine);
 
     // Append circles for data points and mouse events for tooltips
-    svg
+    const circles = svg
       .selectAll('.point')
       .data(data)
       .enter()
@@ -231,38 +316,6 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
       .attr('cy', (d) => yScaleSentiment(d.value))
       .attr('r', 3)
       .attr('fill', '#ebecef')  // light grey
-      .on('mouseover', (event, d) => {
-        // Create tooltip for brief information
-        d3.select('body').append('div')
-          .attr('id', 'small-tooltip')
-          .attr('class', 'fixed p-2 bg-gray-800 text-white rounded text-xs shadow-md')
-          .style('opacity', 0.9)
-          .html(`Sentiment: ${d.value.toFixed(2)}<br>Price: $${d.price.toFixed(2)}`);
-
-        // Create tooltip for detailed information
-        d3.select('body').append('div')
-          .attr('id', 'detailed-tooltip')
-          .attr('class', 'fixed p-2 mt-2 bg-gray-800 text-white rounded text-xs shadow-md')
-          .style('opacity', 0.9)
-          .html(`Generated by AI: The sentiment for this data point is ${d.value.toFixed(2)} with a price of $${d.price.toFixed(2)}.`);
-      })
-      .on('mousemove', (event, d) => {
-        // Positioning the small tooltip
-        d3.select('#small-tooltip')
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY - 28}px`);
-
-        // Positioning the detailed tooltip
-        d3.select('#detailed-tooltip')
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY + 30}px`);
-      })
-      .on('mouseout', () => {
-        // Remove tooltips
-        d3.select('#small-tooltip').remove();
-        d3.select('#detailed-tooltip').remove();
-      });
-
 
     // X axis
     svg
