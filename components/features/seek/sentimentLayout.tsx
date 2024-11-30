@@ -1,10 +1,10 @@
 'use client';
 
-import { SentimentChart } from '@/components/dashboard/sentimentChart';
-import { SkeletonBar } from '@/components/dashboard/skeleton';
+import { SentimentChart } from '@/components/features/dashboard/sentimentChart';
+import { SkeletonBar } from '@/components/features/dashboard/skeleton';
 import { ChartLine, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import React, { useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
 export default function SentimentLayout() {
   const [isSentimentChartLoading, setIsSentimentChartLoading] = useState(true);
