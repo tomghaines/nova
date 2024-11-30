@@ -1,4 +1,4 @@
-'use client';
+/* 'use client';
 import { MouseEvent, useState } from 'react';
 
 import {
@@ -95,3 +95,4 @@ export function SearchBar() {
     </div>
   );
 }
+ */

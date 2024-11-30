@@ -42,9 +42,9 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
     }
     console.log(now, data, priceData);
     // Dimensions and margins
-    const width = 800;
-    const height = 450; // Increased height to provide more space for the legend
-    const margin = { top: 20, right: 60, bottom: 40, left: 50 };
+    const width = 1200;
+    const height = 600; // Increased height to provide more space for the legend
+    const margin = { top: 20, right: 55, bottom: 40, left: 55 };
     
     // Create scales
     const xScale = d3
