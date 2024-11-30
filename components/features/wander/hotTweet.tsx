@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
 
 interface CardProps {
   label: string;
@@ -6,7 +7,7 @@ interface CardProps {
   content: string;
 }
 
-const Card: React.FC<CardProps> = ({ label, title, content }) => {
+const HotTweet: React.FC<CardProps> = ({ label, title, content }) => {
   return (
     <div className='h-auto w-auto p-4'>
       {/* Card */}
@@ -18,9 +19,12 @@ const Card: React.FC<CardProps> = ({ label, title, content }) => {
         {/* Content */}
         <h1 className='mb-2 text-2xl font-bold'>{title}</h1>
         <p className='text-md font-thin'>{content}</p>
+        <Button variant='link' className='mt-2 text-2xl'>
+          ▶▶▶
+        </Button>
       </div>
     </div>
   );
 };
 
-export default Card;
+export default HotTweet;
