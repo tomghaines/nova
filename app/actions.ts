@@ -6,35 +6,32 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const signUpAction = async (formData: FormData) => {
+  const username = formData.get('username')?.toString();
   const email = formData.get('email')?.toString();
   const password = formData.get('password')?.toString();
   const supabase = await createClient();
-  const origin = (await headers()).get('origin');
 
-  if (!email || !password) {
-    return encodedRedirect(
-      'error',
-      '/sign-up',
-      'Email and password are required'
-    );
+  if (!username || !email || !password) {
+    return 'All fields are required';
   }
 
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: `${origin}/auth/callback`
-    }
-  });
+  try {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { username }
+      }
+    });
 
-  if (error) {
-    return encodedRedirect('error', '/sign-up', error.message);
-  } else {
-    return encodedRedirect(
-      'success',
-      '/sign-up',
-      'Thanks for signing up! Please check your email for a verification link.'
-    );
+    if (error) {
+      return error.message;
+    } else {
+      return 'Thanks for signing up! Please check your email for a verification link.';
+    }
+  } catch (err) {
+    const error = err as Error;
+    return error.message;
   }
 };
 
