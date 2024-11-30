@@ -4,11 +4,7 @@ import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { Home, Search, Settings, ChevronUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage
-} from '@/components/features/sidebar/avatar';
+import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import {
   Sidebar,
   SidebarContent,
@@ -121,7 +117,6 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
                     src='https://github.com/shadcn.png'
                     alt='@shadcn'
                   />
-                  <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <span className='flex-1'>{user.email}</span>
                 <ChevronUp className='ml-2' />
