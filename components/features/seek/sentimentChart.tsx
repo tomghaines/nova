@@ -62,7 +62,7 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
     // Dimensions and margins
     const width = 1100;
     const height = 600;
-    const margin = { top: 20, right: 55, bottom: 40, left: 55 };
+    const margin = { top: 20, right: 60, bottom: 60, left: 80 };
 
     // Create scales
     const xScale = d3

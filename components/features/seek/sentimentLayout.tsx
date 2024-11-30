@@ -29,7 +29,7 @@ export default function SentimentLayout() {
       <div className='mb-8 ml-6 mr-6 mt-4 flex flex-col items-start justify-center border border-zinc-400'>
         <div className='items-centers flex w-full flex-row justify-between'>
           {/* Left side: Avatar and h1 */}
-          <div className='mb-5 ml-3 mt-5 flex flex-row items-center'>
+          <div className='mb-5 ml-7 mt-5 flex flex-row items-center'>
             <Avatar className='h-6 w-auto'>
               <AvatarImage src='https://cryptologos.cc/logos/bitcoin-btc-logo.png' />
               <AvatarFallback></AvatarFallback>
@@ -40,7 +40,7 @@ export default function SentimentLayout() {
           </div>
           {/* Right side: Select TimePeriod dropdown */}
           <select
-            className='mr-3 mt-5 h-7 border border-zinc-400 pl-1 pr-1 text-xs leading-tight text-gray-800 dark:invert'
+            className='mr-7 mt-5 h-7 border border-zinc-400 pl-1 pr-1 text-xs leading-tight text-gray-800 dark:invert'
             value={timePeriod}
             onChange={(e) => setTimePeriod(e.target.value)}
           >
