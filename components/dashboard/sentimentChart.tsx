@@ -30,13 +30,13 @@ export const SentimentChart = ({timePeriod, onLoadComplete}) => {
 
     // Filter data based on selected time period
     const now = new Date(); // Get the current date
-    if (timePeriod === 'Last 6m') {
+    if (timePeriod === 'Last 6 months') {
       data = data.filter((d) => d.date >= (() => { const tempDate = new Date(now); tempDate.setMonth(tempDate.getMonth() - $1); return tempDate; })());
       priceData = priceData.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 6)));
-    } else if (timePeriod === 'Last 3m') {
+    } else if (timePeriod === 'Last 3 months') {
       data = data.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 3)));
       priceData = priceData.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 3)));
-    } else if (timePeriod === 'Last 1m') {
+    } else if (timePeriod === 'Last 1 month') {
       data = data.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 1)));
       priceData = priceData.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 1)));
     }
