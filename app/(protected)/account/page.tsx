@@ -6,6 +6,8 @@ import { User } from '@supabase/supabase-js';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { Tabs, TabsTrigger, TabsContent, TabsList } from '@radix-ui/react-tabs';
 import { DataList } from '@radix-ui/themes';
+import { CopyIcon } from 'lucide-react';
+import { copyToClipboard } from '@/utils/clipboardUtils';
 
 export default function AccountPage() {
   const [image, setImage] = useState<File | null>(null);
@@ -99,27 +101,27 @@ export default function AccountPage() {
   }
 
   return (
-    <div className='flex flex-col'>
-      <div>
+    <div className='flex h-screen w-full flex-col'>
+      <div className='p-16'>
         <h1 className='mb-4 text-4xl font-bold text-gray-800 dark:text-gray-100'>
           Account
         </h1>
         <p className='mb-6 text-gray-600 dark:text-gray-400'>
-          Manage your account settings and preferences
+          View your Account&apos;s Details and manage your billing
         </p>
-        <Tabs defaultValue='account'>
+        <Tabs className='w-3/4' defaultValue='account'>
           <TabsList className='flex justify-around rounded-md bg-gray-200 p-2'>
             {/* Account Tab */}
             <TabsTrigger
-              className='rounded-md px-14 py-3 data-[state="active"]:bg-blue-500 data-[state="active"]:text-white'
+              className='rounded-md px-60 py-3 hover:bg-gray-300 data-[state="active"]:bg-gray-500 data-[state="active"]:text-white'
               value='account'
             >
-              Account
+              Account Details
             </TabsTrigger>
 
             {/* Billing Tab */}
             <TabsTrigger
-              className='rounded-md px-14 data-[state="active"]:bg-blue-500 data-[state="active"]:text-white'
+              className='rounded-md px-60 hover:bg-gray-300 data-[state="active"]:bg-gray-500 data-[state="active"]:text-white'
               value='billing'
             >
               Billing
@@ -127,10 +129,11 @@ export default function AccountPage() {
           </TabsList>
 
           {/* Tab Content */}
-          <TabsContent value='account' className='p-4'>
+          <TabsContent value='account' className='flex flex-col gap-8 p-4'>
+            <h2 className='text-2xl font-bold'>Account Details</h2>
             {/* Avatar section */}
             <div className='flex gap-10'>
-              <div className='h-16 w-16 border'>
+              <div className='h-16 w-16'>
                 <Avatar>
                   {/* Show the image URL from state, or a default URL if not yet set */}
                   <AvatarImage
@@ -142,51 +145,50 @@ export default function AccountPage() {
                     alt='User Avatar'
                   />
                 </Avatar>
+                {/* Edit Photo button */}
+                <button
+                  onClick={() => setIsEditing((prev) => !prev)}
+                  className='mt-4 rounded bg-blue-500 px-4 py-2 text-white'
+                >
+                  {isEditing ? 'Cancel' : 'Edit Photo'}
+                </button>
               </div>
               {/* Display user metadata */}
-              <div className='flex w-max flex-col'>
-                <DataList.Root>
-                  <DataList.Item>
-                    <DataList.Label>Account ID</DataList.Label>
-                    <DataList.Value>{userData.id}</DataList.Value>
-                  </DataList.Item>
-                  <DataList.Item>
-                    <DataList.Label>Username</DataList.Label>
-                    <DataList.Value>
-                      {userData.user_metadata.username}
-                    </DataList.Value>
-                  </DataList.Item>
-                  <DataList.Item>
-                    <DataList.Label>Email</DataList.Label>
-                    <DataList.Value>{userData.email}</DataList.Value>
-                  </DataList.Item>
-                  <DataList.Item>
-                    <DataList.Label>Sign Up Date</DataList.Label>
-                    <DataList.Value>
-                      {new Date(userData.created_at).toLocaleDateString(
-                        'en-GB',
-                        {
-                          day: 'numeric',
-                          month: 'long',
-                          year: 'numeric'
-                        }
-                      )}
-                    </DataList.Value>
-                  </DataList.Item>
-                </DataList.Root>
-              </div>
-            </div>
 
-            {/* Edit Photo button */}
-            <button
-              onClick={() => setIsEditing((prev) => !prev)}
-              className='mt-4 rounded bg-blue-500 px-4 py-2 text-white'
-            >
-              {isEditing ? 'Cancel' : 'Edit Photo'}
-            </button>
+              <DataList.Root className='grid w-full gap-4'>
+                <DataList.Item className='grid grid-cols-3 items-center'>
+                  <DataList.Label>Account ID</DataList.Label>
+                  <DataList.Value>{userData.id}</DataList.Value>
+                  <CopyIcon
+                    onClick={() => copyToClipboard(userData.id)}
+                    className='h-7 w-7 rounded-md p-1 hover:cursor-pointer hover:bg-gray-100'
+                  />
+                </DataList.Item>
+                <DataList.Item className='grid grid-cols-3 items-center'>
+                  <DataList.Label>Username</DataList.Label>
+                  <DataList.Value>
+                    {userData.user_metadata.username}
+                  </DataList.Value>
+                </DataList.Item>
+                <DataList.Item className='grid grid-cols-3 items-center'>
+                  <DataList.Label>Email</DataList.Label>
+                  <DataList.Value>{userData.email}</DataList.Value>
+                </DataList.Item>
+                <DataList.Item className='grid grid-cols-3 items-center'>
+                  <DataList.Label>Sign Up Date</DataList.Label>
+                  <DataList.Value>
+                    {new Date(userData.created_at).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    })}
+                  </DataList.Value>
+                </DataList.Item>
+              </DataList.Root>
+            </div>
           </TabsContent>
-          <TabsContent value='billing' className='p-4'>
-            Billing
+          <TabsContent value='billing' className='flex flex-col gap-8 p-4'>
+            <h2 className='text-2xl font-bold'>Billing</h2>
           </TabsContent>
         </Tabs>
 

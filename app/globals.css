@@ -4,7 +4,13 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    /* --branding-1: hsl(354, 85%, 58%);
+    --branding-2: hsl(30, 100%, 50%);
+    --branding-3: hsl(160, 100%, 43%);
+    --branding-3: hsl(160, 100%, 43%);
+    --branding-4: hsl(185, 100%, 50%);
+    --branding-5: hsl(50, 100%, 50%);
+    --branding-6: hsl(225, 100%, 71%); */
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
