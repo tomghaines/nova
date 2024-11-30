@@ -37,9 +37,9 @@ export const MindshareMap = ({ onLoadComplete }) => {
       d3.select(heatmapRef.current).selectAll('*').remove();
     }
 
-    const width = 800;
-    const height = 550;
-    const cellPadding = 2;
+    const width = 900;
+    const height = 600;
+    const cellPadding = 3;
 
     const svg = d3
       .select(heatmapRef.current)

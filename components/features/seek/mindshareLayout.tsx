@@ -1,6 +1,6 @@
 'use client';
 
-import { MindshareMap } from '@/components/features/dashboard/mindshareMap';
+import { MindshareMap } from '@/components/features/seek/mindshareMap';
 import { SkeletonBar } from '@/components/features/dashboard/skeleton';
 import { ChartLine, Lightbulb, Info } from 'lucide-react';
 import React, { useState } from 'react';
