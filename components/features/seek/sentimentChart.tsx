@@ -1,13 +1,15 @@
-'use client';
-
-import React, { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import fetchSentimentData from '@/lib/database/SentimentData';
-import { SentimentData } from '@/@types/data/SentimentData';
+import fetchSentimentData from '@/app/data/SentimentData';
+import { SentimentData } from '@/app/types/data/SentimentData.types';
+import { data, priceData } from '../dashboard/mockdata';
 
-export const SentimentChart = ({ onLoadComplete }) => {
+export const SentimentChart = ({timePeriod, onLoadComplete}) => {
+  const svgRef = useRef();
+
+
   const chartRef = useRef<HTMLDivElement>(null);
-  const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
+/*   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -15,206 +17,250 @@ export const SentimentChart = ({ onLoadComplete }) => {
       setSentimentData(data);
     };
     getData();
-  }, []);
+  }, []); */
 
   useEffect(() => {
     // Check for empty data
-    if (!sentimentData || sentimentData.length === 0) return;
+    /* if (!sentimentData || sentimentData.length === 0) return; */
 
     // Clear existing chart
     if (chartRef.current) {
       d3.select(chartRef.current).selectAll('*').remove();
     }
 
+    // Filter data based on selected time period
+    const now = new Date(); // Get the current date
+    if (timePeriod === 'Last 6m') {
+      data = data.filter((d) => d.date >= (() => { const tempDate = new Date(now); tempDate.setMonth(tempDate.getMonth() - $1); return tempDate; })());
+      priceData = priceData.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 6)));
+    } else if (timePeriod === 'Last 3m') {
+      data = data.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 3)));
+      priceData = priceData.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 3)));
+    } else if (timePeriod === 'Last 1m') {
+      data = data.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 1)));
+      priceData = priceData.filter((d) => d.date >= new Date(now.setMonth(now.getMonth() - 1)));
+    }
+    console.log(now, data, priceData);
+    // Dimensions and margins
     const width = 800;
-    const height = 400;
-    const margin = { top: 20, right: 30, bottom: 30, left: 50 };
-
-    const svg = d3
-      .select(chartRef.current)
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', [0, 0, width, height]);
-
-    // Parse and scale data
-    const x = d3
+    const height = 450; // Increased height to provide more space for the legend
+    const margin = { top: 20, right: 60, bottom: 40, left: 50 };
+    
+    // Create scales
+    const xScale = d3
       .scaleTime()
-      .domain(d3.extent(sentimentData, (d) => new Date(d.date)) as [Date, Date])
+      .domain(d3.extent(data, (d) => d.date))
       .range([margin.left, width - margin.right]);
 
-    const y = d3
+    const yScalePrice = d3
       .scaleLinear()
-      .domain(
-        d3.extent(sentimentData, (d) => d.sentimentValue) as [number, number]
-      )
+      .domain([d3.min(priceData, (d) => d.price) - 0.5, d3.max(priceData, (d) => d.price) + 0.5])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
+    const yScaleSentiment = d3
+      .scaleLinear()
+      .domain([
+        d3.min(data, (d) => d.value) - 0.1,
+        d3.max(data, (d) => d.value) + 0.1,
+      ])
+      .nice()
+      .range([height - margin.bottom, margin.top]);
+    
     onLoadComplete();
-    // Axes
+/*     // Line generator for sentiment
+    const line = d3
+      .line()
+      .x((d) => xScale(d.date))
+      .y((d) => yScaleSentiment(d.value))
+      .curve(d3.curveMonotoneX); */
+
+    // Line generator for price
+    const priceLine = d3
+    .line()
+    .x((d) => xScale(d.date))
+    .y((d) => yScalePrice(d.price))
+    .curve(d3.curveMonotoneX);
+
+    // Area generator for positive and negative areas
+/*     const area = d3
+      .area()
+      .x((d) => xScale(d.date))
+      .y0((d) => yScaleSentiment(0))
+      .y1((d) => yScaleSentiment(d.value))
+      .curve(d3.curveMonotoneX); */
+
+    // Function to calculate intersection points with y=0
+    const getIntersectionPoints = (data) => {
+      const intersectionPoints = [];
+      for (let i = 1; i < data.length; i++) {
+        const prev = data[i - 1];
+        const curr = data[i];
+        if ((prev.value >= 0 && curr.value < 0) || (prev.value < 0 && curr.value >= 0)) {
+          const slope = (curr.value - prev.value) / (curr.date - prev.date);
+          const intersectDate = new Date(prev.date.getTime() - prev.value / slope);
+          intersectionPoints.push({ date: intersectDate, value: 0 });
+        }
+      }
+      return intersectionPoints;
+    };
+
+    // Merge data and intersection points, then sort by date
+    const intersectionPoints = getIntersectionPoints(data);
+    const mergedData = [...data, ...intersectionPoints].sort((a, b) => a.date - b.date);
+
+    // Separate positive and negative areas
+    const positiveArea = d3
+      .area()
+      .x((d) => xScale(d.date))
+      .y0((d) => yScaleSentiment(0))
+      .y1((d) => (d.value >= 0 ? yScaleSentiment(d.value) : yScaleSentiment(0)))
+      .curve(d3.curveMonotoneX);
+
+    const negativeArea = d3
+      .area()
+      .x((d) => xScale(d.date))
+      .y0((d) => yScaleSentiment(0))
+      .y1((d) => (d.value < 0 ? yScaleSentiment(d.value) : yScaleSentiment(0)))
+      .curve(d3.curveMonotoneX);
+
+    // Select SVG element
+    const svg = d3.select(svgRef.current);
+    svg.selectAll('*').remove(); // Clear previous contents
+
+    // Set SVG dimensions
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+
+    
+  // Append legend
+  const legend = svg.append('g').attr('transform', `translate(${margin.left + 30}, ${margin.top - 10})`);
+
+    // Legend for price line
+    legend
+      .append('g')
+      .attr('transform', 'translate(0, 0)')
+      .call((g) => {
+        g.append('line')
+          .attr('x1', 0)
+          .attr('y1', 0)
+          .attr('x2', 20)
+          .attr('y2', 0)
+          .attr('stroke', '#ced2d9') // gray
+          .attr('stroke-width', 4);
+        g.append('text')
+          .attr('x', 30)
+          .attr('y', 1)
+          .text('Price')
+          .attr('fill', 'grey')
+          .style('font-size', '12px')
+          .style('alignment-baseline', 'middle');
+      });
+
+    // Legend for sentiment area
+    legend
+      .append('g')
+      .attr('transform', 'translate(100, 0)')
+      .call((g) => {
+        g.append('line')
+          .attr('x1', 0)
+          .attr('y1', 0)
+          .attr('x2', 10)
+          .attr('y2', 0)
+          .attr('stroke', '#00BF84')  // green
+          .attr('stroke-width', 4)
+          .attr('stroke-linecap', 'round');
+        g.append('line')
+          .attr('x1', 11)
+          .attr('y1', 0)
+          .attr('x2', 20)
+          .attr('y2', 0)
+          .attr('stroke', '#bf003b')  // red
+          .attr('stroke-width', 4)
+          .attr('stroke-linecap', 'round')
+        g.append('text')
+          .attr('x', 30)
+          .attr('y', 1)
+          .text('Sentiment analytics')
+          .attr('fill', 'grey')
+          .style('font-size', '12px')
+          .style('alignment-baseline', 'middle');
+      });
+
+    // Append positive area
+    svg
+    .append('path')
+    .datum(mergedData)
+    .attr('fill', '#00BF84')  // green
+    .attr('opacity', 1)
+    .attr('d', positiveArea);
+  
+    // Append negative area
+    svg
+    .append('path')
+    .datum(mergedData)
+    .attr('fill', '#bf003b')  // red
+    .attr('opacity', 1)
+    .attr('d', negativeArea);
+
+    // Append sentiment line path
+/*     svg
+      .append('path')
+      .datum(mergedData)
+      .attr('fill', 'none')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 2)
+      .attr('d', line); */
+      
+      // Append price line path
+      svg
+      .append('path')
+      .datum(priceData)
+      .attr('fill', 'none')
+      .attr('stroke', '#ced2d9')
+      .attr('stroke-width', 2)
+      .attr('d', priceLine);
+
+    // Append circles for data points
+    svg
+      .selectAll('.point')
+      .data(data)
+      .enter()
+      .append('circle')
+      .attr('class', 'point')
+      .attr('cx', (d) => xScale(d.date))
+      .attr('cy', (d) => yScaleSentiment(d.value))
+      .attr('r', 3)
+      .attr('fill', '#ebecef');
+      /* .attr('stroke', '#d3d3d3')
+      .attr('stroke-width', 1); */
+
+    // X axis
     svg
       .append('g')
       .attr('transform', `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(x).ticks(6).tickSizeOuter(0));
+      .call(d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(0));
 
+    // Y axis for price on the left
     svg
       .append('g')
       .attr('transform', `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y));
+      .call(d3.axisLeft(yScalePrice));
 
-    // Horizontal line at y = 0
+    // Y axis for sentiment on the right
+    const yAxisRight = d3.axisRight(yScaleSentiment).ticks(5).tickFormat((d) => {
+      return d >= 0 ? `+${d}` : d;
+    });
+
     svg
-      .append('line')
-      .attr('x1', margin.left)
-      .attr('x2', width - margin.right)
-      .attr('y1', y(0))
-      .attr('y2', y(0))
-      .attr('stroke', '#D3D3D3')
-      .attr('stroke-width', 1)
-      .attr('stroke-dasharray', '4,4');
+      .append('g')
+      .attr('transform', `translate(${width - margin.right},0)`)
+      .call(yAxisRight)
+      .selectAll('.tick text')
+      .attr('fill', (d) => (d >= 0 ? '#00BF84' : '#bf003b')); // 'green' : 'red'
 
-    // Define gradient for path coloring
-    const gradientId = 'gradient-sentiment';
-    const gradient = svg
-      .append('defs')
-      .append('linearGradient')
-      .attr('id', gradientId)
-      .attr('gradientUnits', 'userSpaceOnUse')
-      .attr('x1', 0)
-      .attr('x2', 0)
-      .attr('y1', 0)
-      .attr('y2', height);
+  }, [/* sentimentData, */ onLoadComplete]);
 
-    // Define stops for gradient
-    gradient
-      .append('stop')
-      .attr('offset', '0%')
-      .attr('stop-color', '#F25D27') // Dark orange for positive sentiment
-      .attr('stop-opacity', 0.9);
-
-    gradient
-      .append('stop')
-      .attr('offset', '50%')
-      .attr('stop-color', '#D3D3D3') // Neutral grey for zero sentiment
-      .attr('stop-opacity', 0.9);
-
-    gradient
-      .append('stop')
-      .attr('offset', '100%')
-      .attr('stop-color', '#2D76BA') // Dark blue for negative sentiment
-      .attr('stop-opacity', 0.9);
-
-    // Draw smoothed path with gradient
-    svg
-      .append('path')
-      .datum(sentimentData)
-      .attr('fill', 'none')
-      .attr('stroke', `url(#${gradientId})`)
-      .attr('stroke-width', 4)
-      .attr(
-        'd',
-        d3
-          .line<SentimentData>()
-          .curve(d3.curveCatmullRom) // Smooth path
-          .x((d) => x(new Date(d.date)))
-          .y((d) => y(d.sentimentValue))
-      );
-
-    // Tooltip elements
-    const tooltip = d3
-      .select(chartRef.current)
-      .append('div')
-      .style('position', 'absolute')
-      .style('width', '150px')
-      .style('background', '#fff')
-      .style('border', '1px solid #ccc')
-      .style('padding', '8px')
-      .style('text-align', 'left')
-      .style('border-radius', '4px')
-      .style('box-shadow', '0px 2px 4px rgba(0,0,0,0.2)')
-      .style('pointer-events', 'none')
-      .style('opacity', 0.8);
-
-    const focusDot = svg
-      .append('circle')
-      .attr('r', 5)
-      .attr('fill', 'grey')
-      .style('opacity', 0);
-
-    const focusLine = svg
-      .append('line')
-      .attr('stroke', '#D3D3D3')
-      .attr('stroke-width', 1)
-      .attr('stroke-dasharray', '4,4')
-      .style('opacity', 0);
-
-    // Hover interaction
-    svg
-      .append('rect')
-      .attr('width', width)
-      .attr('height', height)
-      .style('fill', 'none')
-      .style('pointer-events', 'all')
-      .on('mousemove', (event) => {
-        const [mouseX, mouseY] = d3.pointer(event);
-        const date = x.invert(mouseX);
-
-        // Find the closest data point
-        const bisect = d3.bisector((d: SentimentData) => new Date(d.date)).left;
-        const index = bisect(sentimentData, date, 1);
-        const d0 = sentimentData[index - 1];
-        const d1 = sentimentData[index];
-        const d =
-          d1 &&
-          date.getTime() - new Date(d0.date).getTime() >
-            new Date(d1.date).getTime() - date.getTime()
-            ? d1
-            : d0;
-
-        // Update focus dot position
-        focusDot
-          .attr('cx', x(new Date(d.date)))
-          .attr('cy', y(d.sentimentValue))
-          .style('opacity', 1);
-
-        // Update focus line position
-        focusLine
-          .attr('x1', x(new Date(d.date)))
-          .attr('x2', x(new Date(d.date)))
-          .attr('y1', margin.top)
-          .attr('y2', height - margin.bottom)
-          .style('opacity', 1);
-
-        // Calculate tooltip position
-        const tooltipX = x(new Date(d.date)); // Offset from dot
-        const tooltipY = mouseY; // Track the mouse's Y position
-
-        // Adjust tooltip if it overflows on the right
-        const overflowRight = tooltipX + 20 > width;
-        const adjustedX = overflowRight ? tooltipX - 20 : tooltipX;
-
-        const overflowTop = tooltipY > height;
-        const adjustedY = overflowTop ? tooltipY - 20 : tooltipY;
-
-        tooltip
-          .style('opacity', 1)
-          .style('font-size', '12px')
-          .html(
-            `<strong>Sentiment:</strong> ${d.sentimentValue}<br>
-            <strong>Price:</strong> ${d.price}<br>
-            <strong>Date:</strong> ${new Date(d.date).toLocaleString()}<br>
-            <strong>Analysis:</strong> ${d.analysis}`
-          )
-          .style('left', `${adjustedX}px`) // Adjust position dynamically
-          .style('top', `${adjustedY}px`);
-      })
-      .on('mouseout', () => {
-        focusDot.style('opacity', 0);
-        focusLine.style('opacity', 0);
-        tooltip.style('opacity', 0);
-      });
-  }, [sentimentData, onLoadComplete]);
-
-  return <div ref={chartRef}></div>;
-};
+  return (
+      <svg ref={svgRef} ></svg>
+  )
+  };
