@@ -30,16 +30,21 @@ function RootContent({ children }: { children: React.ReactNode }) {
       <div className='flex min-h-screen w-full'>
         <AppSidebar isNightMode={isNightMode} />
 
-        <div className='relative mt-10 flex flex-1 justify-center'>
-          <div className='fixed right-12 top-12'>
-            <SwitchMode isNightMode={isNightMode} onThemeToggle={toggleTheme} />
+        <div className='flex flex-1 flex-col justify-center'>
+          {/* sidebar trigger and darkmode trigger */}
+          <div className='mt-10 flex flex-row items-center justify-between'>
+            <div className='ml-7'>
+              <SidebarTrigger />
+            </div>
+            <div className='mr-7'>
+              <SwitchMode
+                isNightMode={isNightMode}
+                onThemeToggle={toggleTheme}
+              />
+            </div>
           </div>
-
-          <div className='absolute left-7 top-0 p-0'>
-            <SidebarTrigger />
-          </div>
-
-          <div className='flex items-start justify-center'>{children}</div>
+          {/* children component */}
+          <div className='mt-5 flex items-start justify-center'>{children}</div>
         </div>
       </div>
     </SidebarProvider>

@@ -11,9 +11,9 @@ export default function page() {
   return (
     <div className='flex w-full flex-col items-center justify-start'>
       {/* Inner Container for Charts and Search */}
-      <div className='w-full max-w-4xl px-6 text-center'>
+      <div className='w-full max-w-5xl px-6 text-center'>
         {/* Search Bar */}
-        <div className='relative mb-16 ml-10'>
+        <div className='relative mb-16'>
           <SearchBar />
         </div>
 
