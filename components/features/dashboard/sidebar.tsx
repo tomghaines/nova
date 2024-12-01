@@ -2,7 +2,7 @@
 
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { Home, Search, Settings, ChevronUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import {
@@ -29,19 +29,16 @@ import { Button } from '@radix-ui/themes';
 
 const items = [
   {
-    title: 'Home',
-    url: '/home',
-    icon: Home
+    title: 'HOME',
+    url: '/home'
   },
   {
-    title: 'Seek',
-    url: '/seek',
-    icon: Search
+    title: 'SEEK',
+    url: '/seek'
   },
   {
-    title: 'Wander',
-    url: '/wander',
-    icon: Settings
+    title: 'WANDER',
+    url: '/wander'
   }
 ];
 
@@ -80,24 +77,16 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
   };
 
   return (
-    <Sidebar className='bg-blue-500'>
-      <SidebarContent>
+    <Sidebar>
+      <SidebarContent className=''>
         <SidebarGroup>
-          <SidebarGroupLabel>
-            <img
-              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo-light.png'}
-              alt='Logo'
-              className='mx-auto mt-24 h-12 w-auto'
-            />
-          </SidebarGroupLabel>
-          <SidebarGroupContent className='ml-10 mt-24 w-40'>
-            <SidebarMenu className='space-y-2'>
+          <SidebarGroupContent className='mt-24 w-full'>
+            <SidebarMenu className='space-y-6'>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
-                      <item.icon />
-                      <span className='p-3 text-2xl font-extralight'>
+                      <span className='h-18 dark:border-invert mt-6 w-full border-t-2 border-gray-600 p-2 text-xl font-thin'>
                         {item.title}
                       </span>
                     </Link>

@@ -11,13 +11,13 @@ export function SwitchMode({
   onThemeToggle: () => void;
 }) {
   return (
-    <div className='flex items-center space-x-2'>
+    <div className='flex items-center space-x-4'>
       {/* Dynamic text based on state */}
-      <p className='text-gray-800 dark:text-gray-100'>
-        {isNightMode ? 'Night Mode' : 'Day Mode'}
+      <p className='text-xl font-black text-gray-800 dark:text-gray-100'>
+        {isNightMode ? 'DARK' : 'LIGHT'}
       </p>
       {/* Switch component with state toggle */}
-      <Switch id='airplane-mode' onClick={onThemeToggle} />
+      <Switch onClick={onThemeToggle} />
     </div>
   );
 }
