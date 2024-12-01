@@ -2,7 +2,6 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
-import { Subscriber } from '@/@types/data/SubscriberData';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -15,7 +14,7 @@ mailchimp.setConfig({
   server: process.env.MAILCHIMP_SERVER_PREFIX!,
 });
 
-// Function to add a subscriber
+// add a subscriber
 async function addSubscriber(email: string): Promise<void> {
   try {
     await mailchimp.lists.addListMember(process.env.MAILCHIMP_LIST_ID!, {
@@ -65,9 +64,9 @@ async function sendWeeklyNewsletter(): Promise<void> {
       type: 'regular',
       recipients: { list_id: process.env.MAILCHIMP_LIST_ID! },
       settings: {
-        subject_line: 'Your Weekly Newsletter',
-        from_name: 'Your Company',
-        reply_to: 'noreply@yourcompany.com',
+        subject_line: 'Weekly Newsletter',
+        from_name: 'birdy.ai',
+        reply_to: 'noreply@birdy.ai',
       },
     });
 
