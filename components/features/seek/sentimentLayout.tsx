@@ -5,8 +5,10 @@ import { SkeletonBar } from '@/components/features/dashboard/skeleton';
 import { ChartLine, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import React, { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
+import { useCoin } from '@/app/context/CoinContext';
 
 export default function SentimentLayout() {
+  const { selectedCoin } = useCoin();
   const [isSentimentChartLoading, setIsSentimentChartLoading] = useState(true);
   const [timePeriod, setTimePeriod] = useState('Last 12 months');
 
@@ -48,7 +50,8 @@ export default function SentimentLayout() {
         </div>
         {isSentimentChartLoading && <SkeletonBar />}
         <SentimentChart
-          timePeriod={timePeriod}
+          // timePeriod={timePeriod}
+          key={selectedCoin}
           onLoadComplete={() => setIsSentimentChartLoading(false)}
         />
       </div>
