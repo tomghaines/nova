@@ -57,7 +57,6 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
         (d) => d.date >= new Date(now.setMonth(now.getMonth() - 1))
       );
     }
-    console.log(now, data, priceData);
     // Dimensions and margins
     const width = 800;
     const height = 450; // Increased height to provide more space for the legend

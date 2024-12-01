@@ -139,7 +139,7 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
               <form action={signOutAction} onSubmit={handleSignOut}>
                 <DropdownMenuItem asChild>
                   <Button type='submit' className='w-full hover:cursor-pointer'>
-                    <a href='/home'>Sign out</a>
+                    <span>Sign out</span>
                   </Button>
                 </DropdownMenuItem>
               </form>
