@@ -10,7 +10,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -33,11 +32,11 @@ const items = [
     url: '/home'
   },
   {
-    title: 'SEEK',
+    title: 'SEEK  >>>',
     url: '/seek'
   },
   {
-    title: 'WANDER',
+    title: 'WANDER  <<<',
     url: '/wander'
   }
 ];
@@ -86,7 +85,7 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
-                      <span className='h-18 dark:border-invert mt-6 w-full border-t-2 border-gray-600 p-2 text-xl font-thin'>
+                      <span className='h-18 dark:border-invert mt-6 w-full border-t-2 border-gray-600 p-2 text-xl font-thin hover:font-black'>
                         {item.title}
                       </span>
                     </Link>
