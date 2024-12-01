@@ -4,11 +4,12 @@ import fetchSentimentData from '@/app/data/SentimentData';
 import { SentimentData } from '@/app/types/data/SentimentData.types';
 import { data, priceData } from './mockdata';
 
-export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
+export const SentimentChart2 = ({ onLoadComplete }) => {
   const svgRef = useRef();
 
+
   const chartRef = useRef<HTMLDivElement>(null);
-  /*   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
+/*   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -20,49 +21,18 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
 
   useEffect(() => {
     // Check for empty data
-    /* if (!sentimentData || sentimentData.length === 0) return; */
+    if (!sentimentData || sentimentData.length === 0) return;
 
     // Clear existing chart
     if (chartRef.current) {
       d3.select(chartRef.current).selectAll('*').remove();
     }
 
-    // Filter data based on selected time period
-    const now = new Date(); // Get the current date
-    if (timePeriod === 'Last 6m') {
-      data = data.filter(
-        (d) =>
-          d.date >=
-          (() => {
-            const tempDate = new Date(now);
-            tempDate.setMonth(tempDate.getMonth() - $1);
-            return tempDate;
-          })()
-      );
-      priceData = priceData.filter(
-        (d) => d.date >= new Date(now.setMonth(now.getMonth() - 6))
-      );
-    } else if (timePeriod === 'Last 3m') {
-      data = data.filter(
-        (d) => d.date >= new Date(now.setMonth(now.getMonth() - 3))
-      );
-      priceData = priceData.filter(
-        (d) => d.date >= new Date(now.setMonth(now.getMonth() - 3))
-      );
-    } else if (timePeriod === 'Last 1m') {
-      data = data.filter(
-        (d) => d.date >= new Date(now.setMonth(now.getMonth() - 1))
-      );
-      priceData = priceData.filter(
-        (d) => d.date >= new Date(now.setMonth(now.getMonth() - 1))
-      );
-    }
-    console.log(now, data, priceData);
     // Dimensions and margins
     const width = 800;
     const height = 450; // Increased height to provide more space for the legend
-    const margin = { top: 20, right: 60, bottom: 40, left: 50 };
-
+    const margin = { top: 80, right: 60, bottom: 40, left: 50 };
+    
     // Create scales
     const xScale = d3
       .scaleTime()
@@ -173,7 +143,7 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
           .attr('y1', 0)
           .attr('x2', 20)
           .attr('y2', 0)
-          .attr('stroke', '#ced2d9') // gray
+          .attr('stroke', 'gray')
           .attr('stroke-width', 4);
         g.append('text')
           .attr('x', 30)
@@ -187,24 +157,25 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
     // Legend for sentiment area
     legend
       .append('g')
-      .attr('transform', 'translate(100, 0)')
+      .attr('transform', 'translate(150, 0)')
       .call((g) => {
         g.append('line')
           .attr('x1', 0)
           .attr('y1', 0)
           .attr('x2', 10)
           .attr('y2', 0)
-          .attr('stroke', '#00BF84') // green
+          .attr('stroke', 'green')
           .attr('stroke-width', 4)
           .attr('stroke-linecap', 'round');
         g.append('line')
-          .attr('x1', 11)
+          .attr('x1', 10)
           .attr('y1', 0)
           .attr('x2', 20)
           .attr('y2', 0)
-          .attr('stroke', '#bf003b') // red
+          .attr('stroke', 'red')
           .attr('stroke-width', 4)
-          .attr('stroke-linecap', 'round');
+          .attr('stroke-linecap', 'round')
+          .attr('opacity', 0.5);
         g.append('text')
           .attr('x', 30)
           .attr('y', 1)
@@ -218,16 +189,16 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
     svg
       .append('path')
       .datum(mergedData)
-      .attr('fill', '#00BF84') // green
-      .attr('opacity', 1)
+      .attr('fill', 'green')
+      .attr('opacity', 0.5)
       .attr('d', positiveArea);
 
     // Append negative area
     svg
       .append('path')
       .datum(mergedData)
-      .attr('fill', '#bf003b') // red
-      .attr('opacity', 1)
+      .attr('fill', 'red')
+      .attr('opacity', 0.5)
       .attr('d', negativeArea);
 
     // Append sentiment line path
@@ -245,7 +216,7 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
       .datum(priceData)
       .attr('fill', 'none')
       .attr('stroke', '#ced2d9')
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 2.5)
       .attr('d', priceLine);
 
     // Append circles for data points
@@ -257,10 +228,10 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
       .attr('class', 'point')
       .attr('cx', (d) => xScale(d.date))
       .attr('cy', (d) => yScaleSentiment(d.value))
-      .attr('r', 3)
-      .attr('fill', '#ebecef');
-    /* .attr('stroke', '#d3d3d3')
-      .attr('stroke-width', 1); */
+      .attr('r', 4)
+      .attr('fill', 'white')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 1.5);
 
     // X axis
     svg
@@ -292,8 +263,12 @@ export const SentimentChart = ({ timePeriod, onLoadComplete }) => {
       .attr('transform', `translate(${width - margin.right},0)`)
       .call(yAxisRight)
       .selectAll('.tick text')
-      .attr('fill', (d) => (d >= 0 ? '#00BF84' : '#bf003b')); // 'green' : 'red'
-  }, [/* sentimentData, */ onLoadComplete]);
+      .attr('fill', (d) => (d >= 0 ? 'green' : 'red'));
+<<<<<<< HEAD
+  }, [sentimentData, onLoadComplete]);
+=======
 
-  return <svg ref={svgRef}></svg>;
-};
+  }, [/* sentimentData */, onLoadComplete]);
+
+  return <svg ref={svgRef} ></svg>;
+  };
