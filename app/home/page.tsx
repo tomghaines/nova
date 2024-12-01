@@ -10,11 +10,7 @@ export default function Home() {
     <div className='flex h-screen w-full items-center'>
       <div className='absolute left-24 -translate-y-16 transform'>
         <p
-          className={`mb-6 w-1/5 rounded-lg border text-center ${
-            isNightMode
-              ? 'border-white text-white'
-              : 'border-black text-gray-600'
-          }`}
+          className={`mb-6 w-1/5 rounded-lg border border-black text-center text-black dark:invert`}
         >
           Dashboard
         </p>

@@ -81,7 +81,7 @@
     --box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2),
       0 1px 3px rgba(255, 255, 255, 0.12);
   }
-  body {
+  html {
     font-family: 'Roboto', sans-serif;
   }
 }

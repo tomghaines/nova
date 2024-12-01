@@ -61,6 +61,6 @@ export const mockData: Card[] = [
       "I am not against memes, but meme coins are getting a little weird now. Let's build real applications using blockchain.",
     significance: 4
   },
-  { type: 'narrative', label: '#TRADING', significance: 7 },
+  { type: 'narrative', label: '#TRADING', significance: 3 },
   { type: 'narrative', label: '#LONGDOGE', significance: 4 }
 ];

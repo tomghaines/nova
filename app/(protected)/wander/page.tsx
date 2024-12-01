@@ -6,6 +6,11 @@ import { mockData } from './mockData';
 export default function Page() {
   return (
     <div className='mt-8 flex h-[1000px] flex-col flex-wrap gap-6 p-6'>
+      <div>
+        <h1 className='ml-6 text-6xl font-black'>Monday</h1>
+        <h3 className='font-heavy ml-6 mt-2 text-xl'>Dec 1, 2024</h3>
+        <p className='ml-6 mt-1'>Top trends, served fresh daily.</p>
+      </div>
       {mockData
         .sort((a, b) => b.significance - a.significance)
         .map((card, index) => {
