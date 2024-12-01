@@ -136,6 +136,11 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
                   <a href='/account'>Account</a>
                 </Button>
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Button className='w-full text-left'>
+                  <a href='/account'>Subscription</a>
+                </Button>
+              </DropdownMenuItem>
               <form action={signOutAction} onSubmit={handleSignOut}>
                 <DropdownMenuItem asChild>
                   <Button type='submit' className='w-full hover:cursor-pointer'>
