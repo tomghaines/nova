@@ -32,11 +32,11 @@ function RootContent({ children }: { children: React.ReactNode }) {
 
         <div className='flex flex-1 flex-col justify-center'>
           {/* sidebar trigger and darkmode trigger */}
-          <div className='mt-10 flex flex-row items-center justify-between'>
-            <div className='ml-7'>
+          <div className='sticky top-0 flex flex-row items-center justify-between bg-white z-50 dark:bg-black'>
+            <div className='ml-7 mt-5 mb-3'>
               <SidebarTrigger />
             </div>
-            <div className='mr-7'>
+            <div className='mr-7 mt-5 mb-3'>
               <SwitchMode
                 isNightMode={isNightMode}
                 onThemeToggle={toggleTheme}

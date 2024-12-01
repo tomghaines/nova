@@ -4,11 +4,7 @@ import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { Home, Search, Settings, ChevronUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage
-} from '@/components/features/sidebar/avatar';
+import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import {
   Sidebar,
   SidebarContent,
@@ -29,6 +25,7 @@ import {
 import supabase from '@/utils/supabase/client';
 import { signOutAction } from '@/app/actions';
 import Link from 'next/link';
+import { Button } from '@radix-ui/themes';
 
 const items = [
   {
@@ -115,13 +112,16 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
         <SidebarFooter>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <SidebarMenuButton className='flex items-center gap-2'>
-                <Avatar className='h-6 w-6'>
+              <SidebarMenuButton className='flex justify-around gap-1'>
+                <Avatar className='h-6 w-6 overflow-hidden rounded-full'>
                   <AvatarImage
-                    src='https://github.com/shadcn.png'
+                    src={
+                      user.user_metadata.avatar_url
+                        ? user.user_metadata.avatar_url
+                        : 'https://github.com/shadcn.png'
+                    }
                     alt='@shadcn'
                   />
-                  <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <span className='flex-1'>{user.email}</span>
                 <ChevronUp className='ml-2' />
@@ -132,13 +132,15 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
               className='w-[--radix-popper-anchor-width]'
             >
               <DropdownMenuItem>
-                <Link href='/account'>Account</Link>
+                <Button className='w-full text-left'>
+                  <a href='/account'>Account</a>
+                </Button>
               </DropdownMenuItem>
               <form action={signOutAction} onSubmit={handleSignOut}>
                 <DropdownMenuItem asChild>
-                  <button type='submit' className='w-full text-left'>
-                    <span>Sign out</span>
-                  </button>
+                  <Button type='submit' className='w-full hover:cursor-pointer'>
+                    <a href='/home'>Sign out</a>
+                  </Button>
                 </DropdownMenuItem>
               </form>
             </DropdownMenuContent>

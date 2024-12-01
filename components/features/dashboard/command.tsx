@@ -27,7 +27,7 @@ export function SearchBar() {
     <div className='flex w-full items-center gap-5'>
       <div className='relative w-full'>
         <Command
-          className='mx-auto h-auto w-full max-w-[860px] rounded-lg border border-zinc-100 shadow-lg shadow-md dark:border-zinc-500 dark:shadow-gray-500'
+          className='mx-auto h-auto w-full max-w-[860px] rounded-lg border border-zinc-100 shadow-lg dark:border-zinc-500 dark:shadow-gray-500'
           value={selectedMenuItem}
           onValueChange={setSelectedMenuItem}
           onMouseEnter={() => setIsTokenOpen(true)}
