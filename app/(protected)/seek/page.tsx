@@ -1,15 +1,23 @@
 'use client';
 
-import { MindshareMap } from '@/components/features/dashboard/mindshareMap';
 import { SearchBar } from '@/components/features/dashboard/command';
-import { SkeletonBar } from '@/components/features/dashboard/skeleton';
-import SentimentLayout from '@/components/features/seek/sentimentLayout';
 import MindshareLayout from '@/components/features/seek/mindshareLayout';
 import React from 'react';
+import { CoinProvider, useCoin } from '@/app/context/CoinContext';
+import SentimentChart from '@/components/features/seek/sentimentChart';
 
 export default function page() {
   return (
-    <div className='flex w-full flex-col items-center justify-start'>
+    <CoinProvider>
+      <PageContent />
+    </CoinProvider>
+  );
+}
+
+export function PageContent() {
+  const { selectedCoinSymbol } = useCoin();
+  return (
+    <div className='flex w-full flex-col items-center'>
       {/* Inner Container for Charts and Search */}
       <div className='w-full max-w-5xl px-6 text-center'>
         {/* Search Bar */}
@@ -21,7 +29,7 @@ export default function page() {
         <div className='AI-Summary'></div>
 
         {/* Sentiment Layout Section */}
-        <SentimentLayout />
+        <SentimentChart key={selectedCoinSymbol} />
 
         {/* Mindshare Map Section */}
         <MindshareLayout />

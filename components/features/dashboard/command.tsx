@@ -11,15 +11,19 @@ import {
 } from '@/components/ui/command';
 
 import { Button } from '@/components/ui/button';
+import { useCoin } from '@/app/context/CoinContext';
 
 export function SearchBar() {
+  const { setSelectedCoinSymbol } = useCoin();
   const [isTokenOpen, setIsTokenOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState('$BTC');
   const [selectedToken, setSelectedToken] = useState('$BTC');
 
   const onSelectToken = (e: MouseEvent) => {
     e.preventDefault();
-    setSelectedToken((e.target as HTMLElement).innerText);
+    const newToken = (e.target as HTMLElement).innerText;
+    setSelectedToken(newToken);
+    setSelectedCoinSymbol(newToken.replace('$', ''));
     setIsTokenOpen(false);
   };
 
