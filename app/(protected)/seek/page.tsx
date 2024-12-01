@@ -1,9 +1,6 @@
 'use client';
 
-import { MindshareMap } from '@/components/features/dashboard/mindshareMap';
 import { SearchBar } from '@/components/features/dashboard/command';
-import { SkeletonBar } from '@/components/features/dashboard/skeleton';
-import SentimentLayout from '@/components/features/seek/sentimentLayout';
 import MindshareLayout from '@/components/features/seek/mindshareLayout';
 import React from 'react';
 import { CoinProvider, useCoin } from '@/app/context/CoinContext';
