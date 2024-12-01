@@ -8,6 +8,7 @@ import { Tabs, TabsTrigger, TabsContent, TabsList } from '@radix-ui/react-tabs';
 import { DataList } from '@radix-ui/themes';
 import { CopyIcon } from 'lucide-react';
 import { copyToClipboard } from '@/utils/clipboardUtils';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function AccountPage() {
   const [image, setImage] = useState<File | null>(null);
@@ -32,7 +33,17 @@ export default function AccountPage() {
 
     setUploading(true);
     try {
-      const filePath = `user-images/${userData.id}-${image.name}`;
+      const filePath = `user-images/${userData.id}/avatar.jpg`;
+
+      if (imageUrl) {
+        const { error: deleteError } = await supabase.storage
+          .from('user-images')
+          .remove([filePath]);
+
+        if (deleteError) {
+          throw new Error(deleteError.message);
+        }
+      }
 
       const { data, error: uploadError } = await supabase.storage
         .from('user-images')
@@ -58,12 +69,12 @@ export default function AccountPage() {
       if (updateError) {
         throw new Error(updateError.message);
       }
-
-      console.log('Image uploaded and user metadata updated');
     } catch (error) {
       console.error('Error uploading image:', error);
     } finally {
       setUploading(false);
+      setImage(null);
+      setIsEditing(false);
     }
   };
 
@@ -75,8 +86,11 @@ export default function AccountPage() {
         if (error) {
           setError(error);
         } else if (data.user) {
-          console.log(data.user);
           setUserData(data.user);
+          const avatarUrl = data.user.user_metadata.avatar_url;
+          if (avatarUrl) {
+            setImageUrl(avatarUrl);
+          }
         }
       } catch (err) {
         setError(err as Error);
@@ -89,7 +103,7 @@ export default function AccountPage() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (error) {
