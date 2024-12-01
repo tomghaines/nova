@@ -56,13 +56,19 @@ export default function Page() {
   });
 
   return (
-    <div className='mt-8 flex h-[1000px] flex-col flex-wrap gap-6 p-6'>
-      <div className='text-gray-400'>
+    <div className='mt-8 flex h-[1000px] flex-col flex-wrap gap-6 p-6 text-gray-800'>
+      <div className='border-gray-500 text-gray-500'>
         <div className='ml-4 mr-4 border-t-8'></div>
         <div className='ml-4 mr-4 border-t-8'></div>
-        <h1 className='ml-6 mt-3 text-6xl font-black'>{weekday}</h1>
-        <h3 className='font-heavy ml-6 mt-2 text-xl'>{formattedDate}</h3>
-        <p className='ml-6 mt-1'>Top trends, served fresh daily.</p>
+        <div className='flex'>
+          <h1 className='ml-6 mt-3 text-5xl font-black uppercase'>{weekday}</h1>
+          <h3 className='font-heavy ml-6 mt-3 text-lg font-thin'>
+            {formattedDate}
+          </h3>
+        </div>
+        <p className='ml-6 mt-1 text-xl font-bold'>
+          Top trends, served fresh daily.
+        </p>
       </div>
       {mockData
         .sort((a, b) => b.significance - a.significance)

@@ -18,7 +18,7 @@ const HotTweet: React.FC<CardProps> = ({
     <div className='h-auto w-auto p-4'>
       {/* Card */}
       <div
-        className='h-auto w-full rounded-3xl p-6 duration-700 hover:scale-105 hover:brightness-90'
+        className='h-auto w-full rounded-3xl p-6 text-gray-800 duration-700 hover:scale-105 hover:brightness-90'
         style={{ backgroundColor }}
       >
         {/* Label */}
