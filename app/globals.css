@@ -4,16 +4,8 @@
 
 @layer base {
   :root {
-    /* --branding-1: hsl(354, 85%, 58%);
-    --branding-2: hsl(30, 100%, 50%);
-    --branding-3: hsl(160, 100%, 43%);
-    --branding-3: hsl(160, 100%, 43%);
-    --branding-4: hsl(185, 100%, 50%);
-    --branding-5: hsl(50, 100%, 50%);
-    --branding-6: hsl(225, 100%, 71%); */
+    --branding: hsl(224, 96%, 36%);
     --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
@@ -35,7 +27,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 90%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
@@ -62,7 +54,7 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
+    --border: 0 0% 60%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
     --chart-1: 220 70% 50%;
