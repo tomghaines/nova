@@ -123,11 +123,11 @@ export default function AccountPage() {
         <p className='mb-6 text-gray-600 dark:text-gray-400'>
           View your Account&apos;s Details and manage your billing
         </p>
-        <Tabs className='w-3/4' defaultValue='account'>
-          <TabsList className='flex justify-around rounded-md bg-gray-200 p-2'>
+        <Tabs className='w-full ' defaultValue='account'>
+          <TabsList className='flex justify-start rounded-md border border-zinc-300 p-5 gap-2'>
             {/* Account Tab */}
             <TabsTrigger
-              className='rounded-md px-60 py-3 hover:bg-gray-300 data-[state="active"]:bg-gray-500 data-[state="active"]:text-white'
+              className='w-[150px] rounded-md py-2 text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
               value='account'
             >
               Account Details
@@ -135,10 +135,16 @@ export default function AccountPage() {
 
             {/* Billing Tab */}
             <TabsTrigger
-              className='rounded-md px-60 hover:bg-gray-300 data-[state="active"]:bg-gray-500 data-[state="active"]:text-white'
+              className='w-[150px] rounded-md text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
               value='billing'
             >
               Billing
+            </TabsTrigger>
+            <TabsTrigger
+              className='w-[150px] rounded-md text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
+              value='newsletter'
+            >
+              Newsletter
             </TabsTrigger>
           </TabsList>
 
@@ -203,6 +209,27 @@ export default function AccountPage() {
           </TabsContent>
           <TabsContent value='billing' className='flex flex-col gap-8 p-4'>
             <h2 className='text-2xl font-bold'>Billing</h2>
+          </TabsContent>
+          <TabsContent value='newsletter' className='flex flex-col gap-8'>
+            <h2 className='text-2xl font-bold'>Newsletter</h2>
+            <form className='flex flex-col gap-4' onSubmit={(e) => { e.preventDefault(); alert('Thank you for signing up!'); }}>
+              <label htmlFor='email' className='text-md font-medium'>Email Address</label>
+              <input
+                type='email'
+                id='email'
+                name='email'
+                required
+                className='p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+                placeholder='Enter your email address'
+              />
+              
+              <button
+                type='submit'
+                className='bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
+              >
+                Sign Up
+              </button>
+            </form>
           </TabsContent>
         </Tabs>
 
