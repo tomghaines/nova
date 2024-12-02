@@ -1,26 +1,49 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { DropdownMenu } from '@radix-ui/themes';
+import { useEffect, useCallback } from 'react';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
 import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
 
-export default function FilterEvents({
-  events,
-  setFilteredEvents
-}: {
+interface FilterEventsProps {
   events: CalendarEvent[];
   setFilteredEvents: (events: CalendarEvent[]) => void;
-}) {
-  const [selectedFilters, setSelectedFilters] = useState<Set<string>>(
-    new Set()
-  );
+  activeFilters: Set<string>;
+  setActiveFilters: React.Dispatch<React.SetStateAction<Set<string>>>;
+}
 
-  // Toggle selected filter
+export default function FilterEvents({
+  events,
+  setFilteredEvents,
+  activeFilters,
+  setActiveFilters
+}: FilterEventsProps) {
+  const applyFilters = useCallback(() => {
+    if (activeFilters.size === 0) {
+      // If no filters, show only first 100 events
+      setFilteredEvents(events.slice(0, 100));
+    } else {
+      // If filters are active, apply them
+      const filteredEvents = events.filter((event) =>
+        activeFilters.has(event.eventType)
+      );
+
+      const sortedEvents = filteredEvents.sort(
+        (a, b) =>
+          new Date(a.date_start).getTime() - new Date(b.date_start).getTime()
+      );
+
+      setFilteredEvents(sortedEvents);
+    }
+  }, [events, activeFilters, setFilteredEvents]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
+
   const handleFilterToggle = (eventType: string) => {
-    setSelectedFilters((prev) => {
+    setActiveFilters((prev) => {
       const newFilters = new Set(prev);
       if (newFilters.has(eventType)) {
         newFilters.delete(eventType);
@@ -32,27 +55,9 @@ export default function FilterEvents({
   };
 
   const resetFilters = () => {
-    setSelectedFilters(new Set());
+    setActiveFilters(new Set());
   };
 
-  // Filter and sort events based on selected filters
-  useEffect(() => {
-    const filteredEvents = events.filter(
-      (event) =>
-        selectedFilters.size === 0 || selectedFilters.has(event.eventType)
-    );
-
-    // Sort the filtered events by date_start
-    const sortedEvents = filteredEvents.sort(
-      (a, b) =>
-        new Date(a.date_start).getTime() - new Date(b.date_start).getTime()
-    );
-
-    // Update filtered events in the parent component
-    setFilteredEvents(sortedEvents);
-  }, [selectedFilters, events, setFilteredEvents]); // Re-run whenever selectedFilters or events change
-
-  // Get unique event types from the events
   const uniqueEventTypes = Array.from(
     new Set(events.map((event) => event.eventType))
   );
@@ -76,9 +81,7 @@ export default function FilterEvents({
             <Badge
               key={eventType}
               className={`cursor-pointer rounded-md px-1 ${
-                selectedFilters.has(eventType)
-                  ? 'border-2 border-indigo-400'
-                  : ''
+                activeFilters.has(eventType) ? 'border-2 border-indigo-400' : ''
               }`}
               color={
                 eventTypeToColor[eventType as keyof typeof eventTypeToColor]
