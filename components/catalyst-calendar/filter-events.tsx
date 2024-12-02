@@ -4,14 +4,14 @@ import { useCallback } from 'react';
 import { Select } from '@radix-ui/themes';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
-import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
+import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 
 interface FilterEventsProps {
   events: CalendarEvent[];
   activeFilters: Set<string>;
   setActiveFilters: React.Dispatch<React.SetStateAction<Set<string>>>;
-  onSortChange: (direction: string) => void; // Add this prop
+  onSortChange: (direction: string) => void;
 }
 
 export default function FilterEvents({
@@ -57,7 +57,7 @@ export default function FilterEvents({
       </div>
       <div className='flex flex-col items-start gap-2'>
         <Select.Root defaultValue='asc' onValueChange={onSortChange}>
-          <Select.Trigger className='bg-neutral-900'>
+          <Select.Trigger className='dark:bg-neutral-900'>
             Sort By Date
           </Select.Trigger>
           <Select.Content>
