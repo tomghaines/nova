@@ -14,7 +14,7 @@ const NewsSentiment: React.FC<NewsSentimentProps> = () => {
   ];
 
   return (
-    <div className='flex h-full flex-col justify-between rounded-lg border-[1px] border-neutral-900/40 bg-neutral-900/40 p-4'>
+    <div className='flex h-full flex-col justify-between rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30 p-4'>
       <h3 className='mb-3 text-sm font-medium text-white/60'>News Sentiment</h3>
       <div className='space-y-3'>
         {sources.map((source) => (
