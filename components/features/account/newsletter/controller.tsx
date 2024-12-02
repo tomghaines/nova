@@ -10,13 +10,13 @@ const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
 export async function createWeeklyNewsletter(): Promise<string> {
   try {
     // Fetch data from Supabase
-    const { data, error } = await supabase.from('site_data').select('*').single();
+    const { data, error } = await supabase
+      .from('site_data')
+      .select('*')
+      .single();
     if (error) throw error;
 
-    const siteData = data as SiteData;  // Assuming `SiteData` is defined elsewhere
-
-    // Generate AI content (assuming you have a function to do this)
-    const aiContent = await generateAIContent(siteData);
+    const siteData = data;
 
     // Create Mailchimp campaign
     const campaign = await mailchimp.campaigns.create({
@@ -25,17 +25,17 @@ export async function createWeeklyNewsletter(): Promise<string> {
       settings: {
         subject_line: 'Weekly Newsletter',
         from_name: 'birdy.ai',
-        reply_to: 'noreply@birdy.ai',
-      },
+        reply_to: 'noreply@birdy.ai'
+      }
     });
 
     // Set campaign content
     await mailchimp.campaigns.setContent(campaign.id, {
       html: `
         <h1>Weekly Newsletter</h1>
-        <p>${aiContent}</p>
+        <p>${siteData}</p>
         <!-- Add more HTML content here -->
-      `,
+      `
     });
 
     console.log('Weekly newsletter created successfully');
@@ -67,7 +67,7 @@ export async function addSubscriber(email: string): Promise<void> {
     // Add to Mailchimp
     await mailchimp.lists.addListMember(process.env.MAILCHIMP_LIST_ID!, {
       email_address: email,
-      status: 'subscribed',
+      status: 'subscribed'
     });
 
     console.log('Subscriber added successfully');
