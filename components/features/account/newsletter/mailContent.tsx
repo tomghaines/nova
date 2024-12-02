@@ -1,47 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
 interface MailContentProps {
-  username: string;
   summary: string;
 }
 
-export const MailContent: React.FC = () => {
-  const [username, setUsername] = useState<string>('User');
-  const [summary, setSummary] = useState<string>('Loading summary...');
-
-  useEffect(() => {
-    const fetchSummary = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/search', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            keywords: 'Web3 weekly trends'
-          })
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setSummary(data.summary || 'No summary available');
-        } else {
-          setSummary('Failed to load summary. Please try again later.');
-        }
-      } catch (error) {
-        console.error('Error fetching summary:', error);
-        setSummary('An error occurred while fetching the summary.');
-      }
-    };
-
-    fetchSummary();
-  }, []);
+export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
 
   return (
     <div>
       {/* Heading */}
       <h1>birdy.ai Newsletter: The Latest in Web3 Trends</h1>
+<<<<<<< HEAD
       <p>Hello {username},</p>
+=======
+      <p>Hello,</p >
+>>>>>>> cfa1fc0 (update createNewsletter func)
       <p>
         Here's your weekly dose of insights and trends happening in the Web3
         world. Stay updated with the latest market shifts and narratives
@@ -54,7 +27,7 @@ export const MailContent: React.FC = () => {
 
       {/* Footer */}
       <a
-        href=' '
+        href='https://localhost:3000/home'
         style={{
           backgroundColor: '#625B71',
           color: 'white',
