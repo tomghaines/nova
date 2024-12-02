@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-    --branding: hsl(224, 96%, 36%);
     --foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
