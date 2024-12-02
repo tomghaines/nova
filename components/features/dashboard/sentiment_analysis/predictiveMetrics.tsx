@@ -13,7 +13,7 @@ const PredictiveMetrics: React.FC<PredictiveProps> = () => {
   };
 
   return (
-    <div className='flex h-1/3 flex-col justify-between rounded-lg border-[1px] border-neutral-900/40 bg-neutral-900/40 p-4'>
+    <div className='flex h-1/3 flex-col justify-between rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30 p-4'>
       <h3 className='mb-3 text-sm font-medium text-white/60'>AI Predictions</h3>
       <div className='grid grid-cols-2 gap-4'>
         <div className='space-y-2'>

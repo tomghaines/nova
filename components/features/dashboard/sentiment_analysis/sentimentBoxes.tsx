@@ -22,7 +22,7 @@ const SentimentBox = ({
   const sentiment = type === 'bullish';
 
   return (
-    <div className='flex h-full flex-col justify-between rounded-lg bg-neutral-900/40 p-4 backdrop-blur-sm'>
+    <div className='s flex h-full flex-col justify-between rounded-lg bg-neutral-800/30 p-4 backdrop-blur-sm'>
       {/* Header */}
       <div className='flex flex-col space-y-2'>
         <div className='flex items-center gap-2'>

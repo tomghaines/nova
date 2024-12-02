@@ -93,7 +93,7 @@ export const SentimentDashboard: React.FC<SentimentDashboardProps> = ({
 
         {/* Chart and Summary Row */}
         <div className='flex h-full gap-4'>
-          <div className='flex w-2/3 flex-col overflow-hidden rounded-lg border-[1px] border-neutral-900/40 bg-neutral-900/40'>
+          <div className='flex w-2/3 flex-col overflow-hidden rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30'>
             <div className='flex items-center justify-between border-b border-white/5 p-4'>
               <span className='text-sm font-medium text-white/60'>
                 Sentiment Analysis

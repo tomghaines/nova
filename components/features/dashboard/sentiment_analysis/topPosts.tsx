@@ -139,7 +139,7 @@ const TopPosts: React.FC<TopPostProps> = ({ weeklyData, className = '' }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className={cn(
-        'flex h-full flex-col rounded-lg border-[1px] border-neutral-900/40 bg-neutral-900/40',
+        'flex h-full flex-col rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30',
         className
       )}
     >
