@@ -2,7 +2,7 @@
 
 import { Tabs, TabsTrigger, TabsContent, TabsList } from '@radix-ui/react-tabs';
 import { AccountDetails } from '@/components/features/account/accountDetails';
-import { Newsletter } from '@/components/features/account/newsletter';
+import { Newsletter } from '@/components/features/account/newsletter/signup';
 import { Billing } from '@/components/features/account/billing';
 
 export default function AccountPage() {
