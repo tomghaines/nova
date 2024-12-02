@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import ImageWithFallback from '../ui/image-with-fallback';
 import placeholderLogo from '@/public/assets/missing-logo-placeholder.svg';
+import { FaLink } from 'react-icons/fa';
+import { Badge } from '@radix-ui/themes';
 import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import type Token from '@/@types/data/catalyst-calendar/token';
-import Link from 'next/link';
 
 interface EventItemProps {
   event: CalendarEvent;
@@ -27,16 +29,20 @@ export default function EventItem({ event, token }: EventItemProps) {
           {token.symbol}
         </div>
       </td>
-      <td className='p-2'>Event Type</td>
+      <td className='p-2'>
+        <Badge className='rounded-md px-1' color='indigo'>
+          {event.eventType}
+        </Badge>
+      </td>
       <td className='p-2'>{event.caption}</td>
       <td className='p-2'>
         <Link
           href={event.source}
           target='_blank'
           rel='noopener noreferrer'
-          className='text-blue-600'
+          className='flex items-center gap-2 hover:text-neutral-300'
         >
-          Source
+          <FaLink /> Source
         </Link>
       </td>
       <td className='p-2'>{event.date_public}</td>

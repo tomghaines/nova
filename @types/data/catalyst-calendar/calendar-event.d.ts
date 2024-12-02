@@ -7,6 +7,7 @@ export default interface CalendarEvent {
   date_start: string;
   date_end: string;
   coin_id: stirng;
+  eventType: string;
   coin_price_changes: string;
   tags: string;
 }

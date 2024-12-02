@@ -1,11 +1,11 @@
-// CatalystCalendar.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import EventItem from '@/components/catalyst-calendar/event-item';
 import { Spinner } from '@/components/ui/spinner';
 import { useCalendarList } from '@/hooks/api/use-calendar-list';
 import { Button } from '@radix-ui/themes';
+import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 
 export default function CatalystCalendar() {
   const { events, tokenData, isLoading, error, hasMore, loadMore } =
@@ -39,7 +39,7 @@ export default function CatalystCalendar() {
               </tr>
             </thead>
             <tbody>
-              {events.map((event, index) => (
+              {events.map((event: CalendarEvent, index: number) => (
                 <EventItem
                   key={`${event.coin_id}-${event.date_start}-${index}`}
                   event={event}
@@ -54,7 +54,7 @@ export default function CatalystCalendar() {
               <Button
                 onClick={handleLoadMore}
                 disabled={loadingMore}
-                className='min-w-[200px] cursor-pointer rounded-md bg-gray-200 p-3 hover:bg-gray-300 dark:bg-neutral-900 dark:hover:bg-neutral-700'
+                className='min-w-[200px] cursor-pointer rounded-md bg-gray-200 p-3 text-neutral-300 hover:bg-gray-300 dark:bg-neutral-900 dark:hover:bg-neutral-700'
               >
                 {loadingMore ? <Spinner size='small' /> : 'Load More Events'}
               </Button>
