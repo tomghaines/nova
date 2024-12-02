@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from '@/app/context/theme';
 import { RootContent } from '@/components/root-content';
+import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import './globals.css';
 
@@ -14,7 +15,9 @@ export default function RootLayout({
     <html lang='en' className='dark'>
       <body>
         <ThemeProvider>
-          <RootContent>{children}</RootContent>
+          <Theme>
+            <RootContent>{children}</RootContent>
+          </Theme>
         </ThemeProvider>
       </body>
     </html>
