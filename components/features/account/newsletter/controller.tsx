@@ -58,16 +58,18 @@ export async function sendWeeklyNewsletter(campaignId: string): Promise<void> {
 export async function addSubscriber(email: string): Promise<void> {
   try {
     // Add to Supabase
+    console.log('Adding subscriber to Supabase');
     const { error } = await supabase.from('subscribers').insert([{ email }]);
     if (error) throw error;
 
     // Add to Mailchimp
+    console.log('Adding subscriber to Mailchimp');
     await mailchimp.lists.addListMember(process.env.MAILCHIMP_LIST_ID!, {
       email_address: email,
       status: 'subscribed',
     });
 
-    console.log('Subscriber added successfully');
+    console.log('Subscriber added successfully to Supabase and Mailchimp');
   } catch (error) {
     console.error('Error adding subscriber:', error);
     throw error;
