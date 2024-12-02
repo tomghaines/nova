@@ -58,7 +58,7 @@ export const AccountDetails = () => {
         .getPublicUrl(filePath);
 
       const publicUrl = publicUrlData.publicUrl;
-      setImageUrl(publicUrl);
+      setImageUrl(`${publicUrl}?t=${new Date().getTime()}`);
 
       // Update user metadata with the avatar URL
       const { error: updateError } = await supabase.auth.updateUser({
@@ -129,13 +129,13 @@ export const AccountDetails = () => {
                 'https://github.com/shadcn.png'
               }
               alt='User Avatar'
-              className='border-3 h-20 w-20 rounded-full border border-white'
+              className='h-20 w-20 rounded-full border border-2 border-gray-300'
             />
           </Avatar>
           {/* Edit Photo button */}
           <button
             onClick={() => setIsEditing((prev) => !prev)}
-            className='absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full border border-2 border-black bg-gray-200 text-2xl text-black hover:brightness-90'
+            className='absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full border border-black bg-white text-lg font-thin hover:brightness-90'
           >
             +
           </button>
@@ -143,7 +143,7 @@ export const AccountDetails = () => {
 
         {/* Display user metadata */}
 
-        <DataList.Root className='grid w-full gap-4'>
+        <DataList.Root className='ml-16 grid w-1/2 gap-1'>
           <DataList.Item className='grid grid-cols-3 items-center'>
             <DataList.Label>Account ID</DataList.Label>
             <DataList.Value>{userData.id}</DataList.Value>
@@ -175,17 +175,17 @@ export const AccountDetails = () => {
 
       {/* Image upload form (conditionally rendered) */}
       {isEditing && (
-        <div className='mt-6'>
+        <div className='mt-6 flex justify-center rounded-md border border-2 border-gray-200'>
           <input
             type='file'
             accept='image/*'
             onChange={handleImageChange}
-            className='mb-4'
+            className='mb-4 ml-6 mt-4 py-2'
           />
           <button
             onClick={uploadImage}
             disabled={uploading}
-            className='rounded bg-blue-500 px-4 py-2 text-white'
+            className='mt-6 h-7 w-[120px] rounded-sm border border-gray-600 bg-gray-100 text-black'
           >
             {uploading ? 'Uploading...' : 'Upload Image'}
           </button>
