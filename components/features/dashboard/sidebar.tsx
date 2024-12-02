@@ -129,7 +129,7 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
                 className='w-[--radix-popper-anchor-width]'
               >
                 <DropdownMenuItem>
-                  <Button className='w-full text-left'>
+                  <Button className='w-full cursor-pointer text-left'>
                     <a href='/account'>Account</a>
                   </Button>
                 </DropdownMenuItem>
