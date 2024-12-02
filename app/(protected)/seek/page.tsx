@@ -17,11 +17,11 @@ export default function page() {
 export function PageContent() {
   const { selectedCoinSymbol } = useCoin();
   return (
-    <div className='flex w-full flex-col items-center'>
+    <div className='flex w-full flex-col items-center p-16'>
       {/* Inner Container for Charts and Search */}
       <div className='w-full p-4 text-center'>
         {/* Search Bar */}
-        <div className='relative mb-12 mt-32'>
+        <div className='relative mb-12 mt-10'>
           <SearchBar />
         </div>
         {/* Sentiment Analysis */}
