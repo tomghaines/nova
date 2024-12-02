@@ -13,7 +13,7 @@ export function SwitchMode({
   return (
     <div className='flex items-center space-x-4'>
       {/* Dynamic text based on state */}
-      <p className='text-xl font-black text-gray-800 dark:text-gray-100'>
+      <p className='text-xl text-gray-800 dark:text-gray-100'>
         {isNightMode ? 'DARK' : 'LIGHT'}
       </p>
       {/* Switch component with state toggle */}

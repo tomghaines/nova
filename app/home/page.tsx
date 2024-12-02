@@ -7,7 +7,7 @@ import { useTheme } from '@/app/context/theme';
 export default function Home() {
   const { isNightMode } = useTheme();
   return (
-    <div className='ml-20 flex w-full items-center'>
+    <div className='ml-20 flex w-full items-center overflow-hidden'>
       <div className='left-24 mt-60 -translate-y-16 transform'>
         <p
           className={`mb-6 w-1/5 rounded-lg border border-black text-center text-black dark:invert`}
