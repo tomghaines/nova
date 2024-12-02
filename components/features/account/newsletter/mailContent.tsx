@@ -2,7 +2,12 @@ import React from 'react';
 import SentimentChart from '../../seek/sentimentChart';
 // import MindshareMap from '@/components/features/seek/mindshareMap';
 
-export const MailContent: React.FC = () => {
+interface MailContentProps {
+  username: string;
+  summary: string;
+}
+
+export const MailContent: React.FC<MailContentProps> = ({ username, summary }) => {
   const username = '';
   const summary = '';
 
@@ -48,7 +53,7 @@ export const MailContent: React.FC = () => {
       <p>
         Happy trading,
         <br />
-        The Birdy.ai Team
+        The birdy.ai Team
       </p>
     </div>
   );
