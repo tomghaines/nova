@@ -21,7 +21,7 @@ export function PageContent() {
       {/* Inner Container for Charts and Search */}
       <div className='w-full max-w-5xl px-6 text-center'>
         {/* Search Bar */}
-        <div className='relative mb-12 mt-12'>
+        <div className='relative mb-12 mt-32'>
           <SearchBar />
         </div>
 

@@ -32,19 +32,23 @@ function RootContent({ children }: { children: React.ReactNode }) {
 
         <div className='flex flex-1 flex-col justify-center'>
           {/* top navbar */}
-          <div className='bg-blur fixed top-0 flex h-20 w-full justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black'>
+          <div className='bg-blur fixed top-0 z-50 flex h-20 w-full justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black'>
             {/* Element #1: Sidebar Trigger */}
             <div className='ml-7 mt-6'>
               <SidebarTrigger />
             </div>
             {/* Element #2: Logo */}
-            <img
-              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo-light.png'}
-              alt='Logo'
-              className='mx-auto mt-6 h-9 w-auto'
-            />
+            <div className='fixed left-1/2 top-6 z-50 -translate-x-1/2 transform'>
+              <img
+                src={
+                  isNightMode ? '/logo/logo-dark.png' : '/logo/logo-light.png'
+                }
+                alt='Logo'
+                className='h-9 w-auto'
+              />
+            </div>
             {/* Element #3: Theme Toggle */}
-            <div className='mb-3 mr-12 mt-7'>
+            <div className='fixed right-10 top-7 z-50'>
               <SwitchMode
                 isNightMode={isNightMode}
                 onThemeToggle={toggleTheme}

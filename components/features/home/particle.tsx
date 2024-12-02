@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 const ParticleSystem = () => {
   const mountRef = useRef<HTMLDivElement>(null);
-  const mouse = useRef({ x: 0, y: 0 }); // [新增] 保存鼠标位置
+  const mouse = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -16,23 +16,22 @@ const ParticleSystem = () => {
     );
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
-      alpha: true // 背景透明
+      alpha: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0); // 背景透明
+    renderer.setClearColor(0x000000, 0);
     if (mountRef.current) {
       mountRef.current.appendChild(renderer.domElement);
     }
 
-    // 创建粒子系统
     const particleCount = 1000;
     const particlesGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 20; // x 坐标
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 20; // y 坐标
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 20; // z 坐标
+      positions[i * 3] = (Math.random() - 0.5) * 20;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
     }
 
     particlesGeometry.setAttribute(
@@ -49,7 +48,7 @@ const ParticleSystem = () => {
       color: 0xffffff,
       size: 0.1,
       sizeAttenuation: true,
-      map: circleTexture, // 圆形纹理
+      map: circleTexture,
       transparent: true,
       opacity: 1.0,
       alphaTest: 0.5,
@@ -62,25 +61,22 @@ const ParticleSystem = () => {
     camera.position.z = 10;
 
     const handleMouseMove = (event: MouseEvent) => {
-      mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1; // 归一化为 -1 到 1
+      mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    // 动画循环
     const animate = () => {
       requestAnimationFrame(animate);
 
-      // [新增] 根据鼠标位置动态调整粒子旋转
       particles.rotation.y += 0.001;
-      particles.rotation.x += mouse.current.y * 0.01; // 鼠标 y 影响 x 轴旋转
-      particles.rotation.z += mouse.current.x * 0.01; // 鼠标 x 影响 z 轴旋转
+      particles.rotation.x += mouse.current.y * 0.01;
+      particles.rotation.z += mouse.current.x * 0.01;
 
       renderer.render(scene, camera);
     };
     animate();
 
-    // 处理窗口调整
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -88,10 +84,9 @@ const ParticleSystem = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // 清理
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove); // [新增] 清理鼠标事件
+      window.removeEventListener('mousemove', handleMouseMove);
       if (mountRef.current) {
         mountRef.current.removeChild(renderer.domElement);
       }
@@ -99,10 +94,7 @@ const ParticleSystem = () => {
   }, []);
 
   return (
-    <div
-      ref={mountRef}
-      className='pointer-events-none absolute inset-0 z-10'
-    ></div>
+    <div ref={mountRef} className='pointer-events-none absolute inset-0'></div>
   );
 };
 
