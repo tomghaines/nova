@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Badge } from '@radix-ui/themes';
+import { GrPowerReset } from 'react-icons/gr';
 import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
 
@@ -29,6 +30,10 @@ export default function FilterEvents({
     });
   };
 
+  const resetFilters = () => {
+    setSelectedFilters(new Set());
+  };
+
   // Filter and sort events based on selected filters
   useEffect(() => {
     const filteredEvents = events.filter(
@@ -52,16 +57,27 @@ export default function FilterEvents({
   );
 
   return (
-    <div className='flex flex-col gap-4'>
-      <h2>Filter</h2>
+    <div className='flex h-fit flex-col gap-4 rounded-lg bg-neutral-800 px-3 py-4'>
+      <div className='flex items-center justify-between'>
+        <h2 className='text-2xl'>Filter</h2>
+        <div
+          onClick={resetFilters}
+          className='flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-400 hover:bg-neutral-700'
+        >
+          <GrPowerReset />
+          <p>Reset Filters</p>
+        </div>
+      </div>
       <div className='flex flex-col items-start gap-2'>
         <h3>Event Type</h3>
-        <div className='flex max-w-xl flex-wrap gap-2'>
+        <div className='flex max-w-80 flex-wrap gap-2'>
           {uniqueEventTypes.map((eventType) => (
             <Badge
               key={eventType}
               className={`cursor-pointer rounded-md px-1 ${
-                selectedFilters.has(eventType) ? 'border-2 border-lime-400' : ''
+                selectedFilters.has(eventType)
+                  ? 'border-2 border-indigo-400'
+                  : ''
               }`}
               color={
                 eventTypeToColor[eventType as keyof typeof eventTypeToColor]

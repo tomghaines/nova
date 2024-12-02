@@ -39,8 +39,8 @@ export default function CatalystCalendar() {
         Releases and more!
       </p>
       {/* Pass filteredEvents instead of events */}
-      <FilterEvents events={events} setFilteredEvents={setFilteredEvents} />
-      <div className='flex'>
+      <div className='flex gap-4'>
+        <FilterEvents events={events} setFilteredEvents={setFilteredEvents} />
         {filteredEvents && filteredEvents.length > 0 ? (
           <>
             <table className='w-full'>
