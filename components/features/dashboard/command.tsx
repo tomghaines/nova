@@ -91,11 +91,6 @@ export function SearchBar() {
           )}
         </Command>
       </div>
-      <div>
-        <Button className='grey-400 ml-auto h-11 font-semibold shadow-md dark:shadow-lg dark:shadow-gray-500'>
-          ENTER
-        </Button>
-      </div>
     </div>
   );
 }
