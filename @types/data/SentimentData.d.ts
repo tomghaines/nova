@@ -19,14 +19,19 @@ export interface WeeklySentiment {
 }
 
 export interface CoinData {
+  id: number;
   icon: string;
   name: string;
+  overall_analysis: string;
+  overall_sentiment_score: number;
+  symbol: string;
 }
 
 export interface ChartData {
   coinData: CoinData;
   keyPoints: KeyPoint[];
   weeklySentiment: WeeklySentiment[];
+  topTweets: Tweet[];
 }
 
 export interface SentimentPoint {

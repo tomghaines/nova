@@ -4,7 +4,7 @@ import { SearchBar } from '@/components/features/dashboard/command';
 import MindshareLayout from '@/components/features/seek/mindshareLayout';
 import React from 'react';
 import { CoinProvider, useCoin } from '@/app/context/CoinContext';
-import SentimentChart from '@/components/features/seek/sentimentChart';
+import SentimentDashboard from '@/components/features/seek/sentiment_analysis/sentimentDashboard';
 
 export default function page() {
   return (
@@ -19,19 +19,16 @@ export function PageContent() {
   return (
     <div className='flex w-full flex-col items-center'>
       {/* Inner Container for Charts and Search */}
-      <div className='w-full max-w-5xl px-6 text-center'>
+      <div className='w-full p-4 text-center'>
         {/* Search Bar */}
         <div className='relative mb-12 mt-32'>
           <SearchBar />
         </div>
-
         {/* AI-Summary */}
         <div className='AI-Summary'></div>
-
-        {/* Sentiment Layout Section */}
-        <SentimentChart key={selectedCoinSymbol} />
-
-        {/* Mindshare Map Section */}
+        {/* Sentiment Analysis */}
+        <SentimentDashboard key={selectedCoinSymbol} />
+        {/* Mindshare Map  */}
         <MindshareLayout />
       </div>
     </div>

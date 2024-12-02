@@ -1,232 +1,51 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { SentimentPoint } from '@/@types/data/SentimentData';
 import { motion } from 'framer-motion';
-import { TrendingUp, TrendingDown } from 'lucide-react';
-import fetchSentimentData from '@/lib/database/SentimentData';
-import { useCoin } from '@/app/context/CoinContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  type KeyPoint,
-  ChartData,
-  SentimentPoint,
-  type SentimentStats
-} from '@/@types/data/SentimentData';
-
-// Prop types
-
-interface SentimentBoxesProps {
-  keyPoints: KeyPoint[];
-
-  className?: string;
-}
-
-interface SentimentStatsProps {
-  data: ChartData | null;
-}
 
 interface SentimentChartProps {
+  data: SentimentPoint[];
   onLoadComplete?: () => void;
 }
 
-const SentimentBoxes: React.FC<SentimentBoxesProps> = ({
-  keyPoints,
-
-  className = ''
-}) => {
-  const bullishPoints = keyPoints.filter((point) => point.type === 'bullish');
-  const bearishPoints = keyPoints.filter((point) => point.type === 'bearish');
-
-  return (
-    <div className={`mt-4 grid grid-cols-1 gap-2 md:grid-cols-2 ${className}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className='relative overflow-hidden rounded-sm border border-emerald-500/20 bg-emerald-500/5 p-3 backdrop-blur-sm'
-      >
-        <div className='flex items-center gap-2'>
-          <h3 className='mb-4 font-bold text-emerald-500'>Bullish Factors</h3>
-
-          <TrendingUp className='mb-4 h-5 w-5 text-emerald-500' />
-        </div>
-
-        <ul className='space-y-2'>
-          {bullishPoints.map((point, index) => (
-            <motion.li
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className='flex items-start gap-2 text-sm text-emerald-300'
-            >
-              <span className='mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-500' />
-
-              {point.point}
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className='relative overflow-hidden rounded-sm border border-red-500/20 bg-red-500/5 p-3 backdrop-blur-sm'
-      >
-        <div className='flex items-center gap-2'>
-          <h3 className='mb-4 font-bold text-red-500'>Bearish Factors</h3>
-
-          <TrendingDown className='mb-4 h-5 w-5 text-red-500' />
-        </div>
-
-        <ul className='space-y-2'>
-          {bearishPoints.map((point, index) => (
-            <motion.li
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className='flex items-start gap-2 text-sm text-red-300'
-            >
-              <span className='mt-1.5 h-1.5 w-1.5 rounded-full bg-red-500' />
-
-              {point.point}
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
-    </div>
-  );
-};
-
-const SentimentStats: React.FC<SentimentStatsProps> = ({ data }) => {
-  const stats = useMemo<SentimentStats | null>(() => {
-    if (!data?.weeklySentiment) return null;
-
-    const sentiments = data.weeklySentiment.map((w) =>
-      Number(w.sentiment_score)
-    );
-
-    const prices = data.weeklySentiment.map((w) => Number(w.price));
-
-    const meanSentiment = d3.mean(sentiments);
-    const maxSentiment = d3.max(sentiments);
-    const minSentiment = d3.min(sentiments);
-
-    if (
-      meanSentiment === undefined ||
-      maxSentiment === undefined ||
-      minSentiment === undefined
-    ) {
-      return null;
-    }
-
-    return {
-      avgSentiment: meanSentiment.toFixed(2),
-      maxSentiment: maxSentiment.toFixed(2),
-      minSentiment: minSentiment.toFixed(2),
-      priceChange: (
-        ((prices[prices.length - 1] - prices[0]) / prices[0]) *
-        100
-      ).toFixed(2)
-    };
-  }, [data]);
-
-  if (!stats) return null;
-
-  return (
-    <div className='grid grid-cols-2 gap-2 sm:grid-cols-4'>
-      {[
-        { label: 'Avg Sentiment: ', value: stats.avgSentiment },
-        { label: 'Max Sentiment: ', value: stats.maxSentiment },
-        { label: 'Min Sentiment: ', value: stats.minSentiment },
-        { label: 'Price Change: ', value: `${stats.priceChange}%` }
-      ].map((stat, index) => (
-        <div
-          key={index}
-          className='flex items-center justify-between rounded-sm border border-white/10 px-2 py-1 backdrop-blur-sm'
-        >
-          <p className='text-sm'>{stat.label}</p>
-          <p className='text-sm font-normal'>{stat.value}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export const SentimentChart: React.FC<SentimentChartProps> = ({
+const SentimentChart: React.FC<SentimentChartProps> = ({
+  data: sentimentData,
   onLoadComplete
 }) => {
   const chartRef = useRef<HTMLDivElement>(null);
-  const { selectedCoinSymbol } = useCoin();
-  const [chartData, setChartData] = useState<ChartData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
+  // Resize observer to scale dynamically
   useEffect(() => {
-    const getData = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const data = await fetchSentimentData(selectedCoinSymbol);
-        console.log(data);
-        setChartData(data);
-      } catch (err) {
-        console.error(err);
-        setError(error);
-      } finally {
-        setIsLoading(false);
+    if (!chartRef.current) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        setDimensions({
+          width: Math.round(width),
+          height: Math.round(height)
+        });
       }
-    };
-    getData();
-  }, [selectedCoinSymbol]);
+    });
 
-  const sentimentData = useMemo<SentimentPoint[]>(() => {
-    if (!chartData?.weeklySentiment) return [];
-
-    return chartData.weeklySentiment
-      .map((week) => {
-        const [month, days] = week.date_range.split(' ');
-        const [startDay] = days.split('-');
-        const monthMap: { [key: string]: number } = {
-          Jan: 0,
-          Feb: 1,
-          Mar: 2,
-          Apr: 3,
-          May: 4,
-          Jun: 5,
-          Jul: 6,
-          Aug: 7,
-          Sep: 8,
-          Oct: 9,
-          Nov: 10,
-          Dec: 11
-        };
-        return {
-          date: new Date(2024, monthMap[month], parseInt(startDay)),
-          sentimentValue: week.sentiment_score,
-          analysis: week.summary,
-          price: week.price
-        };
-      })
-      .sort((a, b) => a.date.getTime() - b.date.getTime());
-  }, [chartData]);
+    resizeObserver.observe(chartRef.current);
+    return () => resizeObserver.disconnect();
+  }, []);
 
   useEffect(() => {
     try {
-      if (!sentimentData.length || !chartRef.current) return;
+      if (
+        !sentimentData.length ||
+        !chartRef.current ||
+        !dimensions.width ||
+        !dimensions.height
+      )
+        return;
+
       const container = chartRef.current;
-      const width = 845;
-      const height = 400;
-      const margin = { top: 20, right: 50, bottom: 30, left: 50 };
-
-      // d3 Types
-      const xDomain = d3.extent(sentimentData, (d) => d.date);
-      const yPriceDomain = d3.extent(sentimentData, (d) => d.price);
-
-      if (!xDomain[0] || !xDomain[1] || !yPriceDomain[0] || !yPriceDomain[1]) {
-        throw new Error('Invalid data ranges');
-      }
+      const { width, height } = dimensions;
+      const margin = { top: 20, right: 50, bottom: 20, left: 50 };
 
       // Clear previous chart
       d3.select(container).selectAll('*').remove();
@@ -234,10 +53,10 @@ export const SentimentChart: React.FC<SentimentChartProps> = ({
       const svg = d3
         .select(container)
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .attr('viewBox', [0, 0, width, height])
-        .style('background', '#FFFFFF0');
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .style('overflow', 'visible');
 
       // Gradient definitions
       const defs = svg.append('defs');
@@ -287,18 +106,20 @@ export const SentimentChart: React.FC<SentimentChartProps> = ({
       // Scales
       const x = d3
         .scaleTime()
-        .domain(xDomain)
+        .domain(d3.extent(sentimentData, (d) => d.date) as [Date, Date])
         .range([margin.left, width - margin.right]);
 
       const ySentiment = d3
         .scaleLinear()
         .domain([-0.6, 0.6])
-        .range([height - margin.bottom, margin.top]);
+        .range([height - margin.bottom, margin.top])
+        .nice();
 
       const yPrice = d3
         .scaleLinear()
-        .domain(yPriceDomain)
-        .range([height - margin.bottom, margin.top]);
+        .domain(d3.extent(sentimentData, (d) => d.price) as [number, number])
+        .range([height - margin.bottom, margin.top])
+        .nice();
 
       // Grid
       const grid = svg
@@ -457,6 +278,8 @@ export const SentimentChart: React.FC<SentimentChartProps> = ({
           'class',
           'fixed z-50 hidden rounded-sm border border-white/10 bg-black/90 p-2 text-sm backdrop-blur-3xl'
         )
+        .style('pointer-events', 'none')
+        .style('position', 'absolute')
         .style('pointer-events', 'none');
 
       // Overlay
@@ -497,7 +320,8 @@ export const SentimentChart: React.FC<SentimentChartProps> = ({
         .attr('width', width - margin.left - margin.right)
         .attr('height', height - margin.top - margin.bottom)
         .style('fill', 'none')
-        .style('pointer-events', 'all');
+        .style('pointer-events', 'all')
+        .style('cursor', 'crosshair');
 
       overlay
         .on('mouseover', () => {
@@ -544,24 +368,24 @@ export const SentimentChart: React.FC<SentimentChartProps> = ({
             .style('display', 'block')
             .style('left', `${x(d.date) + 12}px`)
             .style('top', `${ySentiment(d.sentimentValue) - 12}px`).html(`
-  <div class="space-y-2">
-    <div class="flex items-center justify-between gap-4">
-      <span class="text-white/60">Date</span>
-      <span class="font-medium">${d.date.toLocaleDateString()}</span>
-    </div>
-    <div class="flex items-center justify-between gap-4">
-      <span class="text-white/60">Price</span>
-      <span class="font-medium">$${d.price.toLocaleString()}</span>
-    </div>
-    <div class="flex items-center justify-between gap-4">
-      <span class="text-white/60">Sentiment</span>
-      <span class="font-medium ${d.sentimentValue >= 0 ? 'text-emerald-400' : 'text-red-400'}">
-        ${d.sentimentValue.toFixed(2)}
-      </span>
-    </div>
-    <div class=" max-w-xs text-left text-white/80">${d.analysis}</div>
-  </div>
-`);
+   <div class="space-y-2">
+     <div class="flex items-center justify-between gap-4">
+       <span class="text-white/60">Date</span>
+       <span class="font-medium">${d.date.toLocaleDateString()}</span>
+     </div>
+     <div class="flex items-center justify-between gap-4">
+       <span class="text-white/60">Price</span>
+       <span class="font-medium">$${d.price.toLocaleString()}</span>
+     </div>
+     <div class="flex items-center justify-between gap-4">
+       <span class="text-white/60">Sentiment</span>
+       <span class="font-medium ${d.sentimentValue >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+         ${d.sentimentValue.toFixed(2)}
+       </span>
+     </div>
+     <div class=" max-w-xs text-left text-white/80">${d.analysis}</div>
+   </div>
+ `);
         });
 
       // Legend
@@ -601,47 +425,20 @@ export const SentimentChart: React.FC<SentimentChartProps> = ({
       onLoadComplete?.();
     } catch (err) {
       console.error(
-        'Error rending chart:',
+        'Error rendering chart:',
         err instanceof Error ? err.message : 'Unknown error'
       );
     }
-  }, [sentimentData, onLoadComplete]);
+  }, [sentimentData, dimensions, onLoadComplete]);
 
   return (
-    <Card className='w-full overflow-visible shadow-2xl backdrop-blur-sm'>
-      <CardHeader className='border-b border-white/5 px-2 py-2'>
-        <CardTitle className='text-md flex items-center gap-2 font-normal text-white'>
-          <div className='flex items-center gap-2'>
-            {chartData?.coinData?.icon && (
-              <img
-                src={chartData.coinData.icon}
-                alt={chartData.coinData.name}
-                className='h-6 w-6'
-              />
-            )}
-            <span>{chartData?.coinData?.name} Sentiment Analysis</span>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className='space-y-2 p-2'>
-        {isLoading ? (
-          <div className='flex h-[400px] items-center justify-center'>
-            <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-white'></div>
-          </div>
-        ) : (
-          <>
-            <SentimentStats data={chartData} />
-            <div className='relative'>
-              <div
-                ref={chartRef}
-                className='w-full rounded-sm border-[1px] border-white/10'
-              />
-            </div>
-            {chartData && <SentimentBoxes keyPoints={chartData.keyPoints} />}
-          </>
-        )}
-      </CardContent>
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      className='flex h-full w-full'
+    >
+      <div ref={chartRef} className='h-[400px] min-h-[400px] w-full' />
+    </motion.div>
   );
 };
 
