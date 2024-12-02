@@ -8,7 +8,7 @@ interface NavbarProps {
 
 export function Navbar({ isNightMode, onThemeToggle }: NavbarProps) {
   return (
-    <nav className='bg-blur sticky top-0 flex h-20 justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black'>
+    <nav className='bg-blur sticky top-0 flex h-20 justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black dark:bg-opacity-90'>
       <div className='ml-7 mt-6'>
         <SidebarTrigger />
       </div>
