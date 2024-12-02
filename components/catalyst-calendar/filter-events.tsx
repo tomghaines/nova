@@ -4,8 +4,8 @@ import { useCallback } from 'react';
 import { Select } from '@radix-ui/themes';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
-import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
+import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 
 interface FilterEventsProps {
   events: CalendarEvent[];
