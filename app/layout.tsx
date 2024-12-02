@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang='en' className='dark'>
       <body>
         <ThemeProvider>
           <RootContent>{children}</RootContent>
@@ -31,20 +31,29 @@ function RootContent({ children }: { children: React.ReactNode }) {
         <AppSidebar isNightMode={isNightMode} />
 
         <div className='flex flex-1 flex-col justify-center'>
-          {/* sidebar trigger and darkmode trigger */}
-          <div className='sticky top-0 flex flex-row items-center justify-between bg-white z-50 dark:bg-black'>
-            <div className='ml-7 mt-5 mb-3'>
+          {/* top navbar */}
+          <div className='bg-blur sticky top-0 flex h-20 justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black'>
+            {/* Element #1: Sidebar Trigger */}
+            <div className='ml-7 mt-6'>
               <SidebarTrigger />
             </div>
-            <div className='mr-7 mt-5 mb-3'>
+            {/* Element #2: Logo */}
+            <img
+              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo-light.png'}
+              alt='Logo'
+              className='mx-auto mt-6 h-9 w-auto'
+            />
+            {/* Element #3: Theme Toggle */}
+            <div className='mb-3 mr-12 mt-7'>
               <SwitchMode
                 isNightMode={isNightMode}
                 onThemeToggle={toggleTheme}
               />
             </div>
           </div>
+
           {/* children component */}
-          <div className='mt-5 flex items-start justify-center'>{children}</div>
+          <div className='flex items-start justify-center'>{children}</div>
         </div>
       </div>
     </SidebarProvider>

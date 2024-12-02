@@ -2,7 +2,7 @@
 
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { Home, Search, Settings, ChevronUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import {
@@ -10,7 +10,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -29,19 +28,16 @@ import { Button } from '@radix-ui/themes';
 
 const items = [
   {
-    title: 'Home',
-    url: '/home',
-    icon: Home
+    title: 'HOME',
+    url: '/home'
   },
   {
-    title: 'Seek',
-    url: '/seek',
-    icon: Search
+    title: 'SEEK  >>>',
+    url: '/seek'
   },
   {
-    title: 'Wander',
-    url: '/wander',
-    icon: Settings
+    title: 'WANDER  <<<',
+    url: '/wander'
   }
 ];
 
@@ -80,78 +76,74 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
   };
 
   return (
-    <Sidebar className='bg-blue-500'>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>
-            <img
-              src={isNightMode ? '/logo/logo-dark.png' : '/logo/logo-light.png'}
-              alt='Logo'
-              className='mx-auto mt-24 h-12 w-auto'
-            />
-          </SidebarGroupLabel>
-          <SidebarGroupContent className='ml-10 mt-24 w-40'>
-            <SidebarMenu className='space-y-2'>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span className='p-3 text-2xl font-extralight'>
-                        {item.title}
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-      {user && (
-        <SidebarFooter>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton className='flex justify-around gap-1'>
-                <Avatar className='h-6 w-6 overflow-hidden rounded-full'>
-                  <AvatarImage
-                    src={
-                      user.user_metadata.avatar_url
-                        ? user.user_metadata.avatar_url
-                        : 'https://github.com/shadcn.png'
-                    }
-                    alt='@shadcn'
-                  />
-                </Avatar>
-                <span className='flex-1'>{user.email}</span>
-                <ChevronUp className='ml-2' />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              side='top'
-              className='w-[--radix-popper-anchor-width]'
-            >
-              <DropdownMenuItem>
-                <Button className='w-full text-left'>
-                  <a href='/account'>Account</a>
-                </Button>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Button className='w-full text-left'>
-                  <a href='/account'>Subscription</a>
-                </Button>
-              </DropdownMenuItem>
-              <form action={signOutAction} onSubmit={handleSignOut}>
-                <DropdownMenuItem asChild>
-                  <Button type='submit' className='w-full hover:cursor-pointer'>
-                    <span>Sign out</span>
+    <Sidebar>
+      <SidebarContent className='flex h-full flex-col'>
+        <div className='mt-auto'>
+          <SidebarGroup>
+            <SidebarGroupContent className='w-full'>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      className='focus:outline-none active:bg-transparent'
+                    >
+                      <Link href={item.url}>
+                        <span className='h-18 dark:border-invert w-full p-2 text-2xl font-thin hover:font-black'>
+                          {item.title}
+                        </span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
+
+        {user && (
+          <SidebarFooter className='mt-2'>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton className='flex justify-around gap-1'>
+                  <Avatar className='h-6 w-6 overflow-hidden rounded-full'>
+                    <AvatarImage
+                      src={
+                        user.user_metadata.avatar_url
+                          ? user.user_metadata.avatar_url
+                          : 'https://github.com/shadcn.png'
+                      }
+                      alt='@shadcn'
+                    />
+                  </Avatar>
+                  <span className='flex-1'>{user.email}</span>
+                  <ChevronUp className='ml-2' />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side='top'
+                className='w-[--radix-popper-anchor-width]'
+              >
+                <DropdownMenuItem>
+                  <Button className='w-full text-left'>
+                    <a href='/account'>Account</a>
                   </Button>
                 </DropdownMenuItem>
-              </form>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarFooter>
-      )}
+                <form action={signOutAction} onSubmit={handleSignOut}>
+                  <DropdownMenuItem asChild>
+                    <Button
+                      type='submit'
+                      className='w-full hover:cursor-pointer'
+                    >
+                      <a href='/home'>Sign out</a>
+                    </Button>
+                  </DropdownMenuItem>
+                </form>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarFooter>
+        )}
+      </SidebarContent>
     </Sidebar>
   );
 }

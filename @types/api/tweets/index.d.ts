@@ -12,3 +12,15 @@ export interface Tweet {
   isRetweet: boolean;
   isQuote: boolean;
 }
+
+declare namespace API {
+  interface NewsletterSignupRequest {
+    email: string;
+  }
+  interface NewsletterSignupResponse {
+    message: string;
+  }
+  interface ErrorResponse {
+    error: string;
+  }
+}

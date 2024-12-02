@@ -11,7 +11,7 @@ const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
-  const [isNightMode, setIsNightMode] = useState(false);
+  const [isNightMode, setIsNightMode] = useState(true);
 
   const toggleTheme = () => {
     setIsNightMode((prevMode) => {
