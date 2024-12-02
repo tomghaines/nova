@@ -50,18 +50,18 @@ export const Newsletter = () => {
   };
 
   return (
-    <div className='flex flex-col gap-8'>
+    <div className='mt-10 flex flex-col'>
       <h2 className='text-2xl font-bold'>Newsletter</h2>
-      <p className='text-lg'>
+      <p className='mt-2 text-lg'>
         Sign up for our newsletter to stay updated with the latest news and
         updates.
       </p>
 
       <form
-        className='flex flex-row items-center gap-4'
+        className='mt-10 flex flex-row items-center gap-4'
         onSubmit={handleSubmit}
       >
-        <label htmlFor='email' className='text-md font-medium'>
+        <label htmlFor='email' className='text-xl'>
           Email
         </label>
         <input
