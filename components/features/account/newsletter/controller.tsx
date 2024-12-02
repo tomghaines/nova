@@ -13,7 +13,7 @@ export async function createWeeklyNewsletter(): Promise<string> {
     const { data, error } = await supabase.from('site_data').select('*').single();
     if (error) throw error;
 
-    const siteData = data as SiteData; 
+    const siteData = data; 
 
     // Create Mailchimp campaign
     const campaign = await mailchimp.campaigns.create({
