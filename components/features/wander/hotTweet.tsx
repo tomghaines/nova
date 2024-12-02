@@ -21,7 +21,7 @@ const HotTweet: React.FC<CardProps> = ({ label, title, content }) => {
         <p className='text-md font-thin dark:text-white'>{content}</p>
         {/* Button */}
         <div className='w-full text-right'>
-          <Button variant='link' className='mt-4 text-2xl dark:invert'>
+          <Button variant='link' className='mt-4 text-2xl'>
             ▶▶▶
           </Button>
         </div>

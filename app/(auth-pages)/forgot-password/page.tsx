@@ -4,7 +4,6 @@ import { SubmitButton } from '@/components/ui/submit-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
-import { SmtpMessage } from '../smtp-message';
 
 export default async function ForgotPassword(props: {
   searchParams: Promise<Message>;
@@ -12,9 +11,9 @@ export default async function ForgotPassword(props: {
   const searchParams = await props.searchParams;
   return (
     <>
-      <form className='mx-auto flex w-full min-w-64 max-w-64 flex-1 flex-col gap-2 text-foreground [&>input]:mb-6'>
+      <form className='mx-auto flex w-full min-w-80 max-w-80 flex-1 flex-col gap-2 rounded-3xl border p-8 text-foreground [&>input]:mb-6'>
         <div>
-          <h1 className='text-2xl font-medium'>Reset Password</h1>
+          <h1 className='text-2xl font-bold'>Reset Password</h1>
           <p className='text-sm text-secondary-foreground'>
             Already have an account?{' '}
             <Link className='text-primary underline' href='/sign-in'>
@@ -25,13 +24,12 @@ export default async function ForgotPassword(props: {
         <div className='mt-8 flex flex-col gap-2 [&>input]:mb-3'>
           <Label htmlFor='email'>Email</Label>
           <Input name='email' placeholder='you@example.com' required />
-          <SubmitButton formAction={forgotPasswordAction}>
+          <SubmitButton formAction={forgotPasswordAction} className=''>
             Reset Password
           </SubmitButton>
           <FormMessage message={searchParams} />
         </div>
       </form>
-      <SmtpMessage />
     </>
   );
 }

@@ -93,7 +93,7 @@ const config = {
       },
       fontFamily: {
         sans: [
-          '"Noto Sans"',
+          'Noto Sans',
           'ui-sans-serif',
           'system-ui',
           '-apple-system',

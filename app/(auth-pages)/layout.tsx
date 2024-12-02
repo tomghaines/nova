@@ -3,5 +3,5 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className='mt-72 flex flex-col justify-center'>{children}</div>;
+  return <div className=''>{children}</div>;
 }
