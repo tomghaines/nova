@@ -13,10 +13,7 @@ export async function createWeeklyNewsletter(): Promise<string> {
     const { data, error } = await supabase.from('site_data').select('*').single();
     if (error) throw error;
 
-    const siteData = data as SiteData;  // Assuming `SiteData` is defined elsewhere
-
-    // Generate AI content (assuming you have a function to do this)
-    const aiContent = await generateAIContent(siteData);
+    const siteData = data as SiteData; 
 
     // Create Mailchimp campaign
     const campaign = await mailchimp.campaigns.create({
@@ -33,7 +30,7 @@ export async function createWeeklyNewsletter(): Promise<string> {
     await mailchimp.campaigns.setContent(campaign.id, {
       html: `
         <h1>Weekly Newsletter</h1>
-        <p>${aiContent}</p>
+        <p>${siteData}</p>
         <!-- Add more HTML content here -->
       `,
     });
