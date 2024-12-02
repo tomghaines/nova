@@ -63,7 +63,7 @@ export const MailContent: React.FC = () => {
       <p>
         Happy trading,
         <br />
-        The Birdy.ai Team
+        The birdy.ai Team
       </p>
     </div>
   );

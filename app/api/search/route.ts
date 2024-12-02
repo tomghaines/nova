@@ -84,6 +84,7 @@ export async function POST(req: Request) {
 
     return new Response(stream);
   } catch (error) {
+    console.error('Error processing API request:', error);
     return NextResponse.json(
       { error: 'An unexpected error occurred' },
       { status: 500 }

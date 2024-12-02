@@ -38,6 +38,10 @@ const items = [
   {
     title: 'WANDER  <<<',
     url: '/wander'
+  },
+  {
+    title: 'CATALYST CALENDAR',
+    url: '/catalyst-calendar'
   }
 ];
 
