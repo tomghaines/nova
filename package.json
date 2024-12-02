@@ -45,6 +45,7 @@
     "motion": "^11.12.0",
     "next": "latest",
     "next-themes": "^0.4.3",
+    "node-cron": "^3.0.3",
     "openai": "^4.73.1",
     "react": "18.3.1",
     "react-bootstrap": "^2.10.6",
@@ -86,6 +87,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.19.2",
     "typescript": "5.6.3",
     "typescript-eslint": "^8.16.0",
     "vitest": "^2.1.5"
