@@ -9,7 +9,7 @@ import { CopyIcon } from 'lucide-react';
 import { copyToClipboard } from '@/utils/clipboardUtils';
 import { Spinner } from '@/components/ui/spinner';
 
-export const AccountDetails = () =>  {
+export const AccountDetails = () => {
   const [image, setImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [userData, setUserData] = useState<User | null>(null);
@@ -58,7 +58,7 @@ export const AccountDetails = () =>  {
         .getPublicUrl(filePath);
 
       const publicUrl = publicUrlData.publicUrl;
-      setImageUrl(publicUrl);
+      setImageUrl(`${publicUrl}?t=${new Date().getTime()}`);
 
       // Update user metadata with the avatar URL
       const { error: updateError } = await supabase.auth.updateUser({
@@ -114,11 +114,12 @@ export const AccountDetails = () =>  {
   }
 
   return (
-    <div className='flex flex-col gap-8 p-4'>
-      <h2 className='text-2xl font-bold'>Account Details</h2>
+    <div className='mt-4 flex flex-col gap-8 p-4'>
+      <h2 className='text-2xl font-bold'>Profile Setting</h2>
+
       {/* Avatar section */}
       <div className='flex gap-10'>
-        <div className='h-16 w-16'>
+        <div className='relative h-20 w-24'>
           <Avatar>
             {/* Show the image URL from state, or a default URL if not yet set */}
             <AvatarImage
@@ -128,19 +129,21 @@ export const AccountDetails = () =>  {
                 'https://github.com/shadcn.png'
               }
               alt='User Avatar'
+              className='h-20 w-20 rounded-full border border-2 border-gray-300'
             />
           </Avatar>
           {/* Edit Photo button */}
           <button
             onClick={() => setIsEditing((prev) => !prev)}
-            className='mt-4 rounded bg-blue-500 px-4 py-2 text-white'
+            className='absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full border border-black bg-white text-lg font-thin text-black hover:brightness-90 dark:invert'
           >
-            {isEditing ? 'Cancel' : 'Edit Photo'}
+            +
           </button>
         </div>
+
         {/* Display user metadata */}
 
-        <DataList.Root className='grid w-full gap-4'>
+        <DataList.Root className='ml-16 grid w-1/2 gap-1'>
           <DataList.Item className='grid grid-cols-3 items-center'>
             <DataList.Label>Account ID</DataList.Label>
             <DataList.Value>{userData.id}</DataList.Value>
@@ -151,9 +154,7 @@ export const AccountDetails = () =>  {
           </DataList.Item>
           <DataList.Item className='grid grid-cols-3 items-center'>
             <DataList.Label>Username</DataList.Label>
-            <DataList.Value>
-              {userData.user_metadata.username}
-            </DataList.Value>
+            <DataList.Value>{userData.user_metadata.username}</DataList.Value>
           </DataList.Item>
           <DataList.Item className='grid grid-cols-3 items-center'>
             <DataList.Label>Email</DataList.Label>
@@ -172,25 +173,24 @@ export const AccountDetails = () =>  {
         </DataList.Root>
       </div>
 
-  {/* Image upload form (conditionally rendered) */}
-  {isEditing && (
-    <div className='mt-6'>
-      <input
-        type='file'
-        accept='image/*'
-        onChange={handleImageChange}
-        className='mb-4'
-      />
-      <button
-        onClick={uploadImage}
-        disabled={uploading}
-        className='rounded bg-blue-500 px-4 py-2 text-white'
-      >
-        {uploading ? 'Uploading...' : 'Upload Image'}
-      </button>
+      {/* Image upload form (conditionally rendered) */}
+      {isEditing && (
+        <div className='mt-6 flex justify-center rounded-md border border-2 border-gray-200'>
+          <input
+            type='file'
+            accept='image/*'
+            onChange={handleImageChange}
+            className='mb-4 ml-6 mt-4 py-2'
+          />
+          <button
+            onClick={uploadImage}
+            disabled={uploading}
+            className='mt-6 h-7 w-[120px] rounded-sm border border-gray-600 bg-gray-100 text-black'
+          >
+            {uploading ? 'Uploading...' : 'Upload Image'}
+          </button>
+        </div>
+      )}
     </div>
-  )}
-    </div>
-
   );
-}
+};

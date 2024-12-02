@@ -13,10 +13,10 @@ export default function AccountPage() {
           Account
         </h1>
         <p className='mb-6 text-gray-600 dark:text-gray-400'>
-          View your Account&apos;s Details and manage your billing
+          View your account's details and manage your billing
         </p>
-        <Tabs className='w-full ' defaultValue='account'>
-          <TabsList className='flex justify-start rounded-md border border-zinc-300 p-5 gap-2'>
+        <Tabs className='w-full' defaultValue='account'>
+          <TabsList className='flex justify-start gap-2 rounded-md border border-zinc-300 p-5'>
             {/* Account Tab */}
             <TabsTrigger
               className='w-[150px] rounded-md py-2 text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
@@ -32,6 +32,8 @@ export default function AccountPage() {
             >
               Billing
             </TabsTrigger>
+
+            {/* Newsletter Tab */}
             <TabsTrigger
               className='w-[150px] rounded-md text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
               value='newsletter'
@@ -41,14 +43,14 @@ export default function AccountPage() {
           </TabsList>
 
           {/* Tab Content */}
-          <TabsContent value='account' >
+          <TabsContent value='account'>
             <AccountDetails />
           </TabsContent>
           <TabsContent value='billing'>
-            <Billing/>
+            <Billing />
           </TabsContent>
-          <TabsContent value='newsletter' >
-            <Newsletter/>
+          <TabsContent value='newsletter'>
+            <Newsletter />
           </TabsContent>
         </Tabs>
       </div>

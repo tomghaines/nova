@@ -44,7 +44,7 @@ export function SearchBar() {
           {isTokenOpen && (
             <CommandList
               onClick={onSelectToken}
-              className='absolute top-full z-50 w-full bg-white shadow-lg dark:bg-gray-800'
+              className='top-full z-50 w-full bg-white shadow-lg dark:bg-gray-800'
             >
               <CommandGroup heading='Tokens'>
                 <CommandItem value='$BTC'>
