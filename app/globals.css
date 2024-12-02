@@ -98,13 +98,23 @@
   }
 }
 
-@layer utilities {
-  .scrollbar-hide {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer and Edge */
-  }
+::-webkit-scrollbar {
+  width: 8px;
+}
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
-  }
+::-webkit-scrollbar-track {
+  background-color: #e6e6e6 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #bfbfbf !important;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background-color: #18181a !important;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #393939 !important;
 }
