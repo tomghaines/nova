@@ -32,6 +32,8 @@ export default function AccountPage() {
             >
               Billing
             </TabsTrigger>
+
+            {/* Newsletter Tab */}
             <TabsTrigger
               className='w-[150px] rounded-md text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
               value='newsletter'

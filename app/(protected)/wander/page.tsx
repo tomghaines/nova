@@ -30,7 +30,6 @@ export default function Page() {
       {mockData
         .sort((a, b) => b.significance - a.significance)
         .map((card, index) => {
-          const randomColor = `var(--branding)`;
           return (
             <div key={index} className='w-[calc(33.333%-1rem)]'>
               {card.type === 'tweet' ? (
@@ -38,13 +37,9 @@ export default function Page() {
                   label={card.label}
                   title={card.title}
                   content={card.content}
-                  backgroundColor={randomColor}
                 />
               ) : (
-                <HotNarrative
-                  label={card.label}
-                  backgroundColor={randomColor}
-                />
+                <HotNarrative label={card.label} />
               )}
             </div>
           );
