@@ -3,6 +3,7 @@ import ImageWithFallback from '../ui/image-with-fallback';
 import placeholderLogo from '@/public/assets/missing-logo-placeholder.svg';
 import { FaLink } from 'react-icons/fa';
 import { Badge } from '@radix-ui/themes';
+import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
 import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import type Token from '@/@types/data/catalyst-calendar/token';
 
@@ -30,7 +31,14 @@ export default function EventItem({ event, token }: EventItemProps) {
         </div>
       </td>
       <td className='p-2'>
-        <Badge className='rounded-md px-1' color='indigo'>
+        <Badge
+          className='rounded-md px-1'
+          color={
+            eventTypeToColor[
+              event.eventType as keyof typeof eventTypeToColor
+            ] || 'indigo'
+          }
+        >
           {event.eventType}
         </Badge>
       </td>
