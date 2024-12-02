@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { DropdownMenu } from '@radix-ui/themes';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
 import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
@@ -22,7 +23,7 @@ export default function FilterEvents({
     setSelectedFilters((prev) => {
       const newFilters = new Set(prev);
       if (newFilters.has(eventType)) {
-        newFilters.delete(eventType); // Remove filter
+        newFilters.delete(eventType);
       } else {
         newFilters.add(eventType);
       }
@@ -41,7 +42,7 @@ export default function FilterEvents({
         selectedFilters.size === 0 || selectedFilters.has(event.eventType)
     );
 
-    // Sort the filtered events by date_start (soonest to latest)
+    // Sort the filtered events by date_start
     const sortedEvents = filteredEvents.sort(
       (a, b) =>
         new Date(a.date_start).getTime() - new Date(b.date_start).getTime()
@@ -57,12 +58,12 @@ export default function FilterEvents({
   );
 
   return (
-    <div className='flex h-fit flex-col gap-4 rounded-lg bg-neutral-800 px-3 py-4'>
+    <div className='flex h-fit flex-col gap-4 rounded-lg border-[1px] border-neutral-700 bg-neutral-800 px-3 py-4'>
       <div className='flex items-center justify-between'>
         <h2 className='text-2xl'>Filter</h2>
         <div
           onClick={resetFilters}
-          className='flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-400 hover:bg-neutral-700'
+          className='flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-400 hover:border-neutral-500 hover:bg-neutral-700'
         >
           <GrPowerReset />
           <p>Reset Filters</p>
