@@ -14,7 +14,7 @@ interface EventItemProps {
 
 export default function EventItem({ event, token }: EventItemProps) {
   return (
-    <tr className='odd:bg-white even:bg-gray-50 dark:odd:bg-neutral-900 dark:even:bg-neutral-800'>
+    <tr className='odd:bg-white even:bg-gray-100 dark:odd:bg-neutral-900 dark:even:bg-neutral-800'>
       <td className='p-2'>{event.date_start}</td>
       <td className='p-2'>{event.date_end}</td>
       <td className='p-2'>

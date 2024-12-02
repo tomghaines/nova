@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import EventItem from '@/components/catalyst-calendar/event-item';
 import FilterEvents from '@/components/catalyst-calendar/filter-events';
 import { Spinner } from '@/components/ui/spinner';
@@ -18,35 +18,50 @@ export default function CatalystCalendar() {
     loadMore
   } = useCalendarList();
 
-  const [filteredEvents, setFilteredEvents] = useState<CalendarEvent[]>([]);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [visibleEvents, setVisibleEvents] = useState<number>(100);
+  const [sortDirection, setSortDirection] = useState<string>('asc');
 
-  // Update filtered events when base events change
-  useEffect(() => {
+  // Filter events based on active filters
+  const filteredEvents = useMemo(() => {
+    const filtered =
+      activeFilters.size === 0
+        ? events
+        : events.filter((event) => activeFilters.has(event.eventType));
+
+    // Sort the filtered events
+    return [...filtered].sort((a, b) => {
+      const dateA = new Date(a.date_start).getTime();
+      const dateB = new Date(b.date_start).getTime();
+      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+  }, [events, activeFilters, sortDirection]);
+
+  // Get the events to display based on filters and visible count
+  const displayedEvents = useMemo(() => {
     if (activeFilters.size === 0) {
-      // If no filters, show only first 100 events
-      setFilteredEvents(events.slice(0, 100));
-    } else {
-      // If filters are active, apply them
-      const filtered = events.filter((event) =>
-        activeFilters.has(event.eventType)
-      );
-      setFilteredEvents(filtered);
+      return filteredEvents.slice(0, visibleEvents);
     }
-  }, [events, activeFilters]);
+    return filteredEvents;
+  }, [filteredEvents, visibleEvents, activeFilters]);
 
   const handleLoadMore = async () => {
-    setLoadingMore(true);
-    await loadMore();
-    setLoadingMore(false);
+    try {
+      setLoadingMore(true);
+      await loadMore();
+      setVisibleEvents((prev) => prev + 100);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
-  // Only show Load More if we're not filtering and have exactly 100 events
-  const showLoadMore =
-    activeFilters.size === 0 &&
-    filteredEvents.length === 100 &&
-    originalHasMore;
+  // Reset visible events when filters change
+  useEffect(() => {
+    setVisibleEvents(100);
+  }, [activeFilters]);
+
+  const showLoadMore = activeFilters.size === 0 && originalHasMore;
 
   if (isLoading) return <Spinner />;
   if (error) return <div>Error: {error}</div>;
@@ -66,14 +81,14 @@ export default function CatalystCalendar() {
       <div className='flex gap-4'>
         <FilterEvents
           events={events}
-          setFilteredEvents={setFilteredEvents}
           activeFilters={activeFilters}
           setActiveFilters={setActiveFilters}
+          onSortChange={setSortDirection}
         />
-        {filteredEvents && filteredEvents.length > 0 ? (
+        {displayedEvents && displayedEvents.length > 0 ? (
           <>
             <div className='flex w-full flex-col'>
-              <table className='w-full table-fixed'>
+              <table className='w-full table-fixed text-sm'>
                 <thead>
                   <tr className='text-left dark:text-neutral-300'>
                     <th className='p-2 font-medium'>Event Start Date</th>
@@ -86,13 +101,15 @@ export default function CatalystCalendar() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredEvents.map((event: CalendarEvent, index: number) => (
-                    <EventItem
-                      key={`${event.coin_id}-${event.date_start}-${index}`}
-                      event={event}
-                      token={tokenData[event.coin_id]}
-                    />
-                  ))}
+                  {displayedEvents.map(
+                    (event: CalendarEvent, index: number) => (
+                      <EventItem
+                        key={`${event.coin_id}-${event.date_start}-${index}`}
+                        event={event}
+                        token={tokenData[event.coin_id]}
+                      />
+                    )
+                  )}
                 </tbody>
               </table>
               {showLoadMore && (
