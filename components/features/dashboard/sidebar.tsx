@@ -129,8 +129,10 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
                 className='w-[--radix-popper-anchor-width]'
               >
                 <DropdownMenuItem>
-                  <Button className='w-full text-left'>
-                    <a href='/account'>Account</a>
+                  <Button className='w-full cursor-pointer'>
+                    <a className='w-full' href='/account'>
+                      Account
+                    </a>
                   </Button>
                 </DropdownMenuItem>
                 <form action={signOutAction} onSubmit={handleSignOut}>
@@ -139,7 +141,9 @@ export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
                       type='submit'
                       className='w-full hover:cursor-pointer'
                     >
-                      <a href='/home'>Sign out</a>
+                      <a className='w-full' href='/home'>
+                        Sign out
+                      </a>
                     </Button>
                   </DropdownMenuItem>
                 </form>
