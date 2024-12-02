@@ -114,7 +114,7 @@ export const AccountDetails = () => {
   }
 
   return (
-    <div className='flex flex-col gap-8 p-4'>
+    <div className='mt-4 flex flex-col gap-8 p-4'>
       <h2 className='text-2xl font-bold'>Profile Setting</h2>
 
       {/* Avatar section */}
@@ -135,7 +135,7 @@ export const AccountDetails = () => {
           {/* Edit Photo button */}
           <button
             onClick={() => setIsEditing((prev) => !prev)}
-            className='absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full border border-black bg-white text-lg font-thin hover:brightness-90'
+            className='absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full border border-black bg-white text-lg font-thin text-black hover:brightness-90 dark:invert'
           >
             +
           </button>
