@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+import React from 'react';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import mailchimp from './mailchimpSetup';
 import { MailContent } from './mailContent';
@@ -8,6 +11,10 @@ import cron from 'node-cron';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Supabase URL and Key are required.');
+}
 
 // Function to add a new subscriber to Supabase and Mailchimp
 export async function addSubscriber(email: string): Promise<void> {
@@ -43,7 +50,7 @@ export async function createWeeklyNewsletter(): Promise<string> {
       settings: {
         subject_line: 'Birdy Newsletter: The Latest in Web3 Trends',
         from_name: 'birdy.ai',
-        reply_to: 'noreply@birdy.ai'
+        reply_to: 'melzhou1204@gmail.com'
       }
     });
 
