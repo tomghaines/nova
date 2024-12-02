@@ -1,11 +1,10 @@
 import React from 'react';
+import SentimentChart from '../../seek/sentimentChart';
+// import MindshareMap from '@/components/features/seek/mindshareMap';
 
 export const MailContent: React.FC = () => {
   const username = '';
   const summary = '';
-  const bullish = '';
-  const bearish = '';
-  const opinion = '';
 
   return (
     <div>
@@ -24,17 +23,14 @@ export const MailContent: React.FC = () => {
 
       {/* Seek */}
       <h2>🎭 Sentiment</h2>
-      <img src='https://yourdomain.com/chart.png' alt='Trending Chart' />
-      <p>${bullish}</p>
-      <p>${bearish}</p>
+      <SentimentChart />
 
-      <h2>👁️ Mindshare</h2>
-      <img src='https://yourdomain.com/chart.png' alt='Mindshare Chart' />
-      <p>${opinion}</p>
+      {/* <h2>👁️ Mindshare</h2>
+      <MindshareMap />
 
       {/* Wander */}
-      <h2>🔍 Discussions</h2>
-      <p></p>
+      {/* <h2>🔍 Discussions</h2>
+      <p></p> */}
 
       {/* Footer */}
       <a
