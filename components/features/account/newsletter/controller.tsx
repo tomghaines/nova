@@ -38,10 +38,46 @@ export async function addSubscriber(email: string): Promise<void> {
   }
 }
 
+async function fetchSummary(): Promise<string> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minutes
+
+    const response = await fetch('http://localhost:3000/api/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        keywords: 'Web3 weekly trends',
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.summary || 'No summary available';
+    } else {
+      return 'Failed to load summary. Please try again later.';
+    }
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      console.error('Fetch request timed out');
+      return 'The request took too long and was aborted.';
+    } else {
+      console.error('Error fetching summary:', error);
+      return 'An error occurred while fetching the summary.';
+    }
+  }
+}
+
 // Function to create a weekly newsletter campaign
 export async function createWeeklyNewsletter(): Promise<string> {
   try {
-    const mailContentHtml = renderToStaticMarkup(<MailContent />);
+    const summary = await fetchSummary(); 
+    const mailContentHtml = renderToStaticMarkup(<MailContent summary={summary}/>);
 
     // Create Mailchimp campaign
     const campaign = await mailchimp.campaigns.create({
