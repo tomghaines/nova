@@ -1,59 +1,99 @@
+// useCalendarList.ts
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import supabase from '@/utils/supabase/client';
-import type CalendarEvent from '@/@types/data/catalyst-calendar';
-
-interface CoinData {
-  id: string;
-  image_64: string; // Changed from logo to image_64
-}
+import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
+import type Token from '@/@types/data/catalyst-calendar/token';
 
 export function useCalendarList() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [tokenData, setTokenData] = useState<Record<string, CoinData>>({});
+  const [tokenData, setTokenData] = useState<Record<string, Token>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const pageSize = 100;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
+  const fetchData = useCallback(async (page: number) => {
+    try {
+      setIsLoading(true);
 
-        const eventsResponse = await fetch('/api/catalyst-calendar');
-        const eventsData: CalendarEvent[] = await eventsResponse.json();
+      const eventsResponse = await fetch(
+        `/api/catalyst-calendar?page=${page}&pageSize=${pageSize}`
+      );
+      const eventsData: CalendarEvent[] = await eventsResponse.json();
 
-        const tokenIds = Array.from(
-          new Set(eventsData.map((event) => event.coin_id))
-        );
-
-        const { data: coins, error: supabaseError } = await supabase
-          .from('tokens')
-          .select('id, image_64')
-          .in('id', tokenIds);
-
-        if (supabaseError) throw supabaseError;
-
-        const tokenMap = (coins || []).reduce<Record<string, CoinData>>(
-          (acc, coin) => ({
-            ...acc,
-            [coin.id]: { id: coin.id, image_64: coin.image_64 }
-          }),
-          {}
-        );
-
-        setEvents(eventsData);
-        setTokenData(tokenMap);
-      } catch (err) {
-        console.error('Fetch error:', err);
-        setError(err instanceof Error ? err.message : 'Error fetching data');
-      } finally {
-        setIsLoading(false);
+      // If we get fewer events than pageSize, we've reached the end
+      if (eventsData.length < pageSize) {
+        setHasMore(false);
       }
-    };
 
-    fetchData();
+      const tokenIds = Array.from(
+        new Set(eventsData.map((event) => event.coin_id))
+      );
+
+      const { data: coins, error: supabaseError } = await supabase
+        .from('tokens')
+        .select('id, name, symbol, image_64')
+        .in('id', tokenIds);
+
+      if (supabaseError) throw supabaseError;
+
+      const tokenMap = (coins || []).reduce<Record<string, Token>>(
+        (acc, token) => ({
+          ...acc,
+          [token.id]: {
+            id: token.id,
+            name: token.name,
+            symbol: token.symbol,
+            image_64: token.image_64
+          }
+        }),
+        {}
+      );
+
+      // For first page, replace events. For subsequent pages, append
+      setEvents((prevEvents) =>
+        page === 1 ? eventsData : [...prevEvents, ...eventsData]
+      );
+      setTokenData((prevTokens) => ({ ...prevTokens, ...tokenMap }));
+    } catch (err) {
+      console.error('Fetch error:', err);
+      setError(err instanceof Error ? err.message : 'Error fetching data');
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  return { events, tokenData, isLoading, error };
+  // Initial load
+  useEffect(() => {
+    fetchData(1);
+  }, [fetchData]);
+
+  // Function to load more data
+  const loadMore = async () => {
+    if (!isLoading && hasMore) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      await fetchData(nextPage);
+    }
+  };
+
+  // Function to refresh data
+  const refresh = async () => {
+    setCurrentPage(1);
+    setHasMore(true);
+    await fetchData(1);
+  };
+
+  return {
+    events,
+    tokenData,
+    isLoading,
+    error,
+    hasMore,
+    loadMore,
+    refresh
+  };
 }
