@@ -58,12 +58,12 @@ export default function FilterEvents({
   );
 
   return (
-    <div className='flex h-fit flex-col gap-4 rounded-lg border-[1px] border-neutral-700 bg-neutral-800 px-3 py-4'>
-      <div className='flex items-center justify-between'>
+    <div className='flex h-fit flex-col gap-4 rounded-lg border-[1px] border-neutral-300 bg-neutral-200 px-3 py-4 dark:border-neutral-700 dark:bg-neutral-800'>
+      <div className='flex items-center justify-between dark:text-neutral-400'>
         <h2 className='text-2xl'>Filter</h2>
         <div
           onClick={resetFilters}
-          className='flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-400 hover:border-neutral-500 hover:bg-neutral-700'
+          className='hover:border-neutral- flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-400 hover:bg-neutral-300 dark:hover:border-neutral-500 dark:hover:bg-neutral-700'
         >
           <GrPowerReset />
           <p>Reset Filters</p>
