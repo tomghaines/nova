@@ -32,11 +32,7 @@ function RootContent({ children }: { children: React.ReactNode }) {
 
         <div className='flex flex-1 flex-col justify-center'>
           {/* top navbar */}
-<<<<<<< HEAD
-          <div className='bg-blur fixed top-0 flex h-20 w-full justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black'>
-=======
-          <div className='flex-1 bg-blur fixed top-0 w-full flex h-20 justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black'>
->>>>>>> 2a5e42a (editing mailContent)
+          <div className='bg-blur sticky top-0 flex h-20 justify-between border-b-2 bg-white bg-opacity-90 dark:bg-black'>
             {/* Element #1: Sidebar Trigger */}
             <div className='ml-7 mt-6'>
               <SidebarTrigger />
