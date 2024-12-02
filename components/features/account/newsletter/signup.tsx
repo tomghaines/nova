@@ -61,7 +61,7 @@ export const Newsletter = () => {
           id='email'
           name='email'
           required
-          className='p-2 w-64 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500'
+          className='p-2 w-64 border border-gray-300 text-zinc-800 rounded-lg focus:outline-none focus:border-blue-500'
           placeholder='Enter your email address'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
