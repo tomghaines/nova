@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { Select } from '@radix-ui/themes';
-import { Badge, Button } from '@radix-ui/themes';
+import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
 import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
@@ -57,8 +57,8 @@ export default function FilterEvents({
       </div>
       <div className='flex flex-col items-start gap-2'>
         <Select.Root defaultValue='asc' onValueChange={onSortChange}>
-          <Select.Trigger className='bg-neutral-900'>
-            <Button className='w-24 bg-transparent'>Sort By Date</Button>
+          <Select.Trigger className='dark:bg-neutral-900'>
+            Sort By Date
           </Select.Trigger>
           <Select.Content>
             <Select.Item className='hover:bg-indigo-500' value='asc'>
