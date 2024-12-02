@@ -30,14 +30,14 @@ export async function POST(req: Request) {
     const run = await apifyClient.actor('apidojo/tweet-scraper').call({
       customMapFunction: '(object) => { return {...object} }',
       includeSearchTerms: true,
-      maxItems: 15,
+      maxItems: 35,
       onlyImage: false,
       onlyQuote: false,
       onlyTwitterBlue: false,
       onlyVerifiedUsers: false,
       onlyVideo: false,
       searchTerms,
-      sort: 'Latest',
+      sort: 'Top',
       tweetLanguage: 'en'
     });
 
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
               role: 'system',
               content: `Analyze these tweets about "${keywords || symbol}".
                If they appear to be about cryptocurrency or trading, focus on market sentiment and price discussion.
-               If not, provide a general analysis of the discussion topics and sentiment.`
+               If not, provide a general analysis of the discussion topics and sentiment with several pointers for each.`
             },
             {
               role: 'user',

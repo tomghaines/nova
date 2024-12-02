@@ -1,84 +1,81 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { DropdownMenu } from '@radix-ui/themes';
+import { useCallback } from 'react';
+import { Select } from '@radix-ui/themes';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
-import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
+import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
+
+interface FilterEventsProps {
+  events: CalendarEvent[];
+  activeFilters: Set<string>;
+  setActiveFilters: React.Dispatch<React.SetStateAction<Set<string>>>;
+  onSortChange: (direction: string) => void;
+}
 
 export default function FilterEvents({
   events,
-  setFilteredEvents
-}: {
-  events: CalendarEvent[];
-  setFilteredEvents: (events: CalendarEvent[]) => void;
-}) {
-  const [selectedFilters, setSelectedFilters] = useState<Set<string>>(
-    new Set()
+  activeFilters,
+  setActiveFilters,
+  onSortChange // Add this prop
+}: FilterEventsProps) {
+  const handleFilterToggle = useCallback(
+    (eventType: string) => {
+      setActiveFilters((prev) => {
+        const newFilters = new Set(prev);
+        if (newFilters.has(eventType)) {
+          newFilters.delete(eventType);
+        } else {
+          newFilters.add(eventType);
+        }
+        return newFilters;
+      });
+    },
+    [setActiveFilters]
   );
 
-  // Toggle selected filter
-  const handleFilterToggle = (eventType: string) => {
-    setSelectedFilters((prev) => {
-      const newFilters = new Set(prev);
-      if (newFilters.has(eventType)) {
-        newFilters.delete(eventType);
-      } else {
-        newFilters.add(eventType);
-      }
-      return newFilters;
-    });
-  };
+  const resetFilters = useCallback(() => {
+    setActiveFilters(new Set());
+  }, [setActiveFilters]);
 
-  const resetFilters = () => {
-    setSelectedFilters(new Set());
-  };
-
-  // Filter and sort events based on selected filters
-  useEffect(() => {
-    const filteredEvents = events.filter(
-      (event) =>
-        selectedFilters.size === 0 || selectedFilters.has(event.eventType)
-    );
-
-    // Sort the filtered events by date_start
-    const sortedEvents = filteredEvents.sort(
-      (a, b) =>
-        new Date(a.date_start).getTime() - new Date(b.date_start).getTime()
-    );
-
-    // Update filtered events in the parent component
-    setFilteredEvents(sortedEvents);
-  }, [selectedFilters, events, setFilteredEvents]); // Re-run whenever selectedFilters or events change
-
-  // Get unique event types from the events
   const uniqueEventTypes = Array.from(
     new Set(events.map((event) => event.eventType))
   );
 
   return (
-    <div className='flex h-fit flex-col gap-4 rounded-lg border-[1px] border-neutral-300 bg-neutral-200 px-3 py-4 dark:border-neutral-700 dark:bg-neutral-800'>
+    <div className='flex h-fit flex-col gap-4 rounded-lg border-[1px] border-gray-200 bg-gray-100 px-3 py-4 dark:border-neutral-700 dark:bg-neutral-800'>
       <div className='flex items-center justify-between dark:text-neutral-400'>
         <h2 className='text-2xl'>Filter</h2>
         <div
           onClick={resetFilters}
-          className='hover:border-neutral- flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-400 hover:bg-neutral-300 dark:hover:border-neutral-500 dark:hover:bg-neutral-700'
+          className='hover:border-neutral- flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-500 hover:bg-gray-200 dark:hover:border-neutral-500 dark:hover:bg-neutral-700'
         >
           <GrPowerReset />
           <p>Reset Filters</p>
         </div>
       </div>
       <div className='flex flex-col items-start gap-2'>
+        <Select.Root defaultValue='asc' onValueChange={onSortChange}>
+          <Select.Trigger className='dark:bg-neutral-900'>
+            Sort By Date
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item className='hover:bg-indigo-500' value='asc'>
+              Date (Asc)
+            </Select.Item>
+            <Select.Item className='hover:bg-indigo-500' value='desc'>
+              Date (Desc)
+            </Select.Item>
+          </Select.Content>
+        </Select.Root>
         <h3>Event Type</h3>
         <div className='flex max-w-80 flex-wrap gap-2'>
           {uniqueEventTypes.map((eventType) => (
             <Badge
               key={eventType}
               className={`cursor-pointer rounded-md px-1 ${
-                selectedFilters.has(eventType)
-                  ? 'border-2 border-indigo-400'
-                  : ''
+                activeFilters.has(eventType) ? 'border-2 border-indigo-500' : ''
               }`}
               color={
                 eventTypeToColor[eventType as keyof typeof eventTypeToColor]

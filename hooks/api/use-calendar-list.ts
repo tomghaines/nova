@@ -5,12 +5,6 @@ import supabase from '@/utils/supabase/client';
 import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 import type Token from '@/@types/data/catalyst-calendar/token';
 
-// Add an interface for tag data
-interface TagData {
-  id: string;
-  name: string;
-}
-
 export function useCalendarList() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [tokenData, setTokenData] = useState<Record<string, Token>>({});

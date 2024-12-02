@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+interface MailContentProps {
+  username: string;
+  summary: string;
+}
+
 export const MailContent: React.FC = () => {
   const [username, setUsername] = useState<string>('User');
   const [summary, setSummary] = useState<string>('Loading summary...');
