@@ -8,8 +8,6 @@ interface MailContentProps {
 }
 
 export const MailContent: React.FC<MailContentProps> = ({ username, summary }) => {
-  const username = '';
-  const summary = '';
 
   return (
     <div>
