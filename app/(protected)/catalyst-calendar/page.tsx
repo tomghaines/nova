@@ -22,13 +22,22 @@ export default function CatalystCalendar() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='flex w-full flex-col space-y-8 p-6 text-neutral-400 dark:bg-zinc-800'>
-      <h2 className='text-2xl font-bold text-neutral-300'>Catalyst Calendar</h2>
+    <div className='flex w-full flex-col space-y-4 p-6 dark:bg-neutral-900 dark:text-neutral-400'>
+      <h2 className='text-3xl font-bold dark:text-neutral-300'>
+        Catalyst Calendar
+      </h2>
+      <p>
+        The Catalyst Calendar assists in tracking events and catalysts for over
+        1000+ tokens across crypto.
+        <br />
+        Events include DAO/Governance Votes, AMAs, Burns, Lock & Unlock, New
+        Releases and more!
+      </p>
       {events && events.length > 0 ? (
         <>
           <table className='w-full'>
             <thead>
-              <tr className='text-left text-neutral-300'>
+              <tr className='text-left dark:text-neutral-300'>
                 <th className='p-2 font-medium'>Event Start Date</th>
                 <th className='p-2 font-medium'>Event End Date</th>
                 <th className='p-2 font-medium'>Project</th>
@@ -50,11 +59,11 @@ export default function CatalystCalendar() {
           </table>
           {/* Load More Events Button */}
           {hasMore && (
-            <div className='flex justify-center py-4'>
+            <div className='flex justify-center'>
               <Button
                 onClick={handleLoadMore}
                 disabled={loadingMore}
-                className='min-w-[200px] cursor-pointer rounded-md bg-gray-200 p-3 text-neutral-300 hover:bg-gray-300 dark:bg-neutral-900 dark:hover:bg-neutral-700'
+                className='min-w-[200px] cursor-pointer rounded-md bg-gray-200 p-3 hover:bg-gray-300 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700'
               >
                 {loadingMore ? <Spinner size='small' /> : 'Load More Events'}
               </Button>
