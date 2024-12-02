@@ -86,6 +86,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.19.2",
     "typescript": "5.6.3",
     "typescript-eslint": "^8.16.0",
     "vitest": "^2.1.5"

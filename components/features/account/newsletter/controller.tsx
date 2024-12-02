@@ -1,6 +1,8 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import mailchimp from './mailchimpSetup';
 import { MailContent } from './mailContent';
+import { renderToStaticMarkup } from 'react-dom/server';
+import cron from 'node-cron';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -59,7 +61,7 @@ export async function createWeeklyNewsletter(): Promise<string> {
 }
 
 // Function to send the weekly newsletter campaign
-export async function sendWeeklyNewsletter(campaignId: string): Promise<void> {
+export async function sendWeeklyNewsletter(): Promise<void> {
   try {
     const campaignId = await createWeeklyNewsletter();
     await mailchimp.campaigns.send(campaignId);
@@ -70,4 +72,8 @@ export async function sendWeeklyNewsletter(campaignId: string): Promise<void> {
   }
 }
 
-
+// Schedule the function to run every Mondy at 9 AM
+cron.schedule('0 9 * * 1', () => {
+  console.log('Running weekly newsletter job...');
+  sendWeeklyNewsletter();
+});
