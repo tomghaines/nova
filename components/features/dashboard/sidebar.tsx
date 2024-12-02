@@ -32,11 +32,11 @@ const items = [
     url: '/home'
   },
   {
-    title: 'SEEK  >>>',
+    title: 'DASHBOARD',
     url: '/seek'
   },
   {
-    title: 'WANDER  <<<',
+    title: 'DISCOVER',
     url: '/wander'
   },
   {

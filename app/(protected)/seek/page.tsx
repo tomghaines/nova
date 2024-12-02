@@ -24,8 +24,6 @@ export function PageContent() {
         <div className='relative mb-12 mt-32'>
           <SearchBar />
         </div>
-        {/* AI-Summary */}
-        <div className='AI-Summary'></div>
         {/* Sentiment Analysis */}
         <SentimentDashboard key={selectedCoinSymbol} />
         {/* Mindshare Map  */}

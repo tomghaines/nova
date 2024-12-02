@@ -67,7 +67,7 @@ export default function CatalystCalendar() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='flex h-max w-full flex-col gap-4 p-6 dark:bg-neutral-900 dark:text-neutral-400'>
+    <div className='mt-24 flex h-max w-full flex-col gap-4 p-6 dark:bg-neutral-900 dark:text-neutral-400'>
       <h2 className='text-3xl font-bold dark:text-neutral-300'>
         Catalyst Calendar
       </h2>
