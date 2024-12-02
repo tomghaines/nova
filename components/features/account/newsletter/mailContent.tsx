@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 interface MailContentProps {
   summary: string;
@@ -10,11 +10,7 @@ export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
     <div>
       {/* Heading */}
       <h1>birdy.ai Newsletter: The Latest in Web3 Trends</h1>
-<<<<<<< HEAD
-      <p>Hello {username},</p>
-=======
       <p>Hello,</p >
->>>>>>> cfa1fc0 (update createNewsletter func)
       <p>
         Here's your weekly dose of insights and trends happening in the Web3
         world. Stay updated with the latest market shifts and narratives

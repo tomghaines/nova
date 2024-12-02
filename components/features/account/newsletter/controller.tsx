@@ -57,9 +57,10 @@ async function fetchSummary(): Promise<string> {
     clearTimeout(timeoutId);
 
     if (response.ok) {
-      const data = await response.json();
-      return data.summary || 'No summary available';
+      const data = await response.text();
+      return data;
     } else {
+      console.error('Failed to fetch summary:', response.statusText);
       return 'Failed to load summary. Please try again later.';
     }
   } catch (error) {
@@ -73,11 +74,21 @@ async function fetchSummary(): Promise<string> {
   }
 }
 
+// Function to format the summary for HTML
+function formatSummary(summary: string): string {
+  return summary
+    .replace(/^###\s+/gm, '<h2>')       // Replace '### ' with an HTML <h2> tag
+    .replace(/####\s+/gm, '<h3>')        // Replace '#### ' with an HTML <h3> tag
+    .replace(/-\s+/g, '<li>')            // Replace '- ' with an HTML list item tag <li>
+    .replace(/(\*\*)(.+?)(\*\*)/g, '<b>$2</b>'); // Replace '** **' with bold <b> tag
+}
+
 // Function to create a weekly newsletter campaign
 export async function createWeeklyNewsletter(): Promise<string> {
   try {
     const summary = await fetchSummary(); 
-    const mailContentHtml = renderToStaticMarkup(<MailContent summary={summary}/>);
+    const formattedSummary = formatSummary(summary);
+    const mailContentHtml = renderToStaticMarkup(<MailContent summary={formattedSummary} />);
 
     // Create Mailchimp campaign
     const campaign = await mailchimp.campaigns.create({
