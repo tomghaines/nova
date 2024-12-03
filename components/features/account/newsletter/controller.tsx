@@ -6,6 +6,7 @@ import mailchimp from './mailchimpSetup';
 import { MailContent } from './mailContent';
 import { renderToStaticMarkup } from 'react-dom/server';
 import cron from 'node-cron';
+import showdown from 'showdown';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -46,12 +47,12 @@ async function fetchSummary(): Promise<string> {
     const response = await fetch('http://localhost:3000/api/search', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        keywords: 'Web3 weekly trends',
+        keywords: 'Web3 weekly trends'
       }),
-      signal: controller.signal,
+      signal: controller.signal
     });
 
     clearTimeout(timeoutId);
@@ -75,20 +76,23 @@ async function fetchSummary(): Promise<string> {
 }
 
 // Function to format the summary for HTML
-function formatSummary(summary: string): string {
+/* function formatSummary(summary: string): string {
   return summary
     .replace(/^###\s+/gm, '<h2>')       // Replace '### ' with an HTML <h2> tag
     .replace(/####\s+/gm, '<h3>')        // Replace '#### ' with an HTML <h3> tag
     .replace(/-\s+/g, '<li>')            // Replace '- ' with an HTML list item tag <li>
     .replace(/(\*\*)(.+?)(\*\*)/g, '<b>$2</b>'); // Replace '** **' with bold <b> tag
-}
+} */
+const converter = new showdown.Converter();
 
 // Function to create a weekly newsletter campaign
 export async function createWeeklyNewsletter(): Promise<string> {
   try {
-    const summary = await fetchSummary(); 
-    const formattedSummary = formatSummary(summary);
-    const mailContentHtml = renderToStaticMarkup(<MailContent summary={formattedSummary} />);
+    const summary = await fetchSummary();
+    const formattedSummary = converter.makeHtml(summary);
+    const mailContentHtml = renderToStaticMarkup(
+      <MailContent summary={formattedSummary} />
+    );
 
     // Create Mailchimp campaign
     const campaign = await mailchimp.campaigns.create({
