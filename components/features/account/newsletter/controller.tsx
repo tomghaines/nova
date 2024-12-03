@@ -86,9 +86,9 @@ function formatSummary(summary: string): string {
 // Function to create a weekly newsletter campaign
 export async function createWeeklyNewsletter(): Promise<string> {
   try {
-    const summary = await fetchSummary(); 
-    const formattedSummary = formatSummary(summary);
-    const mailContentHtml = renderToStaticMarkup(<MailContent summary={formattedSummary} />);
+    /* const summary = await fetchSummary(); 
+    const formattedSummary = formatSummary(summary); */
+    const mailContentHtml = renderToStaticMarkup(<MailContent summary='test'/* { formattedSummary } */ />);
 
     // Create Mailchimp campaign
     const campaign = await mailchimp.campaigns.create({
