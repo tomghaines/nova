@@ -51,7 +51,7 @@ export default function FilterEvents({
         <h2 className='text-2xl'>Filter</h2>
         <div
           onClick={resetFilters}
-          className='hover:border-neutral- flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-indigo-500 hover:bg-gray-200 dark:hover:border-neutral-500 dark:hover:bg-neutral-700'
+          className='hover:border-neutral- flex cursor-pointer items-center gap-1 rounded-md p-1 text-sm text-emerald-500 hover:bg-gray-200 dark:hover:border-neutral-500 dark:hover:bg-neutral-700'
         >
           <GrPowerReset />
           <p>Reset Filters</p>
@@ -63,10 +63,10 @@ export default function FilterEvents({
             Sort By Date
           </Select.Trigger>
           <Select.Content>
-            <Select.Item className='hover:bg-indigo-500' value='asc'>
+            <Select.Item className='hover:bg-emerald-500' value='asc'>
               Date (Asc)
             </Select.Item>
-            <Select.Item className='hover:bg-indigo-500' value='desc'>
+            <Select.Item className='hover:bg-emerald-500' value='desc'>
               Date (Desc)
             </Select.Item>
           </Select.Content>
