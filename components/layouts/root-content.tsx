@@ -3,7 +3,7 @@
 import { useTheme } from '@/app/context/theme';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/features/sidebar/sidebar';
-import { Navbar } from './features/navbar/navbar';
+import { Navbar } from '../features/navbar/navbar';
 
 interface RootContentProps {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export function RootContent({ children }: RootContentProps) {
   return (
     <SidebarProvider>
       <div className='flex min-h-screen w-full'>
-        <AppSidebar isNightMode={isNightMode} />
+        <AppSidebar />
         <main className='flex flex-1 flex-col'>
           <Navbar isNightMode={isNightMode} onThemeToggle={toggleTheme} />
           <div className='mt-20 flex w-full'>{children}</div>

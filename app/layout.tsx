@@ -1,7 +1,7 @@
 'use client';
 
 import { ThemeProvider } from '@/app/context/theme';
-import { RootContent } from '@/components/root-content';
+import { RootContent } from '@/components/layouts/root-content';
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import './globals.css';
