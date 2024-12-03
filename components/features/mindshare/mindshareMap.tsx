@@ -67,11 +67,12 @@ export const MindshareMap = ({ onLoadComplete }) => {
       .size([width, height])
       .padding(cellPadding)
       .round(true)(root);
-    
+
     // Define the custom color scale with multiple color stops
-    const colorScale = d3.scaleLinear()
+    const colorScale = d3
+      .scaleLinear()
       .domain([0, 0.5, 1]) // Divide the range into parts
-      .range(["#300a0d","#801a22", "#bf2633"]); // The color stops
+      .range(['#300a0d', '#801a22', '#bf2633']); // The color stops
 
     // Normalize data values to range [0, 1]
     const maxValue = d3.max(root.leaves(), (d) => d.value) || 1;
@@ -87,11 +88,11 @@ export const MindshareMap = ({ onLoadComplete }) => {
         // Calculate the width and height of each cell
         const width = d.x1 - d.x0;
         const height = d.y1 - d.y0;
-    
+
         // Calculate the center coordinates of the cell
         const centerX = width / 2;
         const centerY = height / 2;
-    
+
         d3.select(this)
           .transition()
           .duration(200)
@@ -106,13 +107,13 @@ export const MindshareMap = ({ onLoadComplete }) => {
           .duration(200)
           .attr('transform', (d) => `translate(${d.x0},${d.y0}) scale(1)`);
       });
-    
+
     // draw rectangles for each cell
     nodes
       .append('rect')
       .attr('width', (d) => d.x1 - d.x0)
       .attr('height', (d) => d.y1 - d.y0)
-      .attr('fill', (d) => colorScale(normalizedValue(d.value || 0))) 
+      .attr('fill', (d) => colorScale(normalizedValue(d.value || 0)))
       .attr('class', 'treemap-cell');
 
     // Append foreignObject for HTML content
@@ -124,15 +125,19 @@ export const MindshareMap = ({ onLoadComplete }) => {
       .attr('y', 10)
       .append('xhtml:div')
       .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-      .attr('class', 'w-full h-full p-2 text-white text-xs text-left break-normal text-wrap flex flex-col justify-start')
-      .html((d) => `
+      .attr(
+        'class',
+        'w-full h-full p-2 text-white text-xs text-left break-normal text-wrap flex flex-col justify-start'
+      )
+      .html(
+        (d) => `
         <div class="font-bold text-base">${d.data.name}</div>
         <div class="mt-1">${(d.data.percentage * 100).toFixed(1)}%</div>
-      `);
-        
-    onLoadComplete();
+      `
+      );
 
-      }, [mindshareData]);
+    onLoadComplete();
+  }, [mindshareData]);
 
   return <div ref={heatmapRef}></div>;
 };

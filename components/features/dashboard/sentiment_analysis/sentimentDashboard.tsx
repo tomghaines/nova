@@ -6,7 +6,7 @@ import TopPosts from './topPosts';
 import fetchSentimentData from '@/lib/database/SentimentData';
 import SentimentStats from './sentimentStats';
 import SentimentSummary from './sentimentSummary';
-import LoadingBar from '../loader';
+import LoadingBar from '../../../ui/loader';
 import SentimentChart from './sentimentChart';
 import NewsSentiment from './newsSentiment';
 import SentimentCorrelation from './sentimentCorrelation';

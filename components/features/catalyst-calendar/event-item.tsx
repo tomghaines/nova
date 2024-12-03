@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ImageWithFallback from '../ui/image-with-fallback';
+import ImageWithFallback from '../../ui/image-with-fallback';
 import placeholderLogo from '@/public/assets/missing-logo-placeholder.svg';
 import { FaLink } from 'react-icons/fa';
 import { Badge } from '@radix-ui/themes';

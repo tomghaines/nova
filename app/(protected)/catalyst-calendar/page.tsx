@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import EventItem from '@/components/catalyst-calendar/event-item';
-import FilterEvents from '@/components/catalyst-calendar/filter-events';
-import { Spinner } from '@/components/ui/spinner';
+import EventItem from '@/components/features/catalyst-calendar/event-item';
+import FilterEvents from '@/components/features/catalyst-calendar/filter-events';
 import { useCalendarList } from '@/hooks/api/use-calendar-list';
 import { Button } from '@radix-ui/themes';
-import CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
+import LoadingSpinner from '@/components/ui/loader';
+import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 
 export default function CatalystCalendar() {
   const {
@@ -23,14 +23,12 @@ export default function CatalystCalendar() {
   const [visibleEvents, setVisibleEvents] = useState<number>(100);
   const [sortDirection, setSortDirection] = useState<string>('asc');
 
-  // Filter events based on active filters
   const filteredEvents = useMemo(() => {
     const filtered =
       activeFilters.size === 0
         ? events
         : events.filter((event) => activeFilters.has(event.eventType));
 
-    // Sort the filtered events
     return [...filtered].sort((a, b) => {
       const dateA = new Date(a.date_start).getTime();
       const dateB = new Date(b.date_start).getTime();
@@ -38,7 +36,6 @@ export default function CatalystCalendar() {
     });
   }, [events, activeFilters, sortDirection]);
 
-  // Get the events to display based on filters and visible count
   const displayedEvents = useMemo(() => {
     if (activeFilters.size === 0) {
       return filteredEvents.slice(0, visibleEvents);
@@ -56,18 +53,24 @@ export default function CatalystCalendar() {
     }
   };
 
-  // Reset visible events when filters change
   useEffect(() => {
     setVisibleEvents(100);
   }, [activeFilters]);
 
   const showLoadMore = activeFilters.size === 0 && originalHasMore;
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) {
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <LoadingSpinner isLoading={isLoading} />
+      </div>
+    );
+  }
+
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='mt-20 flex h-max w-full flex-col gap-4 p-16 dark:text-neutral-400'>
+    <div className='mt-20 flex h-screen w-full flex-col gap-4 p-16 dark:text-neutral-400'>
       <h2 className='text-3xl font-bold dark:text-neutral-300'>
         Catalyst Calendar
       </h2>
@@ -76,18 +79,18 @@ export default function CatalystCalendar() {
         1000+ tokens across crypto.
         <br />
         Events include DAO/Governance Votes, AMAs, Burns, Lock & Unlock, New
-        Releases and more!
+        Releases, and more!
       </p>
-      <div className='flex gap-4'>
+      <div className='grid grid-cols-[280px_1fr] gap-4'>
         <FilterEvents
           events={events}
           activeFilters={activeFilters}
           setActiveFilters={setActiveFilters}
           onSortChange={setSortDirection}
         />
-        {displayedEvents && displayedEvents.length > 0 ? (
-          <>
-            <div className='flex w-full flex-col'>
+        <div className='w-full overflow-x-auto'>
+          {displayedEvents && displayedEvents.length > 0 ? (
+            <div>
               <table className='w-full table-fixed text-sm'>
                 <thead>
                   <tr className='text-left dark:text-neutral-300'>
@@ -120,7 +123,7 @@ export default function CatalystCalendar() {
                     className='m-6 min-w-[200px] cursor-pointer rounded-md bg-gray-200 p-3 hover:bg-gray-300 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700'
                   >
                     {loadingMore ? (
-                      <Spinner size='small' />
+                      <LoadingSpinner isLoading={isLoading} />
                     ) : (
                       'Load More Events'
                     )}
@@ -128,10 +131,10 @@ export default function CatalystCalendar() {
                 </div>
               )}
             </div>
-          </>
-        ) : (
-          <p>No events Found</p>
-        )}
+          ) : (
+            <p>No events Found</p>
+          )}
+        </div>
       </div>
     </div>
   );

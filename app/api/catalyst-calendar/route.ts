@@ -29,7 +29,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(filteredData);
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('Calendar request error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch events' },
       { status: 500 }

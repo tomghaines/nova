@@ -1,10 +1,10 @@
 'use client';
 
 import { SearchBar } from '@/components/features/dashboard/command';
-import MindshareLayout from '@/components/features/seek/mindshareLayout';
 import React from 'react';
+import MindshareLayout from '@/components/features/mindshare/mindshareLayout';
 import { CoinProvider, useCoin } from '@/app/context/CoinContext';
-import SentimentDashboard from '@/components/features/seek/sentiment_analysis/sentimentDashboard';
+import SentimentDashboard from '@/components/features/dashboard/sentiment_analysis/sentimentDashboard';
 
 export default function page() {
   return (

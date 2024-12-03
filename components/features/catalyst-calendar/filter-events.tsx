@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Select } from '@radix-ui/themes';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
@@ -18,8 +18,10 @@ export default function FilterEvents({
   events,
   activeFilters,
   setActiveFilters,
-  onSortChange // Add this prop
+  onSortChange
 }: FilterEventsProps) {
+  const [isLoading, setIsLoading] = useState(true);
+
   const handleFilterToggle = useCallback(
     (eventType: string) => {
       setActiveFilters((prev) => {
@@ -44,7 +46,7 @@ export default function FilterEvents({
   );
 
   return (
-    <div className='flex h-fit flex-col gap-4 rounded-lg border-[1px] border-gray-200 bg-gray-100 px-3 py-4 dark:border-neutral-700 dark:bg-neutral-800'>
+    <div className='flex h-fit min-w-[280px] max-w-[280px] flex-col gap-4 rounded-lg border-[1px] border-gray-200 bg-gray-100 px-3 py-4 dark:border-neutral-700 dark:bg-neutral-800'>
       <div className='flex items-center justify-between dark:text-neutral-400'>
         <h2 className='text-2xl'>Filter</h2>
         <div
