@@ -39,6 +39,7 @@ export default function FilterEvents({
 
   const resetFilters = useCallback(() => {
     setActiveFilters(new Set());
+    onSortChange('asc');
   }, [setActiveFilters]);
 
   const uniqueEventTypes = Array.from(
@@ -77,7 +78,9 @@ export default function FilterEvents({
             <Badge
               key={eventType}
               className={`cursor-pointer rounded-md px-1 ${
-                activeFilters.has(eventType) ? 'border-2 border-indigo-500' : ''
+                activeFilters.has(eventType)
+                  ? 'border-2 border-emerald-500'
+                  : ''
               }`}
               color={
                 eventTypeToColor[eventType as keyof typeof eventTypeToColor]
