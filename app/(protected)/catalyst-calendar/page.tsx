@@ -66,7 +66,7 @@ export default function CatalystCalendar() {
   }, [activeFilters]);
 
   const showLoadMore =
-    activeFilters.size === 0 && !projectFilters && originalHasMore;
+    activeFilters.size === 0 && projectFilters.size === 0 && originalHasMore;
 
   if (isLoading) {
     return (
