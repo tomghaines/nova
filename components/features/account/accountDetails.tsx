@@ -5,7 +5,7 @@ import supabase from '@/utils/supabase/client';
 import { User } from '@supabase/supabase-js';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { DataList } from '@radix-ui/themes';
-import { CopyIcon } from 'lucide-react';
+import { CopyIcon, SquareUser } from 'lucide-react';
 import { copyToClipboard } from '@/utils/clipboardUtils';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -115,11 +115,9 @@ export const AccountDetails = () => {
 
   return (
     <div className='mt-4 flex flex-col gap-8 p-4'>
-      <h2 className='text-2xl font-bold'>Profile Setting</h2>
-
       {/* Avatar section */}
       <div className='flex gap-10'>
-        <div className='relative h-20 w-24'>
+        <div className='relative h-20 w-28'>
           <Avatar>
             {/* Show the image URL from state, or a default URL if not yet set */}
             <AvatarImage
@@ -135,47 +133,55 @@ export const AccountDetails = () => {
           {/* Edit Photo button */}
           <button
             onClick={() => setIsEditing((prev) => !prev)}
-            className='absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full border border-black bg-white text-lg font-thin text-black hover:brightness-90 dark:invert'
+            className='absolute bottom-1 right-1 flex h-7 w-7 items-center justify-center rounded-full border border-black bg-white text-lg font-thin text-black hover:brightness-90 dark:invert'
           >
             +
           </button>
         </div>
 
         {/* Display user metadata */}
-
-        <DataList.Root className='ml-16 grid w-1/2 gap-1'>
-          <DataList.Item className='grid grid-cols-3 items-center'>
-            <DataList.Label>Account ID</DataList.Label>
-            <DataList.Value>{userData.id}</DataList.Value>
-            <CopyIcon
-              onClick={() => copyToClipboard(userData.id)}
-              className='h-7 w-7 rounded-md p-1 hover:cursor-pointer hover:bg-gray-100'
-            />
-          </DataList.Item>
-          <DataList.Item className='grid grid-cols-3 items-center'>
-            <DataList.Label>Username</DataList.Label>
-            <DataList.Value>{userData.user_metadata.username}</DataList.Value>
-          </DataList.Item>
-          <DataList.Item className='grid grid-cols-3 items-center'>
-            <DataList.Label>Email</DataList.Label>
-            <DataList.Value>{userData.email}</DataList.Value>
-          </DataList.Item>
-          <DataList.Item className='grid grid-cols-3 items-center'>
-            <DataList.Label>Sign Up Date</DataList.Label>
-            <DataList.Value>
-              {new Date(userData.created_at).toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-              })}
-            </DataList.Value>
-          </DataList.Item>
-        </DataList.Root>
+        <div>
+          <div className='ml-16 flex'>
+            <SquareUser className='mt-1' />
+            <h2 className='mb-4 ml-4 text-2xl font-bold'>Profile Setting</h2>
+          </div>
+          <div className='mb-8 ml-16 w-[520px] border-t-2 dark:border-neutral-600'></div>
+          <DataList.Root className='ml-16 grid w-full gap-1'>
+            <DataList.Item className='grid grid-cols-3 items-center'>
+              <DataList.Label className=''>Account ID</DataList.Label>
+              <div className='flex rounded-xl border p-2 dark:border-neutral-600 dark:bg-neutral-800'>
+                <DataList.Value>{userData.id}</DataList.Value>
+                <CopyIcon
+                  onClick={() => copyToClipboard(userData.id)}
+                  className='h-7 w-7 rounded-md p-1 hover:cursor-pointer hover:bg-gray-100'
+                />
+              </div>
+            </DataList.Item>
+            <DataList.Item className='grid grid-cols-3 items-center'>
+              <DataList.Label>Username</DataList.Label>
+              <DataList.Value>{userData.user_metadata.username}</DataList.Value>
+            </DataList.Item>
+            <DataList.Item className='grid grid-cols-3 items-center'>
+              <DataList.Label>Email</DataList.Label>
+              <DataList.Value>{userData.email}</DataList.Value>
+            </DataList.Item>
+            <DataList.Item className='grid grid-cols-3 items-center'>
+              <DataList.Label>Sign Up Date</DataList.Label>
+              <DataList.Value>
+                {new Date(userData.created_at).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric'
+                })}
+              </DataList.Value>
+            </DataList.Item>
+          </DataList.Root>
+        </div>
       </div>
 
       {/* Image upload form (conditionally rendered) */}
       {isEditing && (
-        <div className='mt-6 flex justify-center rounded-md border border-2 border-gray-200'>
+        <div className='space-around ml-40 flex rounded-md border-gray-200'>
           <input
             type='file'
             accept='image/*'

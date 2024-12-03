@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Mail } from 'lucide-react';
 
 export const Newsletter = () => {
   const [email, setEmail] = useState('');
@@ -50,9 +51,12 @@ export const Newsletter = () => {
   };
 
   return (
-    <div className='mt-10 flex flex-col'>
-      <h2 className='text-2xl font-bold'>Newsletter</h2>
-      <p className='mt-2 text-lg'>
+    <div className='mb-10 ml-6 mt-10 flex flex-col'>
+      <div className='flex'>
+        <Mail className='mt-1' />
+        <h2 className='ml-4 text-2xl font-bold text-neutral-400'>Newsletter</h2>
+      </div>
+      <p className='text-md mt-2 text-neutral-400'>
         Sign up for our newsletter to stay updated with the latest news and
         updates.
       </p>
@@ -61,9 +65,6 @@ export const Newsletter = () => {
         className='mt-10 flex flex-row items-center gap-4'
         onSubmit={handleSubmit}
       >
-        <label htmlFor='email' className='text-xl'>
-          Email
-        </label>
         <input
           type='email'
           id='email'
