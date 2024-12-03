@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubmitButton } from '@/components/submit-button';
+import { SubmitButton } from '@/components/ui/submit-button';
 import { TwitterSignUp } from '@/components/ui/twitter-sign-up';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
