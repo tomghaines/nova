@@ -7,7 +7,7 @@ import { Billing } from '@/components/features/account/billing';
 
 export default function AccountPage() {
   return (
-    <div className='mt-20 flex h-screen w-full flex-col'>
+    <div className='flex h-screen w-full flex-col'>
       <div className='p-16'>
         <h1 className='mb-4 text-4xl font-bold text-gray-800 dark:text-gray-100'>
           Account
