@@ -28,21 +28,22 @@ export function PageContent() {
       <div className='relative w-full max-w-[1400px] space-y-4 p-4'>
         {/* Search Bar */}
         <div className='relative mb-12'>
-        <div className='relative'>
-          <SearchBar />
-        </div>
+          <div className='relative'>
+            <SearchBar />
+          </div>
 
-        {/* Sentiment Analysis */}
-        <div className='w-full'>
-          <SentimentDashboard key={selectedCoinSymbol} />
-        </div>
+          {/* Sentiment Analysis */}
+          <div className='w-full'>
+            <SentimentDashboard key={selectedCoinSymbol} />
+          </div>
 
-        {/* Mindshare Analysis */}
-        <div className='w-full transition-opacity duration-200 ease-in-out'>
-          <MindshareComponent
-            key={`mindshare-${selectedCoinSymbol}`}
-            onLoadComplete={handleMindshareLoadComplete}
-          />
+          {/* Mindshare Analysis */}
+          <div className='w-full transition-opacity duration-200 ease-in-out'>
+            <MindshareComponent
+              key={`mindshare-${selectedCoinSymbol}`}
+              onLoadComplete={handleMindshareLoadComplete}
+            />
+          </div>
         </div>
       </div>
     </div>
