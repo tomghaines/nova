@@ -70,8 +70,8 @@ export default function CatalystCalendar() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='mt-20 flex h-max w-full flex-col gap-4 p-16 dark:text-neutral-400'>
-      <h2 className='h-max text-3xl font-bold dark:text-neutral-300'>
+    <div className='flex h-max w-full flex-col gap-4 p-16 dark:text-neutral-400'>
+      <h2 className='text-3xl font-bold dark:text-neutral-300'>
         Catalyst Calendar
       </h2>
       <p>
@@ -94,13 +94,17 @@ export default function CatalystCalendar() {
               <table className='w-full table-fixed text-sm'>
                 <thead>
                   <tr className='text-left dark:text-neutral-300'>
-                    <th className='p-2 font-medium'>Event Start Date</th>
-                    <th className='p-2 font-medium'>Event End Date</th>
-                    <th className='p-2 font-medium'>Project</th>
-                    <th className='p-2 font-medium'>Event Type</th>
-                    <th className='p-2 font-medium'>Description</th>
-                    <th className='p-2 font-medium'>Source</th>
-                    <th className='p-2 font-medium'>Ann. Date</th>
+                    <th className='w-[110px] p-2 font-medium'>
+                      Event Start Date
+                    </th>
+                    <th className='w-[110px] p-2 font-medium'>
+                      Event End Date
+                    </th>
+                    <th className='w-[100px] p-2 font-medium'>Project</th>
+                    <th className='w-[120px] p-2 font-medium'>Event Type</th>
+                    <th className='w-[250px] p-2 font-medium'>Description</th>
+                    <th className='w-[90px] p-2 font-medium'>Source</th>
+                    <th className='w-[110px] p-2 font-medium'>Ann. Date</th>
                   </tr>
                 </thead>
                 <tbody>

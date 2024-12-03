@@ -16,9 +16,9 @@ export function RootContent({ children }: RootContentProps) {
     <SidebarProvider>
       <div className='flex min-h-screen w-full'>
         <AppSidebar isNightMode={isNightMode} />
-        <main className='flex flex-1 flex-col justify-center'>
+        <main className='flex flex-1 flex-col'>
           <Navbar isNightMode={isNightMode} onThemeToggle={toggleTheme} />
-          <div className='flex items-start justify-center'>{children}</div>
+          <div className='mt-20 flex w-full'>{children}</div>
         </main>
       </div>
     </SidebarProvider>

@@ -46,7 +46,7 @@ export default function EventItem({ event, token }: EventItemProps) {
           {event.eventType}
         </Badge>
       </td>
-      <td className='w-[300px] px-2 py-1'>
+      <td className='w-[250px] px-2 py-1'>
         <div className='truncate'>{event.caption}</div>
       </td>
       <td className='w-[90px] whitespace-nowrap px-2 py-1'>
