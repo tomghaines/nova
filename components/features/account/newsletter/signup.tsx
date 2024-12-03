@@ -24,9 +24,11 @@ export const Newsletter = () => {
       document.body.appendChild(popup);
 
       const closeButton = popup.querySelector('#closePopup');
-      closeButton.addEventListener('click', () => {
-        document.body.removeChild(popup);
-      });
+      if (closeButton) {
+        closeButton.addEventListener('click', () => {
+          document.body.removeChild(popup);
+        });
+      }
     };
 
     /* POST request to add a new subscriber email */

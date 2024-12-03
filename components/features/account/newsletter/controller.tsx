@@ -1,3 +1,5 @@
+'use server';
+
 import * as dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 import React from 'react';
