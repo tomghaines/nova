@@ -37,7 +37,7 @@ const items = [
   },
   {
     title: 'DISCOVER',
-    url: '/wander'
+    url: '/discover'
   },
   {
     title: 'CATALYST CALENDAR',

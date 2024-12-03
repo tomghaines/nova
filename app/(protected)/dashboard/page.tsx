@@ -4,7 +4,7 @@ import { SearchBar } from '@/components/features/dashboard/command';
 import React, { useState } from 'react';
 import { CoinProvider, useCoin } from '@/app/context/CoinContext';
 import SentimentDashboard from '@/components/features/dashboard/sentiment_analysis/sentimentDashboard';
-import MindshareComponent from '@/components/features/seek/mindshare-analysis/mindshare';
+import MindshareComponent from '@/components/features/discover/mindshare-analysis/mindshare';
 
 export default function page() {
   return (
