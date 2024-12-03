@@ -74,13 +74,6 @@ async function fetchSummary(): Promise<string> {
 }
 
 // Function to format the summary for HTML
-/* function formatSummary(summary: string): string {
-  return summary
-    .replace(/^###\s+/gm, '<h2>')       // Replace '### ' with an HTML <h2> tag
-    .replace(/####\s+/gm, '<h3>')        // Replace '#### ' with an HTML <h3> tag
-    .replace(/-\s+/g, '<li>')            // Replace '- ' with an HTML list item tag <li>
-    .replace(/(\*\*)(.+?)(\*\*)/g, '<b>$2</b>'); // Replace '** **' with bold <b> tag
-} */
 const converter = new showdown.Converter();
 
 // Function to create a weekly newsletter campaign
