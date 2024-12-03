@@ -15,8 +15,8 @@ interface FilterEventsProps {
   setActiveFilters: React.Dispatch<React.SetStateAction<Set<string>>>;
   onSortChange: (direction: string) => void;
   tokenData: Record<string, Token>;
-  projectFilter: string;
-  setProjectFilter: (value: string) => void;
+  projectFilters: Set<string>;
+  setProjectFilter: React.Dispatch<React.SetStateAction<Set<string>>>;
 }
 
 export default function FilterEvents({
@@ -25,7 +25,7 @@ export default function FilterEvents({
   activeFilters,
   setActiveFilters,
   onSortChange,
-  projectFilter,
+  projectFilters,
   setProjectFilter
 }: FilterEventsProps) {
   const handleFilterToggle = useCallback(
@@ -45,7 +45,7 @@ export default function FilterEvents({
 
   const resetFilters = useCallback(() => {
     setActiveFilters(new Set());
-    setProjectFilter('');
+    setProjectFilter(new Set());
     onSortChange('asc');
   }, [setActiveFilters, setProjectFilter, onSortChange]);
 
@@ -74,7 +74,7 @@ export default function FilterEvents({
         <ProjectSearch
           projects={uniqueProjects}
           onSelect={setProjectFilter}
-          value={projectFilter}
+          values={projectFilters}
           tokenData={tokenData}
         />
       </div>

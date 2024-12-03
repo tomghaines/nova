@@ -21,7 +21,7 @@ export default function CatalystCalendar() {
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   const [visibleEvents, setVisibleEvents] = useState<number>(100);
   const [sortDirection, setSortDirection] = useState<string>('asc');
-  const [projectFilter, setProjectFilter] = useState('');
+  const [projectFilters, setProjectFilters] = useState<Set<string>>(new Set());
   const [loadingMore, setLoadingMore] = useState(false);
 
   const filteredEvents = useMemo(() => {
@@ -30,18 +30,19 @@ export default function CatalystCalendar() {
         ? events
         : events.filter((event) => activeFilters.has(event.eventType));
 
-    const withProjectFilter = projectFilter
-      ? filtered.filter(
-          (event) => tokenData[event.coin_id]?.symbol === projectFilter
-        )
-      : filtered;
+    const withProjectFilter =
+      projectFilters.size > 0
+        ? filtered.filter((event) =>
+            projectFilters.has(tokenData[event.coin_id]?.symbol)
+          )
+        : filtered;
 
     return [...withProjectFilter].sort((a, b) => {
       const dateA = new Date(a.date_start).getTime();
       const dateB = new Date(b.date_start).getTime();
       return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
     });
-  }, [events, activeFilters, projectFilter, sortDirection, tokenData]);
+  }, [events, activeFilters, projectFilters, sortDirection, tokenData]);
 
   const displayedEvents = useMemo(() => {
     if (activeFilters.size === 0) {
@@ -65,7 +66,7 @@ export default function CatalystCalendar() {
   }, [activeFilters]);
 
   const showLoadMore =
-    activeFilters.size === 0 && !projectFilter && originalHasMore;
+    activeFilters.size === 0 && !projectFilters && originalHasMore;
 
   if (isLoading) {
     return (
@@ -96,8 +97,8 @@ export default function CatalystCalendar() {
           setActiveFilters={setActiveFilters}
           onSortChange={setSortDirection}
           tokenData={tokenData}
-          projectFilter={projectFilter}
-          setProjectFilter={setProjectFilter}
+          projectFilters={projectFilters}
+          setProjectFilter={setProjectFilters}
         />
         <div className='w-full overflow-x-auto'>
           {displayedEvents && displayedEvents.length > 0 ? (
