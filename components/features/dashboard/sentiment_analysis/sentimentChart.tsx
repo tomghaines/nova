@@ -2,6 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { SentimentPoint } from '@/@types/data/SentimentData';
 import { motion } from 'framer-motion';
+import { Download, Info } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
 interface SentimentChartProps {
   data: SentimentPoint[];
@@ -32,6 +39,40 @@ const SentimentChart: React.FC<SentimentChartProps> = ({
     resizeObserver.observe(chartRef.current);
     return () => resizeObserver.disconnect();
   }, []);
+
+  const handleExport = () => {
+    const chartData = sentimentData.map(
+      ({ date, sentimentValue, price, analysis }) => ({
+        date: date.toISOString(),
+        sentiment: sentimentValue,
+        price,
+        analysis
+      })
+    );
+
+    const csvData = [
+      ['Date', 'Sentiment', 'Price', 'Analysis'],
+      ...chartData.map(({ date, sentiment, price, analysis }) => [
+        date,
+        sentiment,
+        price,
+        analysis
+      ])
+    ];
+
+    const csvContent = csvData.map((row) => row.join(',')).join('\n');
+
+    const downloadLink = document.createElement('a');
+    downloadLink.setAttribute(
+      'href',
+      'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent)
+    );
+    downloadLink.setAttribute('download', 'sentiment-data.csv');
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   useEffect(() => {
     try {
@@ -435,9 +476,38 @@ const SentimentChart: React.FC<SentimentChartProps> = ({
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className='flex h-full w-full'
+      className='flex h-full w-full flex-col'
     >
-      <div ref={chartRef} className='h-[400px] min-h-[400px] w-full' />
+      <div className='flex items-center justify-between border-b border-white/5 p-4'>
+        <div className='flex items-center gap-2'>
+          <span className='text-sm font-medium text-white/60'>
+            Sentiment Analysis
+          </span>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info className='h-4 w-4 text-white/40' />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className='text-xs'>
+                  Market attention distribution across topics
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        {/* Export Button */}
+        <button
+          onClick={handleExport}
+          className='rounded-md bg-white/5 p-1.5 text-white/60 hover:bg-white/10'
+        >
+          <Download className='h-3.5 w-3.5' />
+        </button>
+      </div>
+      <div
+        ref={chartRef}
+        className='h-[400px] min-h-[400px] w-full pb-2 pl-3'
+      />
     </motion.div>
   );
 };
