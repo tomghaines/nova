@@ -7,7 +7,7 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { DataList } from '@radix-ui/themes';
 import { CopyIcon } from 'lucide-react';
 import { copyToClipboard } from '@/utils/clipboardUtils';
-import { Spinner } from '@/components/ui/spinner';
+import LoadingSpinner from '@/components/ui/loader';
 
 export const AccountDetails = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -44,7 +44,7 @@ export const AccountDetails = () => {
         }
       }
 
-      const { data, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('user-images')
         .upload(filePath, image);
 
@@ -102,7 +102,7 @@ export const AccountDetails = () => {
   }, []);
 
   if (isLoading) {
-    return <Spinner />;
+    return <LoadingSpinner isLoading={true} />;
   }
 
   if (error) {
@@ -129,7 +129,7 @@ export const AccountDetails = () => {
                 'https://github.com/shadcn.png'
               }
               alt='User Avatar'
-              className='h-20 w-20 rounded-full border border-2 border-gray-300'
+              className='h-20 w-20 rounded-full border-2 border-gray-300'
             />
           </Avatar>
           {/* Edit Photo button */}
@@ -175,7 +175,7 @@ export const AccountDetails = () => {
 
       {/* Image upload form (conditionally rendered) */}
       {isEditing && (
-        <div className='mt-6 flex justify-center rounded-md border border-2 border-gray-200'>
+        <div className='mt-6 flex justify-center rounded-md border-2 border-gray-200'>
           <input
             type='file'
             accept='image/*'
