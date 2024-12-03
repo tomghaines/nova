@@ -72,7 +72,7 @@ export const Newsletter = () => {
           id='email'
           name='email'
           required
-          className='w-64 rounded-lg border border-gray-300 p-2 text-zinc-800 focus:border-emerald-500 focus:outline-none'
+          className='w-64 rounded-lg border border-zinc-300 bg-black p-2 text-zinc-100 focus:border-blue-500 focus:outline-none'
           placeholder='Enter your email address'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -80,7 +80,7 @@ export const Newsletter = () => {
 
         <button
           type='submit'
-          className='rounded-lg bg-emerald-600 px-4 py-2 font-bold text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50'
+          className='rounded-lg bg-black border border-zinc-300 px-4 py-2 font-bold text-white hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
         >
           Sign Up
         </button>
