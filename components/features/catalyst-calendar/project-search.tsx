@@ -31,7 +31,7 @@ export function ProjectSearch({
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>
-      <Popover.Trigger className='hover:border-neutral-400 dark:border-emerald-500'>
+      <Popover.Trigger className='border-emerald-500 hover:border-neutral-400'>
         <Button
           variant='outline'
           role='combobox'
