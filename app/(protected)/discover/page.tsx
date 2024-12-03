@@ -1,7 +1,7 @@
 import React from 'react';
 import HotTweet from '@/components/features/wander/hotTweet';
 import HotNarrative from '@/components/features/wander/hotNarrative';
-import { mockData } from './mockData';
+import { mockData } from '../../../components/features/wander/weeklyData';
 
 export default function Page() {
   const today = new Date();
@@ -32,6 +32,7 @@ export default function Page() {
             <div key={index} className='w-[calc(33.333%-1rem)]'>
               {card.type === 'tweet' ? (
                 <HotTweet
+                  id={card.id}
                   label={card.label}
                   title={card.title}
                   content={card.content}

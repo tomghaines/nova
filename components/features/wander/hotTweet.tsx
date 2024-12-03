@@ -1,13 +1,17 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { mockData } from './weeklyData';
 
 interface CardProps {
+  id: number;
   label: string;
   title: string;
   content: string;
 }
 
-const HotTweet: React.FC<CardProps> = ({ label, title, content }) => {
+const HotTweet: React.FC<CardProps> = ({ id, label, title, content }) => {
+  const card = mockData.find((item) => item.id === id && item.type === 'tweet');
+  const link = card?.link;
   return (
     <div className='h-auto w-auto p-4'>
       {/* Card */}
@@ -23,9 +27,11 @@ const HotTweet: React.FC<CardProps> = ({ label, title, content }) => {
         <p className='text-md font-thin dark:text-white'>{content}</p>
         {/* Button */}
         <div className='w-full text-right'>
-          <Button variant='link' className='mt-4 text-2xl text-gray-600'>
-            ▶▶▶
-          </Button>
+          <a href={link} target='_blank' rel='noopener noreferrer'>
+            <Button variant='link' className='mt-4 text-2xl text-gray-600'>
+              ▶▶▶
+            </Button>
+          </a>
         </div>
       </div>
     </div>
