@@ -105,7 +105,7 @@ export default function CatalystCalendar() {
             <div>
               <table className='w-full table-fixed text-sm'>
                 <thead>
-                  <tr className='text-left dark:text-neutral-300'>
+                  <tr className='text-left dark:text-neutral-500'>
                     <th className='w-[110px] p-2 font-medium'>
                       Event Start Date
                     </th>
