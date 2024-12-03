@@ -80,7 +80,7 @@ export const Newsletter = () => {
 
         <button
           type='submit'
-          className='rounded-lg bg-black border border-zinc-300 px-4 py-2 font-bold text-white hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
+          className='rounded-lg border border-zinc-300 bg-black px-4 py-2 font-bold text-white hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
         >
           Sign Up
         </button>

@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prettier": "prettier --check .",
     "build": "npm run prettier && next build",
     "dev": "next dev",
     "lint": "npx eslint . --fix",
