@@ -124,7 +124,7 @@ export default function CatalystCalendar() {
                   <Button
                     onClick={handleLoadMore}
                     disabled={loadingMore}
-                    className='m-6 min-w-[200px] cursor-pointer rounded-md bg-gray-200 p-3 hover:bg-gray-300 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700'
+                    className='m-6 min-w-[200px] cursor-pointer rounded-md bg-gray-200 p-3 text-black hover:bg-gray-300 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700'
                   >
                     {loadingMore ? (
                       <LoadingSpinner isLoading={isLoading} />
