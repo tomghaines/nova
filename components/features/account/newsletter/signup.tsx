@@ -15,7 +15,7 @@ export const Newsletter = () => {
         <div class='bg-white p-8 rounded-lg text-center dark:bg-black'>
           <h3 class='text-xl font-bold mb-4 dark:text-zinc-200'>You're In!</h3>
           <p class='text-md mb-6 dark:text-zinc-200'>You've successfully signed up for the birdy.ai newsletter report.</p>
-          <button class='bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50' id='closePopup'>
+          <button class='bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50' id='closePopup'>
             Close
           </button>
         </div>
@@ -69,7 +69,7 @@ export const Newsletter = () => {
           id='email'
           name='email'
           required
-          className='w-64 rounded-lg border border-gray-300 p-2 text-zinc-800 focus:border-blue-500 focus:outline-none'
+          className='w-64 rounded-lg border border-gray-300 p-2 text-zinc-800 focus:border-emerald-500 focus:outline-none'
           placeholder='Enter your email address'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -77,7 +77,7 @@ export const Newsletter = () => {
 
         <button
           type='submit'
-          className='rounded-lg bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
+          className='rounded-lg bg-emerald-600 px-4 py-2 font-bold text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50'
         >
           Sign Up
         </button>

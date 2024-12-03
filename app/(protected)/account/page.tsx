@@ -19,7 +19,7 @@ export default function AccountPage() {
           <TabsList className='flex justify-start gap-2 rounded-md border border-zinc-300 p-5'>
             {/* Account Tab */}
             <TabsTrigger
-              className='w-[150px] rounded-md py-2 text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
+              className='w-[150px] rounded-md py-2 text-emerald-500 hover:bg-emerald-100 data-[state="active"]:bg-emerald-200 data-[state="active"]:text-emerald-700'
               value='account'
             >
               Account Details
@@ -27,7 +27,7 @@ export default function AccountPage() {
 
             {/* Billing Tab */}
             <TabsTrigger
-              className='w-[150px] rounded-md text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
+              className='w-[150px] rounded-md text-emerald-500 hover:bg-emerald-100 data-[state="active"]:bg-emerald-200 data-[state="active"]:text-emerald-700'
               value='billing'
             >
               Billing
@@ -35,7 +35,7 @@ export default function AccountPage() {
 
             {/* Newsletter Tab */}
             <TabsTrigger
-              className='w-[150px] rounded-md text-zinc-500 hover:bg-indigo-100 data-[state="active"]:bg-indigo-200 data-[state="active"]:text-indigo-600'
+              className='w-[150px] rounded-md text-emerald-500 hover:bg-emerald-100 data-[state="active"]:bg-emerald-200 data-[state="active"]:text-emerald-700'
               value='newsletter'
             >
               Newsletter
