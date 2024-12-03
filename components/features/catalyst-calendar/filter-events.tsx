@@ -75,6 +75,7 @@ export default function FilterEvents({
           projects={uniqueProjects}
           onSelect={setProjectFilter}
           value={projectFilter}
+          tokenData={tokenData}
         />
       </div>
       <div className='flex flex-col items-start gap-2'>

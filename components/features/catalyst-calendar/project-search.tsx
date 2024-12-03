@@ -1,83 +1,97 @@
-import * as React from 'react';
-import { Check, Search } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem
-} from '@/components/ui/command';
-import { Popover } from '@radix-ui/themes';
-import { Button } from '@/components/ui/button';
+'use client';
 
-export interface ProjectSearchProps {
+import { useEffect, useMemo, useState } from 'react';
+import { Command } from 'cmdk';
+import type Token from '@/@types/data/catalyst-calendar/token';
+import ImageWithFallback from '@/components/ui/image-with-fallback';
+import placeholderLogo from '@/public/assets/missing-logo-placeholder.svg';
+
+interface ProjectSearchProps {
   projects: string[];
   onSelect: (value: string) => void;
   value: string;
+  tokenData: Record<string, Token>;
 }
 
 export function ProjectSearch({
   projects,
   onSelect,
-  value
+  value,
+  tokenData
 }: ProjectSearchProps) {
-  const [open, setOpen] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [search, setSearch] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
-  const filteredProjects = projects.filter((project) =>
-    project.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) =>
+      project.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [projects, search]);
+
+  useEffect(() => {
+    setSearch('');
+  }, [value]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!event.target) return;
+      const target = event.target as HTMLElement;
+      if (!target.closest('.command-menu')) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <Popover.Root open={open} onOpenChange={setOpen}>
-      <Popover.Trigger className='border-emerald-500 hover:border-neutral-400'>
-        <Button
-          variant='outline'
-          role='combobox'
-          aria-expanded={open}
-          className='w-full justify-between border-[1px] dark:bg-neutral-900 dark:text-neutral-400'
-        >
-          {value || 'Search project...'}
-          <Search className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-        </Button>
-      </Popover.Trigger>
-      <Popover.Content className='w-full p-0'>
-        <Command
-          shouldFilter={false}
-          className='text-neutral-400 dark:bg-neutral-900'
-        >
-          <CommandInput
-            placeholder='Search project...'
-            value={searchTerm}
-            onValueChange={setSearchTerm}
-          />
-          <CommandEmpty>No project found.</CommandEmpty>
-          <CommandGroup className='max-h-[200px] overflow-y-auto'>
-            {searchTerm &&
-              filteredProjects.map((project) => (
-                <CommandItem
+    <div className='command-menu'>
+      <Command className='w-full rounded-md border-[1px] border-gray-200 text-black dark:border-emerald-500 dark:bg-neutral-900 dark:text-neutral-400'>
+        <Command.Input
+          value={search}
+          onValueChange={setSearch}
+          onFocus={() => setIsOpen(true)}
+          placeholder='Search projects...'
+          className='w-full bg-transparent p-2 outline-none placeholder:text-sm'
+        />
+        {isOpen && (
+          <Command.List className='absolute z-10 max-h-[200px] overflow-y-auto rounded-lg border-[1px] border-neutral-700 drop-shadow-xl dark:bg-neutral-900'>
+            {filteredProjects.map((project) => {
+              const token = Object.values(tokenData).find(
+                (t) => t.symbol === project
+              );
+
+              return (
+                <Command.Item
                   key={project}
                   value={project}
-                  className='cursor-pointer data-[selected=true]:bg-emerald-500 data-[selected=true]:text-white'
-                  onSelect={(currentValue) => {
-                    onSelect(currentValue === value ? '' : currentValue);
-                    setOpen(false);
-                    setSearchTerm('');
+                  onSelect={(selected) => {
+                    onSelect(selected);
+                    setIsOpen(false);
+                    setSearch('');
                   }}
+                  className='flex cursor-pointer items-center gap-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800'
                 >
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      value === project ? 'opacity-100' : 'opacity-0'
-                    )}
-                  />
+                  {token?.image_64 && (
+                    <ImageWithFallback
+                      height={18}
+                      width={18}
+                      src={token.image_64}
+                      fallbackSrc={placeholderLogo}
+                      alt={`${project} logo`}
+                      className='rounded-full object-cover'
+                    />
+                  )}
                   {project}
-                </CommandItem>
-              ))}
-          </CommandGroup>
-        </Command>
-      </Popover.Content>
-    </Popover.Root>
+                </Command.Item>
+              );
+            })}
+          </Command.List>
+        )}
+      </Command>
+    </div>
   );
 }
