@@ -54,7 +54,7 @@ export function SearchBar() {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsOpen(false);
-    }, 300); // Delay before closing to allow smooth movement to dropdown
+    }, 100); // Delay before closing to allow smooth movement to dropdown
   };
 
   const onSelectToken = (
@@ -116,7 +116,7 @@ export function SearchBar() {
       </div>
 
       <div
-        className={`absolute top-full z-50 mt-2 w-[280px] -translate-x-[calc(280px-100%)] transition-all duration-200 ${isOpen ? 'visible opacity-100' : 'invisible opacity-0'}`}
+        className={`absolute top-full z-50 mt-2 w-full transition-all duration-200 ${isOpen ? 'visible opacity-100' : 'invisible opacity-0'}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
