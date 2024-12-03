@@ -45,7 +45,7 @@ const items = [
   }
 ];
 
-export function AppSidebar({ isNightMode }: { isNightMode: boolean }) {
+export function AppSidebar() {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
