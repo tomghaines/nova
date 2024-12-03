@@ -33,7 +33,7 @@ const items = [
   },
   {
     title: 'DASHBOARD',
-    url: '/seek'
+    url: '/dashboard'
   },
   {
     title: 'DISCOVER',

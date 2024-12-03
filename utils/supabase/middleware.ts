@@ -42,7 +42,9 @@ export const updateSession = async (request: NextRequest) => {
     pathname.startsWith('/forgot-password');
 
   if (isAuthPage) {
-    return user ? NextResponse.redirect(new URL('/seek', request.url)) : res;
+    return user
+      ? NextResponse.redirect(new URL('/dashboard', request.url))
+      : res;
   }
 
   return user ? res : NextResponse.redirect(new URL('/sign-in', request.url));
