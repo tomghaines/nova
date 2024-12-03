@@ -1,10 +1,10 @@
 'use client';
 
-import { SearchBar } from '@/components/features/dashboard/command';
-import React, { useState } from 'react';
-import { CoinProvider, useCoin } from '@/app/context/CoinContext';
+import React from 'react';
 import SentimentDashboard from '@/components/features/dashboard/sentiment_analysis/sentimentDashboard';
 import MindshareComponent from '@/components/features/discover/mindshare-analysis/mindshare';
+import { SearchBar } from '@/components/features/dashboard/command';
+import { CoinProvider, useCoin } from '@/app/context/CoinContext';
 
 export default function page() {
   return (
@@ -16,11 +16,6 @@ export default function page() {
 
 export function PageContent() {
   const { selectedCoinSymbol } = useCoin();
-  const [isLoadingMindshare, setIsLoadingMindshare] = useState(true);
-
-  const handleMindshareLoadComplete = () => {
-    setIsLoadingMindshare(false);
-  };
 
   return (
     <div className='flex w-full flex-col items-center p-16'>
@@ -39,10 +34,7 @@ export function PageContent() {
 
           {/* Mindshare Analysis */}
           <div className='w-full transition-opacity duration-200 ease-in-out'>
-            <MindshareComponent
-              key={`mindshare-${selectedCoinSymbol}`}
-              onLoadComplete={handleMindshareLoadComplete}
-            />
+            <MindshareComponent key={`mindshare-${selectedCoinSymbol}`} />
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const currentDate = new Date().toISOString().split('T')[0];
 
     const response = await fetch(
-      `https://coindar.org/api/v2/events?access_token=81515:1TI3025iFp2cQG5GZHN&page=${page}&page_size=${pageSize}&filter_date_start=${currentDate}`
+      `${process.env.COINDAR_API}&page=${page}&page_size=${pageSize}&filter_date_start=${currentDate}`
     );
 
     if (!response.ok) {
