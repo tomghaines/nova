@@ -54,9 +54,9 @@ export default function EventItem({ event, token }: EventItemProps) {
           href={event.source}
           target='_blank'
           rel='noopener noreferrer'
-          className='flex items-center gap-2 hover:text-neutral-300'
+          className='flex items-center gap-2 hover:text-neutral-600 dark:hover:text-neutral-300'
         >
-          <FaLink /> Source
+          <FaLink className='text-emerald-500 hover:text-emerald-300' /> Source
         </Link>
       </td>
       <td className='w-[110px] whitespace-nowrap px-2 py-1'>
