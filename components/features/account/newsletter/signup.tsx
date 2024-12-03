@@ -8,14 +8,16 @@ export const Newsletter = () => {
     e.preventDefault();
 
     /* Popup window for successful newsletter sign up */
-    const showSuccessPopup = () => {
+    const showSuccessPopup = (message:string) => {
       const popup = document.createElement('div');
       popup.className =
         'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50';
       popup.innerHTML = `
         <div class='bg-white p-8 rounded-lg text-center dark:bg-black'>
           <h3 class='text-xl font-bold mb-4 dark:text-zinc-200'>You're In!</h3>
-          <p class='text-md mb-6 dark:text-zinc-200'>You've successfully signed up for the birdy.ai newsletter report.</p>
+          <p class='text-md mb-6 dark:text-zinc-200'>
+          ${message}
+          </p>
           <button class='bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50' id='closePopup'>
             Close
           </button>
@@ -42,13 +44,18 @@ export const Newsletter = () => {
       });
 
       if (response.ok) {
-        showSuccessPopup();
+        const data = await response.json();
+        showSuccessPopup(data.message || "You've successfully signed up!");
+      } else if (response.status === 400 || response.status === 409) {
+        const data = await response.json();
+        showSuccessPopup(data.message || "You've already signed up!");
       } else {
         // Handle error
-        console.error('Signup failed');
+        console.error('Something went wrong. Please try again later.');
       }
     } catch (error) {
       console.error('Error:', error);
+      showSuccessPopup('Failed to connect to the server. Please try again later.');
     }
   };
 

@@ -6,14 +6,10 @@ import React from 'react';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import mailchimp from './mailchimpSetup';
 import { MailContent } from './mailContent';
-import { renderToStaticMarkup } from 'react-dom/server';
+/* import { renderToStaticMarkup } from 'react-dom/server'; */
 import cron from 'node-cron';
 import showdown from 'showdown';
-
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+import supabase from '@/utils/supabase/client';
 
 // Function to add a new subscriber to Supabase and Mailchimp
 export async function addSubscriber(email: string): Promise<void> {
@@ -81,7 +77,8 @@ export async function createWeeklyNewsletter(): Promise<string> {
   try {
     const summary = await fetchSummary();
     const formattedSummary = converter.makeHtml(summary);
-    const mailContentHtml = renderToStaticMarkup(
+    const ReactDOMServer = (await import('react-dom/server')).default;
+    const mailContentHtml = ReactDOMServer.renderToStaticMarkup(
       <MailContent summary={formattedSummary} />
     );
 
