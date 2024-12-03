@@ -18,12 +18,12 @@ export default function Page() {
         <div className='ml-4 mr-4 border-t-8'></div>
         <div className='ml-4 mr-4 border-t-8'></div>
         <div className='flex'>
-          <h1 className='ml-6 mt-3 text-5xl uppercase'>{weekday}</h1>
+          <h1 className='ml-6 mt-3 text-3xl uppercase'>{weekday}</h1>
           <h3 className='font-heavy ml-6 mt-3 text-lg font-thin'>
             {formattedDate}
           </h3>
         </div>
-        <p className='ml-6 mt-1 text-xl'>Top trends, served fresh daily.</p>
+        <p className='ml-6 mt-1 text-lg'>Top trends, served fresh daily.</p>
       </div>
       {mockData
         .sort((a, b) => b.significance - a.significance)
@@ -34,6 +34,11 @@ export default function Page() {
                 <HotTweet
                   id={card.id}
                   label={card.label}
+                  time={card.time}
+                  retweet={card.retweet}
+                  reply={card.reply}
+                  like={card.like}
+                  bookmark={card.bookmark}
                   title={card.title}
                   content={card.content}
                 />

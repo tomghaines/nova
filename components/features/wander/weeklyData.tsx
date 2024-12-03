@@ -3,6 +3,11 @@ export type Card =
       id: number;
       type: 'tweet';
       label: string;
+      retweet: number;
+      reply: number;
+      like: number;
+      bookmark: number;
+      time: string;
       title: string;
       content: string;
       significance: number;
@@ -21,6 +26,11 @@ export const mockData: Card[] = [
     id: 1,
     type: 'tweet',
     label: 'Wallet',
+    retweet: 546,
+    reply: 1336,
+    like: 3632,
+    bookmark: 745,
+    time: 'Tue Dec 03 11:00',
     title: 'Vitalik Buterin',
     content: 'What I would love to see in a wallet: https://t.co/51zWXRVKrE',
     significance: 9,
@@ -36,7 +46,12 @@ export const mockData: Card[] = [
   {
     id: 2,
     type: 'tweet',
-    label: 'BTC Investment',
+    label: 'BTC',
+    retweet: 4959,
+    reply: 1990,
+    like: 3632,
+    bookmark: 1139,
+    time: 'Mon Dec 02 13:04',
     title: 'Michael Saylor',
     content:
       'MicroStrategy has acquired 15,400 BTC for ~$1.5 billion at ~$95,976 per #bitcoin and has achieved BTC Yield of 38.7% QTD and 63.3% YTD. As of 12/2/2024, we hodl 402,100 $BTC acquired for ~$23.4 billion at ~$58,263 per bitcoin. $MSTR',
@@ -54,6 +69,11 @@ export const mockData: Card[] = [
     id: 3,
     type: 'tweet',
     label: 'Debanking',
+    retweet: 623,
+    reply: 153,
+    like: 3856,
+    bookmark: 275,
+    time: 'Sat Nov 30 16:40',
     title: 'Balaji',
     content:
       'Debanking is happening. And it’s bad that it is. Remember that Warren built an anti-crypto army. So of course she was willing to unbank companies! Her goal was to block you from escaping control. And she almost succeeded, if not for democracy. @nic__carter has the details.',
@@ -71,6 +91,11 @@ export const mockData: Card[] = [
     id: 4,
     type: 'tweet',
     label: 'Market',
+    retweet: 703,
+    reply: 359,
+    like: 3299,
+    bookmark: 964,
+    time: 'Tue Dec 03 10:19',
     title: 'Ashcryptoreal',
     content:
       'THE BULLRUN IS JUST STARTING. THIS IS A REMINDER THAT THE BULLRUN IS FAR FROM OVER. HISTORICALLY, BITCOIN MOVES IN A RANGE AND THE BULLRUN IS 1001 DAYS FROM BOTTOM TO PEAK. IF THE SAME TIMEFRAME KICKS IN, WE CAN EXPECT THE NEXT ATH IN 287 DAYS (WEEK 4 OF SEP 2025). AFTER THAT, WE CAN EXPECT 406 DAYS OF CONTINUOUS SELLING.',
@@ -88,6 +113,11 @@ export const mockData: Card[] = [
     id: 5,
     type: 'tweet',
     label: 'ETF',
+    retweet: 124,
+    reply: 46,
+    like: 1178,
+    bookmark: 31,
+    time: 'Sat Nov 30 14:48',
     title: 'RyanSAdams',
     content:
       'Ethereum ETF daily inflows exceeded bitcoin ETF for the first time ever. $332m in Ethereum ETF inflows yesterday. TradFi woke up and realized ETH under $4k is the black friday deal of the decade. We are going higher. 🚀',
