@@ -19,9 +19,10 @@ export default function CatalystCalendar() {
   } = useCalendarList();
 
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
-  const [loadingMore, setLoadingMore] = useState(false);
   const [visibleEvents, setVisibleEvents] = useState<number>(100);
   const [sortDirection, setSortDirection] = useState<string>('asc');
+  const [projectFilter, setProjectFilter] = useState('');
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const filteredEvents = useMemo(() => {
     const filtered =
@@ -29,12 +30,18 @@ export default function CatalystCalendar() {
         ? events
         : events.filter((event) => activeFilters.has(event.eventType));
 
-    return [...filtered].sort((a, b) => {
+    const withProjectFilter = projectFilter
+      ? filtered.filter(
+          (event) => tokenData[event.coin_id]?.symbol === projectFilter
+        )
+      : filtered;
+
+    return [...withProjectFilter].sort((a, b) => {
       const dateA = new Date(a.date_start).getTime();
       const dateB = new Date(b.date_start).getTime();
       return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
     });
-  }, [events, activeFilters, sortDirection]);
+  }, [events, activeFilters, projectFilter, sortDirection, tokenData]);
 
   const displayedEvents = useMemo(() => {
     if (activeFilters.size === 0) {
@@ -57,7 +64,8 @@ export default function CatalystCalendar() {
     setVisibleEvents(100);
   }, [activeFilters]);
 
-  const showLoadMore = activeFilters.size === 0 && originalHasMore;
+  const showLoadMore =
+    activeFilters.size === 0 && !projectFilter && originalHasMore;
 
   if (isLoading) {
     return (
@@ -87,6 +95,9 @@ export default function CatalystCalendar() {
           activeFilters={activeFilters}
           setActiveFilters={setActiveFilters}
           onSortChange={setSortDirection}
+          tokenData={tokenData}
+          projectFilter={projectFilter}
+          setProjectFilter={setProjectFilter}
         />
         <div className='w-full overflow-x-auto'>
           {displayedEvents && displayedEvents.length > 0 ? (

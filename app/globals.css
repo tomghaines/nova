@@ -118,3 +118,10 @@
 .dark ::-webkit-scrollbar-thumb {
   background-color: #393939 !important;
 }
+
+/* Default overides */
+
+.rt-SelectTrigger {
+  border: 1px solid rgb(16 185 129) !important;
+  border-radius: 6px !important;
+}

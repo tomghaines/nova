@@ -5,6 +5,8 @@ import { Select } from '@radix-ui/themes';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
 import { eventTypeToColor } from '@/@types/data/catalyst-calendar/event-badge-colors';
+import { ProjectSearch } from './project-search';
+import type Token from '@/@types/data/catalyst-calendar/token';
 import type CalendarEvent from '@/@types/data/catalyst-calendar/calendar-event';
 
 interface FilterEventsProps {
@@ -12,16 +14,20 @@ interface FilterEventsProps {
   activeFilters: Set<string>;
   setActiveFilters: React.Dispatch<React.SetStateAction<Set<string>>>;
   onSortChange: (direction: string) => void;
+  tokenData: Record<string, Token>;
+  projectFilter: string;
+  setProjectFilter: (value: string) => void;
 }
 
 export default function FilterEvents({
   events,
+  tokenData,
   activeFilters,
   setActiveFilters,
-  onSortChange
+  onSortChange,
+  projectFilter,
+  setProjectFilter
 }: FilterEventsProps) {
-  const [isLoading, setIsLoading] = useState(true);
-
   const handleFilterToggle = useCallback(
     (eventType: string) => {
       setActiveFilters((prev) => {
@@ -39,8 +45,13 @@ export default function FilterEvents({
 
   const resetFilters = useCallback(() => {
     setActiveFilters(new Set());
+    setProjectFilter('');
     onSortChange('asc');
-  }, [setActiveFilters]);
+  }, [setActiveFilters, setProjectFilter, onSortChange]);
+
+  const uniqueProjects = Array.from(
+    new Set(events.map((event) => tokenData[event.coin_id]?.symbol))
+  ).filter(Boolean);
 
   const uniqueEventTypes = Array.from(
     new Set(events.map((event) => event.eventType))
@@ -59,9 +70,18 @@ export default function FilterEvents({
         </div>
       </div>
       <div className='flex flex-col items-start gap-2'>
+        <h3>Search By Project</h3>
+        <ProjectSearch
+          projects={uniqueProjects}
+          onSelect={setProjectFilter}
+          value={projectFilter}
+        />
+      </div>
+      <div className='flex flex-col items-start gap-2'>
+        <h3>Sort By</h3>
         <Select.Root defaultValue='asc' onValueChange={onSortChange}>
-          <Select.Trigger className='dark:bg-neutral-900'>
-            Sort By Date
+          <Select.Trigger className='cursor-pointer border-2 bg-neutral-100 py-5 dark:bg-neutral-900 dark:text-neutral-400'>
+            Date Start
           </Select.Trigger>
           <Select.Content>
             <Select.Item className='hover:bg-emerald-500' value='asc'>
