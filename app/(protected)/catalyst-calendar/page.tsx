@@ -94,13 +94,17 @@ export default function CatalystCalendar() {
               <table className='w-full table-fixed text-sm'>
                 <thead>
                   <tr className='text-left dark:text-neutral-300'>
-                    <th className='p-2 font-medium'>Event Start Date</th>
-                    <th className='p-2 font-medium'>Event End Date</th>
-                    <th className='p-2 font-medium'>Project</th>
-                    <th className='p-2 font-medium'>Event Type</th>
-                    <th className='p-2 font-medium'>Description</th>
-                    <th className='p-2 font-medium'>Source</th>
-                    <th className='p-2 font-medium'>Ann. Date</th>
+                    <th className='w-[110px] p-2 font-medium'>
+                      Event Start Date
+                    </th>
+                    <th className='w-[110px] p-2 font-medium'>
+                      Event End Date
+                    </th>
+                    <th className='w-[100px] p-2 font-medium'>Project</th>
+                    <th className='w-[120px] p-2 font-medium'>Event Type</th>
+                    <th className='w-[250px] p-2 font-medium'>Description</th>
+                    <th className='w-[90px] p-2 font-medium'>Source</th>
+                    <th className='w-[110px] p-2 font-medium'>Ann. Date</th>
                   </tr>
                 </thead>
                 <tbody>
