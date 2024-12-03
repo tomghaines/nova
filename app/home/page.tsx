@@ -1,18 +1,18 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import ParticleSystem from '@/components/features/home/particle';
 import { useTheme } from '@/app/context/theme';
+import Link from 'next/link';
 
 export default function Home() {
   const { isNightMode } = useTheme();
   return (
-    <div className='ml-20 flex w-full items-center overflow-hidden'>
+    <div className='ml-20 flex w-full items-center'>
       <div className='left-24 mt-60 -translate-y-16 transform'>
         <p
           className={`mb-6 w-1/5 rounded-lg border border-black text-center text-black dark:invert`}
         >
-          Dashboard
+          Analytics
         </p>
         <h1 className='mb-4 text-5xl leading-tight'>
           Your Real-time Lens into <br />
@@ -23,7 +23,12 @@ export default function Home() {
           trending web3 topics on X Platform, providing insightful <br />
           analysis and interactive data visualizations <br />
         </p>
-        <Button className='w-full'>Enter</Button>
+        <Link
+          href='/seek'
+          className='rounded bg-gray-300 px-48 py-2 font-semibold text-black transition-colors hover:bg-blue-600'
+        >
+          Start Your Journey
+        </Link>
       </div>
 
       <img
