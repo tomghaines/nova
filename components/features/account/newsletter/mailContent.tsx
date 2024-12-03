@@ -6,7 +6,7 @@ interface MailContentProps {
 
 export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
   return (
-    <div style={{ backgroundColor: 'black', width: '100%', height: 'auto', paddingTop: '20px', paddingBottom: '20px' }}>
+    <div style={{ backgroundColor: 'black', width: '100%', height: 'auto', paddingTop: '20px', paddingBottom: '20px', fontFamily:'Roboto, Arial, sans-serif '}}>
     <div
       style={{
         maxWidth: '600px',
@@ -15,6 +15,7 @@ export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
         padding: '20px',
         borderRadius: '8px',
         boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+        fontFamily:'Roboto, Arial, sans-serif',
       }}
     >
       {/* Logo */}
@@ -54,7 +55,7 @@ export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
         style={{
           fontSize: '16px',
           textAlign: 'center',
-          color: '#555',
+          color: '#000',
           marginBottom: '20px',
         }}
       >
@@ -66,14 +67,12 @@ export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
       <div
         style={{
           marginBottom: '20px',
-          color: '#555',
+          color: '#000',
           fontSize:'16px',
+          fontFamily:'Roboto, Arial, sans-serif',
         }}
-      >
-        <b>Diverse Content Focus</b>
-        {/* {summary} */}
-        
-      </div>
+        dangerouslySetInnerHTML={{ __html: summary }}
+      ></div>
 
       {/* Call-to-Action Button */}
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
@@ -86,6 +85,7 @@ export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
             borderRadius: '5px',
             textDecoration: 'none',
             fontWeight: 'bold',
+            fontFamily:'Roboto, Arial, sans-serif',
           }}
         >
           Read the Full Analysis
@@ -119,7 +119,7 @@ export const MailContent: React.FC<MailContentProps> = ({ summary }) => {
               />
             </td>
             <td style={{ width: '50%', paddingLeft: '10px', textAlign: 'left' }}>
-              <p style={{ margin: '0' }}>
+              <p style={{ margin: '5' }}>
                 Contact us at{' '}
                 <a href="mailto:contact@birdy.ai" style={{ color: '#666', textDecoration: 'underline' }}>
                   contact@birdy.ai

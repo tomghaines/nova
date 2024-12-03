@@ -1,4 +1,4 @@
-import { sendWeeklyNewsletter } from './controller';
+/* import { sendWeeklyNewsletter } from './controller';
 
 (async () => {
   try {
@@ -9,3 +9,4 @@ import { sendWeeklyNewsletter } from './controller';
     console.error('Error during test:', error);
   }
 })();
+ */
