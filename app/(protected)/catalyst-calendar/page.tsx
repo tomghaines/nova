@@ -70,8 +70,8 @@ export default function CatalystCalendar() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='mt-20 flex h-screen w-full flex-col gap-4 p-16 dark:text-neutral-400'>
-      <h2 className='text-3xl font-bold dark:text-neutral-300'>
+    <div className='mt-20 flex h-max w-full flex-col gap-4 p-16 dark:text-neutral-400'>
+      <h2 className='h-max text-3xl font-bold dark:text-neutral-300'>
         Catalyst Calendar
       </h2>
       <p>
