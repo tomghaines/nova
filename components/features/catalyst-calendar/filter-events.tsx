@@ -15,8 +15,8 @@ interface FilterEventsProps {
   setActiveFilters: React.Dispatch<React.SetStateAction<Set<string>>>;
   onSortChange: (direction: string) => void;
   tokenData: Record<string, Token>;
-  projectFilter: string;
-  setProjectFilter: (value: string) => void;
+  projectFilters: Set<string>;
+  setProjectFilter: React.Dispatch<React.SetStateAction<Set<string>>>;
 }
 
 export default function FilterEvents({
@@ -25,7 +25,7 @@ export default function FilterEvents({
   activeFilters,
   setActiveFilters,
   onSortChange,
-  projectFilter,
+  projectFilters,
   setProjectFilter
 }: FilterEventsProps) {
   const handleFilterToggle = useCallback(
@@ -45,7 +45,7 @@ export default function FilterEvents({
 
   const resetFilters = useCallback(() => {
     setActiveFilters(new Set());
-    setProjectFilter('');
+    setProjectFilter(new Set());
     onSortChange('asc');
   }, [setActiveFilters, setProjectFilter, onSortChange]);
 
@@ -58,7 +58,7 @@ export default function FilterEvents({
   );
 
   return (
-    <div className='flex h-fit min-w-[280px] max-w-[280px] flex-col gap-4 rounded-lg border-[1px] border-gray-200 bg-gray-100 px-3 py-4 backdrop-blur-md backdrop-brightness-125 dark:border-neutral-700 dark:bg-neutral-400/10'>
+    <div className='flex h-fit min-w-[280px] max-w-[280px] flex-col gap-4 rounded-lg border-[1px] border-gray-300 bg-gray-100 px-3 py-4 dark:border-neutral-800 dark:bg-zinc-900'>
       <div className='flex items-center justify-between dark:text-neutral-400'>
         <h2 className='text-2xl'>Filter</h2>
         <div
@@ -74,7 +74,7 @@ export default function FilterEvents({
         <ProjectSearch
           projects={uniqueProjects}
           onSelect={setProjectFilter}
-          value={projectFilter}
+          values={projectFilters}
           tokenData={tokenData}
         />
       </div>
