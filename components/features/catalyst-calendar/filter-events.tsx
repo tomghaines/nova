@@ -70,15 +70,6 @@ export default function FilterEvents({
         </div>
       </div>
       <div className='flex flex-col items-start gap-2'>
-        <h3>Search By Project</h3>
-        <ProjectSearch
-          projects={uniqueProjects}
-          onSelect={setProjectFilter}
-          values={projectFilters}
-          tokenData={tokenData}
-        />
-      </div>
-      <div className='flex flex-col items-start gap-2'>
         <h3>Sort By</h3>
         <Select.Root defaultValue='asc' onValueChange={onSortChange}>
           <Select.Trigger className='cursor-pointer border-2 bg-neutral-100 py-5 dark:bg-neutral-900 dark:text-neutral-400'>
@@ -93,6 +84,15 @@ export default function FilterEvents({
             </Select.Item>
           </Select.Content>
         </Select.Root>
+        <div className='flex flex-col items-start gap-2'>
+          <h3>Search By Project</h3>
+          <ProjectSearch
+            projects={uniqueProjects}
+            onSelect={setProjectFilter}
+            values={projectFilters}
+            tokenData={tokenData}
+          />
+        </div>
         <h3>Event Type</h3>
         <div className='flex max-w-80 flex-wrap gap-2'>
           {uniqueEventTypes.map((eventType) => (
