@@ -26,12 +26,12 @@ export default function EventItem({ event, token }: EventItemProps) {
           <ImageWithFallback
             height={18}
             width={18}
-            src={token.image_64 || token.image_32}
+            src={token?.image_64 || token?.image_32 || placeholderLogo}
             fallbackSrc={placeholderLogo}
-            alt={`${token.name} logo`}
+            alt={`${token?.name} logo`}
             className='rounded-full object-cover'
           />
-          <span className='truncate'>{token.symbol}</span>
+          <span className='truncate'>{token?.symbol}</span>
         </div>
       </td>
       <td className='w-[120px] whitespace-nowrap px-2 py-1'>
