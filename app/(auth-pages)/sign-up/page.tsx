@@ -19,10 +19,10 @@ export default async function Signup(props: {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-50'>
-      <div className='w-full max-w-md rounded-lg bg-white p-6 shadow-md'>
-        <h1 className='text-2xl font-semibold text-gray-800'>Create Account</h1>
-        <p className='mt-2 text-sm text-gray-600'>
+    <div className='flex min-h-screen justify-center'>
+      <div className='w-full max-w-md rounded-lg p-6 shadow-md'>
+        <h1 className='text-2xl font-semibold text-gray-100'>Create Account</h1>
+        <p className='mt-2 text-sm text-gray-300'>
           Sign up today and unlock a world of possibilities. Your adventure
           begins here.
         </p>
@@ -34,7 +34,7 @@ export default async function Signup(props: {
 
         <div className='mt-6 flex items-center justify-center'>
           <div className='w-full border-t border-gray-300'></div>
-          <span className='mx-4 text-sm text-gray-500'>OR</span>
+          <span className='mx-4 text-sm text-gray-300'>OR</span>
           <div className='w-full border-t border-gray-300'></div>
         </div>
 
@@ -43,7 +43,7 @@ export default async function Signup(props: {
           <div className='mb-4'>
             <Label
               htmlFor='username'
-              className='block text-sm font-medium text-gray-700'
+              className='block text-sm font-medium text-gray-300'
             >
               Username
             </Label>
@@ -60,7 +60,7 @@ export default async function Signup(props: {
           <div className='mb-4'>
             <Label
               htmlFor='email'
-              className='block text-sm font-medium text-gray-700'
+              className='block text-sm font-medium text-gray-300'
             >
               Email
             </Label>
@@ -80,12 +80,16 @@ export default async function Signup(props: {
           </div>
 
           {/* Submit Button */}
-          <SubmitButton formAction={signUpAction} pendingText='Signing up...'>
+          <SubmitButton
+            formAction={signUpAction}
+            pendingText='Signing up...'
+            className='w-full'
+          >
             Create Account
           </SubmitButton>
         </form>
 
-        <p className='mt-6 text-center text-sm text-gray-600'>
+        <p className='mt-6 text-center text-sm text-gray-300'>
           Already have an account?{' '}
           <a href='/sign-in' className='text-blue-600 hover:underline'>
             Log in
