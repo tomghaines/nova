@@ -8,7 +8,7 @@ export const Newsletter = () => {
     e.preventDefault();
 
     /* Popup window for successful newsletter sign up */
-    const showSuccessPopup = (message:string) => {
+    const showSuccessPopup = (message: string) => {
       const popup = document.createElement('div');
       popup.className =
         'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50';
@@ -55,7 +55,9 @@ export const Newsletter = () => {
       }
     } catch (error) {
       console.error('Error:', error);
-      showSuccessPopup('Failed to connect to the server. Please try again later.');
+      showSuccessPopup(
+        'Failed to connect to the server. Please try again later.'
+      );
     }
   };
 
@@ -79,7 +81,7 @@ export const Newsletter = () => {
           id='email'
           name='email'
           required
-          className='w-64 rounded-lg border border-zinc-300 bg-black p-2 text-zinc-100 focus:border-blue-500 focus:outline-none'
+          className='w-64 rounded-lg border border-zinc-300 bg-black p-2 text-zinc-100 focus:border-emerald-500 focus:outline-none'
           placeholder='Enter your email address'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -87,7 +89,7 @@ export const Newsletter = () => {
 
         <button
           type='submit'
-          className='rounded-lg border border-zinc-300 bg-black px-4 py-2 font-bold text-white hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
+          className='rounded-lg border border-emerald-700 bg-emerald-500 px-4 py-2 font-bold text-white hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50'
         >
           Sign Up
         </button>

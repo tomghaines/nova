@@ -149,11 +149,11 @@ export const AccountDetails = () => {
           <DataList.Root className='ml-16 grid w-full gap-1'>
             <DataList.Item className='grid grid-cols-3 items-center'>
               <DataList.Label className=''>Account ID</DataList.Label>
-              <div className='flex rounded-xl border p-2 dark:border-neutral-600 dark:bg-neutral-800'>
+              <div className='flex items-center justify-between rounded-xl border p-2 dark:border-neutral-600 dark:bg-neutral-800'>
                 <DataList.Value>{userData.id}</DataList.Value>
                 <CopyIcon
                   onClick={() => copyToClipboard(userData.id)}
-                  className='h-7 w-7 rounded-md p-1 hover:cursor-pointer hover:bg-gray-100'
+                  className='h-7 w-7 rounded-md p-1 hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-neutral-700'
                 />
               </div>
             </DataList.Item>
