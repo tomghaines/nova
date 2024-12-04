@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addSubscriber } from '@/components/features/account/newsletter/controller';
+import { addSubscriber } from '@/utils/newsletter/controller';
 import supabase from '@/utils/supabase/client';
 
 export async function POST(request: NextRequest) {
