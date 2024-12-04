@@ -136,11 +136,11 @@ const HotTweet: React.FC<CardProps> = ({
       {/* Card */}
       <div className='h-auto w-full rounded-3xl border border-gray-300 bg-gray-200 p-6 text-gray-600 duration-700 hover:scale-105 dark:border-neutral-600 dark:bg-neutral-800'>
         {/* Label */}
-        <div className='flex justify-between'>
-          <div className='mb-4 inline-block w-auto rounded-xl border border-black p-1 text-sm dark:invert'>
+        <div className='flex justify-between dark:text-neutral-400'>
+          <div className='mb-4 inline-block w-auto rounded-xl border border-black p-1 text-sm dark:border-neutral-400'>
             <span className='ml-2 mr-2'>{label}</span>
           </div>
-          <div className='text-xs dark:invert'>
+          <div className='text-xs'>
             <span className='ml-2 mr-2'>{time}</span>
           </div>
         </div>
@@ -169,13 +169,13 @@ const HotTweet: React.FC<CardProps> = ({
           <a href={link} target='_blank' rel='noopener noreferrer'>
             <Button
               variant='link'
-              className='mt-3 p-1 text-xs text-gray-600 dark:text-neutral-400'
+              className='mt-5 p-1 text-xs text-gray-600 dark:text-neutral-400'
             >
               See Original
             </Button>
           </a>
           <Button
-            className='mb-2 mt-3 h-8 border bg-gray-400 p-4 text-xs dark:bg-neutral-700 dark:text-neutral-300'
+            className='mb-2 mt-5 h-8 border bg-gray-400 p-2 text-xs dark:bg-neutral-700 dark:text-neutral-300'
             onClick={handleContentAnalysisClick}
           >
             Content Analysis
@@ -205,30 +205,5 @@ const HotTweet: React.FC<CardProps> = ({
     </div>
   );
 };
-
-//      {/* Popup for News Recommender */}
-//      {showRecommender && (
-//       <div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black bg-opacity-50'>
-//         <div className='max-h-[80vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-neutral-300 p-12 text-sm dark:text-neutral-600'>
-//           <div className='mb-4 flex items-center justify-between'>
-//             <h2 className='text-3xl font-bold'>Content Analysis</h2>
-//             <button onClick={handleCloseRecommender} className=''>
-//               Close
-//             </button>
-//           </div>
-//           <hr className='mb-4 border-gray-400' />
-//           <div className='formatted-recommendations'>
-//             {recommendations ? (
-//               formatRecommendations(recommendations)
-//             ) : (
-//               <p>Loading recommendations...</p >
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     )}
-//   </div>
-// );
-// };
 
 export default HotTweet;
