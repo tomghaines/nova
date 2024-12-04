@@ -67,14 +67,14 @@ export function ProjectSearch({
   };
 
   return (
-    <div className='command-menu'>
-      <Command className='w-full rounded-md border-[1px] border-emerald-500 text-black dark:bg-neutral-900 dark:text-neutral-400'>
+    <div className='command-menu w-full'>
+      <Command className='rounded-md border-[1px] border-emerald-500 bg-transparent text-black dark:text-neutral-400'>
         <Command.Input
           value={search}
           onValueChange={setSearch}
           onFocus={() => setIsOpen(true)}
           placeholder='Search projects...'
-          className='w-full bg-transparent p-2 outline-none placeholder:text-sm placeholder:text-black dark:placeholder:text-neutral-400'
+          className='h-8 bg-transparent p-2 outline-none placeholder:text-sm placeholder:text-black dark:placeholder:text-neutral-400'
         />
         {isOpen && (
           <Command.List className='absolute z-10 max-h-[200px] overflow-y-auto rounded-lg border-[1px] border-neutral-400 bg-neutral-300 drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-900'>
@@ -88,7 +88,7 @@ export function ProjectSearch({
                   key={project}
                   value={project}
                   onSelect={handleSelect}
-                  className='flex cursor-pointer items-center gap-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                  className='flex cursor-pointer items-center gap-2 p-2 hover:bg-neutral-100 hover:text-black dark:hover:bg-emerald-500'
                 >
                   {token?.image_64 && (
                     <ImageWithFallback
@@ -141,7 +141,7 @@ export function ProjectSearch({
                     newSelection.delete(project);
                     onSelect(newSelection);
                   }}
-                  className='ml-1 text-gray-400 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-neutral-300'
+                  className='ml-1 text-gray-400 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-emerald-400'
                 >
                   ×
                 </button>
