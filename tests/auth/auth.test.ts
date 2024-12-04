@@ -1,5 +1,5 @@
 import { vi, it, expect, describe } from 'vitest';
-import { mockSupabaseClient } from '@/tests/mocks/supabaseClientMock';
+import { mockSupabaseClient } from '@/tests/mocks/auth/supabaseClientMock';
 
 describe('Supabase Auth', () => {
   it('should clear user session', async () => {
