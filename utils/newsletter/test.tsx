@@ -9,4 +9,8 @@
     console.error('Error during test:', error);
   }
 })();
+
+
  */
+
+/* run 'npx tsx components/features/account/newsletter/test.tsx' to send a newsletter */

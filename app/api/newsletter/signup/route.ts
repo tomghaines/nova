@@ -4,7 +4,9 @@ import supabase from '@/utils/supabase/client';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const body  = await request.json();
+    console.log('Request JSON body:', body); 
+    const { email } = body;
 
     // Check if the email already exists in the database
     const { data, error: fetchError } = await supabase
@@ -12,6 +14,8 @@ export async function POST(request: NextRequest) {
       .select('email')
       .eq('email', email)
       .single();
+
+    console.log('Supabase query result:', { data, fetchError });
 
     if (data) {
       // Email already exists

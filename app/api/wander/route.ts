@@ -2,17 +2,24 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { newsContent } = await req.json();
+    const body = await req.json();
+    const newsContent = body.newsContent;
     const url = new URL(req.url);
     const acceptHeader = req.headers.get('Accept');
 
+    console.log('Headers:', Array.from(req.headers.entries()));
+    console.log('Parsed Body:', body);
+
+
+    // empty input
     if (!newsContent) {
       return NextResponse.json(
         { error: 'News content is required' },
         { status: 400 }
       );
     }
-
+    
+    // POST request content to perplexity api
     const options = {
       method: 'POST',
       headers: {
@@ -42,13 +49,32 @@ export async function POST(req: Request) {
       })
     };
 
+    // response from perplexity
     let response;
     try {
       response = await fetch(
         'https://api.perplexity.ai/chat/completions',
         options
       );
+
+      // if response error
+      if (!response.ok) {
+        const responseText = await response.text();
+        console.error(
+          `Perplexity API returned an error: ${response.status} ${response.statusText}`,
+          responseText
+        );
+        return NextResponse.json(
+          {
+            error: `Perplexity API returned an error: ${response.status}`,
+            details: responseText
+          },
+          { status: response.status }
+        );
+      }
+
     } catch (networkError) {
+      // network error
       console.error('Network error during fetch:', networkError);
       return NextResponse.json(
         {
@@ -59,21 +85,7 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!response.ok) {
-      const responseText = await response.text();
-      console.error(
-        `Perplexity API returned an error: ${response.status} ${response.statusText}`,
-        responseText
-      );
-      return NextResponse.json(
-        {
-          error: `Perplexity API returned an error: ${response.status}`,
-          details: responseText
-        },
-        { status: response.status }
-      );
-    }
-
+    // analysis processing (response -> json format)
     let analysis;
     try {
       analysis = await response.json();
@@ -88,7 +100,9 @@ export async function POST(req: Request) {
       );
     }
 
-    if (acceptHeader?.includes('application/json')) {
+    // format analysis based on header format
+    // only accept json or html header format
+    if (!acceptHeader || (!acceptHeader.includes('application/json') && !acceptHeader.includes('text/html'))) {
       return NextResponse.json({
         recommendations: analysis.choices[0]?.message?.content
       });
@@ -103,25 +117,16 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error('Error processing API request:', error);
-      return NextResponse.json(
-        {
-          error: 'An unexpected error occurred',
-          details: error.message
-        },
-        { status: 500 }
-      );
-    } else {
-      console.error('Unknown error type:', error);
-      return NextResponse.json(
-        {
-          error: 'An unexpected error occurred',
-          details: 'Unknown error type'
-        },
-        { status: 500 }
-      );
-    }
+    // unknown errors
+    console.error('Unknown error type:', error);
+    return NextResponse.json(
+      {
+        error: 'An unexpected error occurred',
+        details: 'Unknown error type'
+      },
+      { status: 500 }
+    );
   }
 }
