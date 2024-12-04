@@ -25,7 +25,7 @@ export default function Home() {
         </p>
         <Link
           href='/dashboard'
-          className='rounded bg-gray-300 px-48 py-2 font-semibold text-black transition-colors hover:bg-emerald-500'
+          className='rounded bg-gray-300 px-48 py-2 font-semibold text-black transition-colors hover:bg-gray-700'
         >
           Start Your Journey
         </Link>
