@@ -22,7 +22,7 @@ const SentimentBox = ({
   const sentiment = type === 'bullish';
 
   return (
-    <div className='s flex h-full flex-col justify-between rounded-lg bg-neutral-800/30 p-4 backdrop-blur-sm'>
+    <div className='flex h-full flex-col justify-between rounded-lg bg-neutral-800/30 p-4 backdrop-blur-sm'>
       {/* Header */}
       <div className='flex flex-col space-y-2'>
         <div className='flex items-center gap-2'>
@@ -62,7 +62,7 @@ const SentimentBoxes: React.FC<SentimentBoxesProps> = ({ keyPoints }) => {
   const totalPoints = keyPoints.length;
 
   return (
-    <div className='grid h-full grid-rows-2 gap-4'>
+    <div className='flex h-full gap-2'>
       <SentimentBox
         points={bullishPoints}
         type='bullish'

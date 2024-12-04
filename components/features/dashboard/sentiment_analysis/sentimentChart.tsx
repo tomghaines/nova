@@ -504,10 +504,7 @@ const SentimentChart: React.FC<SentimentChartProps> = ({
           <Download className='h-3.5 w-3.5' />
         </button>
       </div>
-      <div
-        ref={chartRef}
-        className='h-[400px] min-h-[400px] w-full pb-2 pl-3'
-      />
+      <div ref={chartRef} className='h-full w-full pb-2 pl-3' />
     </motion.div>
   );
 };

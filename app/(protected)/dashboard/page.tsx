@@ -18,14 +18,14 @@ export function PageContent() {
   const { selectedCoinSymbol } = useCoin();
 
   return (
-    <div className='flex w-full flex-col items-center p-16'>
+    <div className='flex h-screen w-full flex-col items-center'>
       {/* Inner Container for Charts and Search */}
-      <div className='relative w-full max-w-[1400px] space-y-4 p-4'>
+      <div className='relative w-full space-y-4 p-4'>
         {/* Search Bar */}
         <div className='relative flex flex-col gap-4'>
-          <div className='relative'>
+          {/* <div className='relative'>
             <SearchBar />
-          </div>
+          </div> */}
 
           {/* Sentiment Analysis */}
           <div className='w-full'>
@@ -33,9 +33,9 @@ export function PageContent() {
           </div>
 
           {/* Mindshare Analysis */}
-          <div className='w-full transition-opacity duration-200 ease-in-out'>
+          {/* <div className='w-full transition-opacity duration-200 ease-in-out'>
             <MindshareComponent key={`mindshare-${selectedCoinSymbol}`} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ interface CorrelationProps {
 const SentimentCorrelation: React.FC<CorrelationProps> = () => {
   const correlations = [
     { name: 'BTC/ETH', type: 'Price', value: 0.85 },
-    { name: 'Market Volume', type: 'Volume', value: 0.72 }
+    { name: 'Volume', type: 'Volume', value: 0.72 }
   ];
 
   return (
@@ -19,7 +19,7 @@ const SentimentCorrelation: React.FC<CorrelationProps> = () => {
       <div className='grid grid-cols-2 gap-4'>
         {correlations.map((corr) => (
           <div key={corr.name} className='space-y-2'>
-            <div className='text-xs text-white/40'>{corr.type} Correlation</div>
+            <div className='text-xs text-white/40'>{corr.type}</div>
             <div className='flex items-center justify-between rounded-md bg-white/5 p-2'>
               <span className='text-sm text-white/80'>{corr.name}</span>
               <span className='text-sm font-medium text-emerald-400'>
