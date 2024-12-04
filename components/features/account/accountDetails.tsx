@@ -191,7 +191,7 @@ export const AccountDetails = () => {
           <button
             onClick={uploadImage}
             disabled={uploading}
-            className='mt-6 h-7 w-[120px] rounded-sm border border-gray-600 bg-gray-100 text-black'
+            className='mt-6 h-7 w-[120px] rounded-md border border-gray-600 bg-gray-100 text-black'
           >
             {uploading ? 'Uploading...' : 'Upload Image'}
           </button>
