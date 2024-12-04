@@ -72,7 +72,7 @@ export default function FilterEvents({
       <div className='flex flex-col items-start gap-2'>
         <h3>Sort By</h3>
         <Select.Root defaultValue='asc' onValueChange={onSortChange}>
-          <Select.Trigger className='cursor-pointer border-2 bg-neutral-100 py-5 dark:bg-neutral-900 dark:text-neutral-400'>
+          <Select.Trigger className='h-8 w-full cursor-pointer border-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400'>
             Date Start
           </Select.Trigger>
           <Select.Content>
@@ -84,7 +84,7 @@ export default function FilterEvents({
             </Select.Item>
           </Select.Content>
         </Select.Root>
-        <div className='flex flex-col items-start gap-2'>
+        <div className='flex w-full flex-col items-start gap-2'>
           <h3>Search By Project</h3>
           <ProjectSearch
             projects={uniqueProjects}
