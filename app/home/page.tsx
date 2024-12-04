@@ -24,7 +24,7 @@ export default function Home() {
           analysis and interactive data visualizations <br />
         </p>
         <Link
-          href='/seek'
+          href='/dashboard'
           className='rounded bg-gray-300 px-48 py-2 font-semibold text-black transition-colors hover:bg-blue-600'
         >
           Start Your Journey
