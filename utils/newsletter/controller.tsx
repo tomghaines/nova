@@ -3,9 +3,8 @@
 import * as dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 import React from 'react';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import mailchimp from './mailchimpSetup';
-import { MailContent } from './mailContent';
+import mailchimp from '@/utils/newsletter/mailchimpSetup';
+import { MailContent } from '@/utils/newsletter/mailContent';
 /* import { renderToStaticMarkup } from 'react-dom/server'; */
 import cron from 'node-cron';
 import showdown from 'showdown';
