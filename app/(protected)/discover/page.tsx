@@ -13,8 +13,8 @@ export default function Page() {
   });
 
   return (
-    <div className='flex h-[1000px] flex-col flex-wrap gap-6 p-6 text-gray-800'>
-      <div className='border-gray-500 text-gray-500'>
+    <div className='flex h-[1000px] flex-col flex-wrap gap-6 p-6 text-neutral-800'>
+      <div className='border-neutral-500 text-neutral-500'>
         <div className='ml-4 mr-4 border-t-8'></div>
         <div className='ml-4 mr-4 border-t-8'></div>
         <div className='flex'>

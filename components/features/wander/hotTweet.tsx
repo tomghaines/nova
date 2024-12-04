@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { mockData } from './weeklyData';
 
@@ -26,10 +26,55 @@ const HotTweet: React.FC<CardProps> = ({
   title,
   content
 }) => {
+  const [displayedRetweet, setDisplayedRetweet] = useState<number>(0);
+  const [displayedReply, setDisplayedReply] = useState<number>(0);
+  const [displayedLike, setDisplayedLike] = useState<number>(0);
+  const [displayedBookmark, setDisplayedBookmark] = useState<number>(0);
   const [showRecommender, setShowRecommender] = useState<boolean>(false);
   const [recommendations, setRecommendations] = useState<string>('');
+  const [displayedContent, setDisplayedContent] = useState<string>('');
   const card = mockData.find((item) => item.id === id && item.type === 'tweet');
   const link = card?.link;
+
+  // text animation
+  useEffect(() => {
+    let index = 0;
+    setDisplayedContent('');
+
+    const timer = setInterval(() => {
+      setDisplayedContent((prev) => prev + content.charAt(index));
+      index++;
+      if (index >= content.length) {
+        clearInterval(timer);
+      }
+    }, 7);
+
+    return () => clearInterval(timer);
+  }, [content]);
+
+  // stats animation
+  useEffect(() => {
+    animateStat(setDisplayedRetweet, retweet);
+    animateStat(setDisplayedReply, reply);
+    animateStat(setDisplayedLike, like);
+    animateStat(setDisplayedBookmark, bookmark);
+  }, [retweet, reply, like, bookmark]);
+
+  const animateStat = (
+    setValue: React.Dispatch<React.SetStateAction<number>>,
+    targetValue: number
+  ) => {
+    let current = 0;
+    const increment = Math.ceil(targetValue / 50);
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= targetValue) {
+        current = targetValue;
+        clearInterval(timer);
+      }
+      setValue(current);
+    }, 10);
+  };
 
   const handleContentAnalysisClick = async () => {
     setShowRecommender(true);
@@ -47,10 +92,10 @@ const HotTweet: React.FC<CardProps> = ({
         const data = await response.json();
         setRecommendations(data.recommendations);
       } else {
-        console.error('Failed to fetch recommendations', response.status);
+        console.error('Failed to fetch recommendation', response.status);
       }
     } catch (error) {
-      console.error('Error fetching recommendations:', error);
+      console.error('Error fetching recommendation:', error);
     }
   };
 
@@ -58,7 +103,7 @@ const HotTweet: React.FC<CardProps> = ({
     setShowRecommender(false);
   };
 
-  const formatRecommendations = (text: string) => {
+  const formatRecommendation = (text: string) => {
     return text
       .split(/(?=\d+\.\s\*\*)|(?=###)/) // Split at numbered points followed by ** or ###
       .map((part, index) => {
@@ -100,25 +145,25 @@ const HotTweet: React.FC<CardProps> = ({
           </div>
         </div>
         {/* Stats */}
-        <div className='mb-2 flex flex-col'>
-          <div className='inline-block w-auto rounded-xl p-1 text-xs dark:invert'>
-            <span>Retweet: {retweet}</span>
+        <div className='mb-2 flex flex-col p-1 text-xs dark:text-neutral-400'>
+          <div className='inline-block w-auto rounded-xl'>
+            <span>Retweet: {displayedRetweet}</span>
           </div>
-          <div className='inline-block w-auto rounded-xl p-1 text-xs dark:invert'>
-            <span>Reply: {reply}</span>
+          <div className='inline-block w-auto rounded-xl'>
+            <span>Reply: {displayedReply}</span>
           </div>
-          <div className='inline-block w-auto rounded-xl p-1 text-xs dark:invert'>
-            <span>Like: {like}</span>
+          <div className='inline-block w-auto rounded-xl'>
+            <span>Like: {displayedLike}</span>
           </div>
-          <div className='inline-block w-auto rounded-xl p-1 text-xs dark:invert'>
-            <span>Bookmark: {bookmark}</span>
+          <div className='inline-block w-auto rounded-xl'>
+            <span>Bookmark: {displayedBookmark}</span>
           </div>
         </div>
         {/* Content */}
         <h1 className='mb-2 text-xl font-semibold dark:text-neutral-400'>
           {title}
         </h1>
-        <p className='text-sm font-thin dark:text-white'>{content}</p>
+        <p className='text-sm font-thin dark:text-white'>{displayedContent}</p>
         {/* Button */}
         <div className='flex justify-between text-left'>
           <a href={link} target='_blank' rel='noopener noreferrer'>
@@ -144,16 +189,14 @@ const HotTweet: React.FC<CardProps> = ({
           <div className='max-h-[80vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-neutral-300 p-12 text-sm dark:text-neutral-600'>
             <div className='mb-4 flex items-center justify-between'>
               <h2 className='text-3xl font-bold'>Content Analysis</h2>
-              <button onClick={handleCloseRecommender} className=''>
-                Close
-              </button>
+              <button onClick={handleCloseRecommender}>Close</button>
             </div>
             <hr className='mb-4 border-gray-400' />
             <div className='formatted-recommendations'>
               {recommendations ? (
-                formatRecommendations(recommendations)
+                formatRecommendation(recommendations)
               ) : (
-                <p>Loading recommendations...</p>
+                <p>Loading analysis...</p>
               )}
             </div>
           </div>
@@ -162,5 +205,30 @@ const HotTweet: React.FC<CardProps> = ({
     </div>
   );
 };
+
+//      {/* Popup for News Recommender */}
+//      {showRecommender && (
+//       <div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black bg-opacity-50'>
+//         <div className='max-h-[80vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-neutral-300 p-12 text-sm dark:text-neutral-600'>
+//           <div className='mb-4 flex items-center justify-between'>
+//             <h2 className='text-3xl font-bold'>Content Analysis</h2>
+//             <button onClick={handleCloseRecommender} className=''>
+//               Close
+//             </button>
+//           </div>
+//           <hr className='mb-4 border-gray-400' />
+//           <div className='formatted-recommendations'>
+//             {recommendations ? (
+//               formatRecommendations(recommendations)
+//             ) : (
+//               <p>Loading recommendations...</p >
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     )}
+//   </div>
+// );
+// };
 
 export default HotTweet;

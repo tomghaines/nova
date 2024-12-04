@@ -5,7 +5,6 @@ export async function POST(req: Request) {
     const { newsContent } = await req.json();
     const url = new URL(req.url);
     const acceptHeader = req.headers.get('Accept');
-    console.log('API Key:', process.env.PERPLEXITY_API_KEY);
 
     if (!newsContent) {
       return NextResponse.json(
