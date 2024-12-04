@@ -82,7 +82,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible='icon' className='transition-all duration-300'>
-      <SidebarContent className='flex h-screen flex-col items-center justify-between align-middle'>
+      <SidebarContent className='flex h-screen flex-col items-center justify-between bg-zinc-100 align-middle dark:bg-neutral-950'>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className='flex flex-col gap-4'>
@@ -95,7 +95,7 @@ export function AppSidebar() {
                   >
                     <Link
                       href={item.url}
-                      className='flex items-center gap-2 hover:bg-neutral-800 hover:no-underline'
+                      className='flex items-center gap-2 hover:bg-neutral-200 hover:no-underline dark:hover:bg-neutral-800'
                     >
                       <item.icon className='dark:text-neutral-500' />
                       <span className='font-semibold transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0 dark:text-neutral-400'>
@@ -113,7 +113,7 @@ export function AppSidebar() {
           <SidebarFooter className='mt-2 flex justify-center'>
             <DropdownMenu>
               <DropdownMenuTrigger
-                className='hover:bg-neutral-800 hover:no-underline'
+                className='hover:bg-neutral-200 hover:no-underline dark:text-neutral-300 dark:hover:bg-neutral-800'
                 asChild
               >
                 <SidebarMenuButton
@@ -131,7 +131,7 @@ export function AppSidebar() {
                   </Avatar>
                   <div className='flex items-center justify-between gap-2 overflow-hidden transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0'>
                     <div className='flex flex-col text-[0.8rem]'>
-                      <span className='min-w-0 font-semibold'>
+                      <span className='min-w-0 font-bold'>
                         {user.user_metadata.username}
                       </span>
                       <span className='min-w-0'>{user.email}</span>
