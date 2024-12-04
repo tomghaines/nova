@@ -12,7 +12,7 @@ const SentimentCorrelation: React.FC<CorrelationProps> = () => {
   ];
 
   return (
-    <div className='flex h-full flex-col justify-between rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30 p-4'>
+    <div className='flex flex-col justify-between rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30 p-4'>
       <h3 className='mb-3 text-sm font-medium text-white/60'>
         Market Correlations
       </h3>

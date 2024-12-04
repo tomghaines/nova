@@ -24,7 +24,7 @@ const SentimentBox = ({
   return (
     <div className='flex h-full flex-col justify-between rounded-lg bg-neutral-800/30 p-4 backdrop-blur-sm'>
       {/* Header */}
-      <div className='flex flex-col space-y-2'>
+      <div className='flex flex-col space-y-10'>
         <div className='flex items-center gap-2'>
           <span
             className={`text-sm ${sentiment ? 'text-emerald-500' : 'text-red-500'}`}
@@ -39,7 +39,7 @@ const SentimentBox = ({
       </div>
 
       {/* Footer */}
-      <div className='flex items-center justify-between border-t border-neutral-800 pt-4'>
+      <div className='mt-2 flex items-center justify-between border-t border-neutral-800 pt-2'>
         <div className='flex items-center gap-2'>
           <Zap className='h-4 w-4 text-neutral-400' />
           <span className='text-xs text-neutral-400'>Market Impact</span>
@@ -62,7 +62,7 @@ const SentimentBoxes: React.FC<SentimentBoxesProps> = ({ keyPoints }) => {
   const totalPoints = keyPoints.length;
 
   return (
-    <div className='flex h-full gap-2'>
+    <div className='flex gap-2'>
       <SentimentBox
         points={bullishPoints}
         type='bullish'

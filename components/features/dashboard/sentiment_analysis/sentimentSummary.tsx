@@ -23,7 +23,7 @@ const SentimentSummary: React.FC<SentimentSummaryProps> = ({ coinData }) => {
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className='relative h-full w-full rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30 px-4 py-2'
+      className='w-full rounded-lg border-[1px] border-neutral-900/40 bg-neutral-800/30 px-4 py-2'
     >
       <div className='flex h-full w-full flex-col justify-between gap-3'>
         <div className='flex w-full flex-col items-start justify-between'>
