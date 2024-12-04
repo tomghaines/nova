@@ -1,5 +1,6 @@
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { SwitchMode } from '@/components/features/dashboard/switch';
+import { IconButton } from '@radix-ui/themes';
+import { MoonStar, Sun } from 'lucide-react';
 
 interface NavbarProps {
   isNightMode: boolean;
@@ -21,8 +22,14 @@ export function Navbar({ isNightMode, onThemeToggle }: NavbarProps) {
         />
       </div>
 
-      <div className='fixed right-10 top-7 z-50'>
-        <SwitchMode isNightMode={isNightMode} onThemeToggle={onThemeToggle} />
+      <div className='fixed right-10 top-5 z-50 rounded-lg border-[2px] border-neutral-200 dark:border-neutral-700'>
+        <IconButton
+          size='3'
+          className='cursor-pointer bg-neutral-100 text-black hover:bg-neutral-300 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800'
+          onClick={onThemeToggle}
+        >
+          {isNightMode ? <Sun /> : <MoonStar />}
+        </IconButton>
       </div>
     </nav>
   );
