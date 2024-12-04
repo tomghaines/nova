@@ -37,7 +37,8 @@ const HotTweet: React.FC<CardProps> = ({
       const response = await fetch('/api/wander', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
         },
         body: JSON.stringify({ newsContent: content })
       });
@@ -46,7 +47,7 @@ const HotTweet: React.FC<CardProps> = ({
         const data = await response.json();
         setRecommendations(data.recommendations);
       } else {
-        console.error('Failed to fetch recommendations');
+        console.error('Failed to fetch recommendations', response.status);
       }
     } catch (error) {
       console.error('Error fetching recommendations:', error);
@@ -55,6 +56,34 @@ const HotTweet: React.FC<CardProps> = ({
 
   const handleCloseRecommender = () => {
     setShowRecommender(false);
+  };
+
+  const formatRecommendations = (text: string) => {
+    return text
+      .split(/(?=\d+\.\s\*\*)|(?=###)/) // Split at numbered points followed by ** or ###
+      .map((part, index) => {
+        if (part.startsWith('###')) {
+          return (
+            <h2 key={index} className='mb-2 mt-4 text-lg font-bold'>
+              {part.replace('###', '').trim()}
+            </h2>
+          );
+        }
+        return (
+          <p key={index} className='mb-4'>
+            {part.split(/(\*\*.*?\*\*)/).map((subPart, subIndex) => {
+              if (subPart.startsWith('**') && subPart.endsWith('**')) {
+                return (
+                  <strong key={subIndex} className='font-bold'>
+                    {subPart.replace(/\*\*/g, '')}
+                  </strong>
+                );
+              }
+              return subPart;
+            })}
+          </p>
+        );
+      });
   };
 
   return (
@@ -111,20 +140,18 @@ const HotTweet: React.FC<CardProps> = ({
 
       {/* Popup for News Recommender */}
       {showRecommender && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='w-3/4 max-w-2xl rounded-lg bg-neutral-200 p-8'>
+        <div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black bg-opacity-50'>
+          <div className='max-h-[80vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-neutral-300 p-12 text-sm dark:text-neutral-600'>
             <div className='mb-4 flex items-center justify-between'>
-              <h2 className='text-lg font-bold'>Content Analysis</h2>
+              <h2 className='text-3xl font-bold'>Content Analysis</h2>
               <button onClick={handleCloseRecommender} className=''>
                 Close
               </button>
             </div>
-            <div>
+            <hr className='mb-4 border-gray-400' />
+            <div className='formatted-recommendations'>
               {recommendations ? (
-                <div>
-                  <h2>Recommended Readings:</h2>
-                  <p>{recommendations}</p>
-                </div>
+                formatRecommendations(recommendations)
               ) : (
                 <p>Loading recommendations...</p>
               )}

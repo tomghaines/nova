@@ -4,7 +4,6 @@ export async function POST(req: Request) {
   try {
     const { newsContent } = await req.json();
     const url = new URL(req.url);
-    const streamOption = url.searchParams.get('stream') === 'true';
     const acceptHeader = req.headers.get('Accept');
     console.log('API Key:', process.env.PERPLEXITY_API_KEY);
 
@@ -34,7 +33,7 @@ export async function POST(req: Request) {
             content: newsContent
           }
         ],
-        max_tokens: 200,
+        max_token: 500,
         return_images: false,
         return_related_questions: false,
         temperature: 0.6,

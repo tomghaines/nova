@@ -9,7 +9,6 @@ const NewsRecommender: React.FC<NewsRecommenderProps> = ({
 }) => {
   return (
     <div>
-      <h1>News Recommender</h1>
       <p>{initialContent}</p>
     </div>
   );
