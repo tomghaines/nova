@@ -2,7 +2,13 @@
 
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { ChevronUp } from 'lucide-react';
+import {
+  ChevronUp,
+  Home,
+  LayoutDashboard,
+  Calendar,
+  Compass
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import {
@@ -29,19 +35,23 @@ import { Button } from '@radix-ui/themes';
 const items = [
   {
     title: 'HOME',
-    url: '/home'
+    url: '/home',
+    icon: Home
   },
   {
     title: 'DASHBOARD',
-    url: '/dashboard'
+    url: '/dashboard',
+    icon: LayoutDashboard
   },
   {
     title: 'DISCOVER',
-    url: '/discover'
+    url: '/discover',
+    icon: Compass
   },
   {
     title: 'CATALYST CALENDAR',
-    url: '/catalyst-calendar'
+    url: '/catalyst-calendar',
+    icon: Calendar
   }
 ];
 
@@ -59,7 +69,6 @@ export function AppSidebar() {
 
     getUser();
 
-    // Set up auth state change listener
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -72,7 +81,7 @@ export function AppSidebar() {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase, router]);
+  }, [router]);
 
   const handleSignOut = async () => {
     setUser(null);
@@ -80,20 +89,22 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar>
+    <Sidebar collapsible='icon' className='transition-all duration-300'>
       <SidebarContent className='flex h-full flex-col'>
         <div className='mt-auto'>
           <SidebarGroup>
-            <SidebarGroupContent className='w-full'>
+            <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
-                      className='focus:outline-none active:bg-transparent'
+                      tooltip={item.title}
+                      className='w-auto focus:outline-none active:bg-transparent'
                     >
-                      <Link href={item.url}>
-                        <span className='h-18 dark:border-invert w-full p-2 text-2xl font-thin hover:font-black'>
+                      <Link href={item.url} className='flex items-center gap-2'>
+                        <item.icon className='h-5 w-5' />
+                        <span className='transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0'>
                           {item.title}
                         </span>
                       </Link>
@@ -109,19 +120,25 @@ export function AppSidebar() {
           <SidebarFooter className='mt-2'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton className='flex justify-around gap-1'>
-                  <Avatar className='h-6 w-6 overflow-hidden rounded-full'>
+                <SidebarMenuButton
+                  tooltip={user.user_metadata.username || user.email}
+                  className='flex items-center gap-2 p-2'
+                >
+                  <Avatar className='h-6 w-6 min-w-[24px] flex-shrink-0 overflow-hidden rounded-full'>
                     <AvatarImage
                       src={
-                        user.user_metadata.avatar_url
-                          ? user.user_metadata.avatar_url
-                          : 'https://github.com/shadcn.png'
+                        user.user_metadata.avatar_url ||
+                        'https://github.com/shadcn.png'
                       }
-                      alt='@shadcn'
+                      alt='User avatar'
                     />
                   </Avatar>
-                  <span className='flex-1'>{user.email}</span>
-                  <ChevronUp className='ml-2' />
+                  <div className='flex items-center gap-2 overflow-hidden transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0'>
+                    <span className='min-w-0 truncate'>
+                      {user.user_metadata.username || user.email}
+                    </span>
+                    <ChevronUp className='h-4 w-4 flex-shrink-0' />
+                  </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -129,11 +146,9 @@ export function AppSidebar() {
                 className='w-[--radix-popper-anchor-width]'
               >
                 <DropdownMenuItem>
-                  <Button className='w-full cursor-pointer'>
-                    <a className='w-full' href='/account'>
-                      Account
-                    </a>
-                  </Button>
+                  <Link href='/account' className='w-full'>
+                    <Button className='w-full cursor-pointer'>Account</Button>
+                  </Link>
                 </DropdownMenuItem>
                 <form action={signOutAction} onSubmit={handleSignOut}>
                   <DropdownMenuItem asChild>
@@ -141,9 +156,7 @@ export function AppSidebar() {
                       type='submit'
                       className='w-full hover:cursor-pointer'
                     >
-                      <a className='w-full' href='/home'>
-                        Sign out
-                      </a>
+                      Sign out
                     </Button>
                   </DropdownMenuItem>
                 </form>
