@@ -74,7 +74,7 @@ const SentimentSummary: React.FC<SentimentSummaryProps> = ({ coinData }) => {
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <p className='line-clamp-4 text-left text-xs font-light leading-relaxed text-white/70'>
+            <p className='h-full text-left text-xs font-light leading-relaxed text-white/70'>
               {coinData.overallAnalysis}
             </p>
           </div>
