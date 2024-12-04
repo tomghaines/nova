@@ -64,7 +64,15 @@ export function AppSidebar() {
   const router = useRouter();
 
   useEffect(() => {
-    // Code to fetch and manage user data omitted for brevity
+    const fetchUser = async () => {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+      if (user) {
+        setUser(user);
+      }
+    };
+    fetchUser();
   }, [router]);
 
   const handleSignOut = async () => {
