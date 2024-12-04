@@ -44,7 +44,7 @@ const items = [
   },
   {
     title: 'Mindshare',
-    url: '',
+    url: '/mindshare',
     icon: Brain
   },
   {

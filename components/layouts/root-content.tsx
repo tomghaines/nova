@@ -14,11 +14,13 @@ export function RootContent({ children }: RootContentProps) {
 
   return (
     <SidebarProvider>
-      <div className='flex min-h-screen w-full'>
+      <div className='flex h-auto w-full'>
         <AppSidebar />
-        <main className='flex flex-1 flex-col'>
-          <Navbar isNightMode={isNightMode} onThemeToggle={toggleTheme} />
-          <div className='mt-20 flex w-full'>{children}</div>
+        <main className='m-0 flex w-full flex-col'>
+          <div className='h-12'>
+            <Navbar isNightMode={isNightMode} onThemeToggle={toggleTheme} />
+          </div>
+          <div className='flex h-full w-full'>{children}</div>
         </main>
       </div>
     </SidebarProvider>
