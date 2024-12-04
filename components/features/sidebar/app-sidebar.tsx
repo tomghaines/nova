@@ -82,7 +82,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible='icon' className='transition-all duration-300'>
-      <SidebarContent className='flex h-screen flex-col items-center justify-between bg-zinc-100 align-middle dark:bg-neutral-950'>
+      <SidebarContent className='flex h-screen flex-col items-center justify-between overflow-x-hidden bg-zinc-100 align-middle dark:bg-neutral-950'>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className='flex flex-col gap-4'>
