@@ -2,7 +2,7 @@
 
 import { useTheme } from '@/app/context/theme';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/features/sidebar/sidebar';
+import { AppSidebar } from '@/components/features/sidebar/app-sidebar';
 import { Navbar } from '../features/navbar/navbar';
 
 interface RootContentProps {
