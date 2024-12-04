@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const url = new URL(req.url);
     const streamOption = url.searchParams.get('stream') === 'true';
     const acceptHeader = req.headers.get('Accept');
-    console.log('Perplexity API Key:', process.env.PERPLEXITY_API_KEY);
+    console.log('API Key:', process.env.PERPLEXITY_API_KEY);
 
     if (!newsContent) {
       return NextResponse.json(
@@ -34,13 +34,12 @@ export async function POST(req: Request) {
             content: newsContent
           }
         ],
-        max_tokens: 50,
+        max_tokens: 200,
         return_images: false,
         return_related_questions: false,
         temperature: 0.6,
         top_p: 0.7,
         search_recency_filter: 'month',
-        stream: streamOption,
         presence_penalty: 1
       })
     };
