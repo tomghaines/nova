@@ -82,53 +82,54 @@ export default function FilterEvents({
           <p>Reset Filters</p>
         </div>
       </div>
-      <div className='flex flex-col items-start gap-3'>
+      <div className='flex flex-col items-start gap-2'>
         <h3>Sort By</h3>
-        <Select.Root
-          value={startDateValue}
-          onValueChange={(val) => {
-            setStartDateValue(val);
-            onStartDateSortChange(val);
-          }}
-        >
-          <Select.Trigger className='h-8 w-full cursor-pointer border-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400'>
-            Date Start
-          </Select.Trigger>
-          <Select.Content>
-            <Select.Item className='hover:bg-emerald-500' value='asc'>
-              Date (Asc)
-            </Select.Item>
-            <Select.Item className='hover:bg-emerald-500' value='desc'>
-              Date (Desc)
-            </Select.Item>
-            <Select.Item className='hover:bg-emerald-500' value='none'>
-              None
-            </Select.Item>
-          </Select.Content>
-        </Select.Root>
-
-        <Select.Root
-          value={endDateValue}
-          onValueChange={(val) => {
-            setEndDateValue(val);
-            onEndDateSortChange(val);
-          }}
-        >
-          <Select.Trigger className='h-8 w-full cursor-pointer border-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400'>
-            Date End
-          </Select.Trigger>
-          <Select.Content>
-            <Select.Item className='hover:bg-emerald-500' value='asc'>
-              Date (Asc)
-            </Select.Item>
-            <Select.Item className='hover:bg-emerald-500' value='desc'>
-              Date (Desc)
-            </Select.Item>
-            <Select.Item className='hover:bg-emerald-500' value='none'>
-              None
-            </Select.Item>
-          </Select.Content>
-        </Select.Root>
+        <div className='flex w-full justify-between'>
+          <Select.Root
+            value={startDateValue}
+            onValueChange={(val) => {
+              setStartDateValue(val);
+              onStartDateSortChange(val);
+            }}
+          >
+            <Select.Trigger className='h-8 w-[7rem] cursor-pointer border-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400'>
+              Date Start
+            </Select.Trigger>
+            <Select.Content>
+              <Select.Item className='hover:bg-emerald-500' value='asc'>
+                Date (Asc)
+              </Select.Item>
+              <Select.Item className='hover:bg-emerald-500' value='desc'>
+                Date (Desc)
+              </Select.Item>
+              <Select.Item className='hover:bg-emerald-500' value='none'>
+                None
+              </Select.Item>
+            </Select.Content>
+          </Select.Root>
+          <Select.Root
+            value={endDateValue}
+            onValueChange={(val) => {
+              setEndDateValue(val);
+              onEndDateSortChange(val);
+            }}
+          >
+            <Select.Trigger className='h-8 w-[7rem] cursor-pointer border-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400'>
+              Date End
+            </Select.Trigger>
+            <Select.Content>
+              <Select.Item className='hover:bg-emerald-500' value='asc'>
+                Date (Asc)
+              </Select.Item>
+              <Select.Item className='hover:bg-emerald-500' value='desc'>
+                Date (Desc)
+              </Select.Item>
+              <Select.Item className='hover:bg-emerald-500' value='none'>
+                None
+              </Select.Item>
+            </Select.Content>
+          </Select.Root>
+        </div>
         <div className='flex w-full flex-col items-start gap-2'>
           <h3>Search By Project</h3>
           <ProjectSearch
