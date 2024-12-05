@@ -13,12 +13,13 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarFooter
+  SidebarFooter,
+  SidebarRail,
+  SidebarSeparator
 } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
@@ -32,11 +33,6 @@ import Link from 'next/link';
 import { Button } from '@radix-ui/themes';
 
 const items = [
-  {
-    title: 'Home',
-    url: '/home',
-    icon: Home
-  },
   {
     title: 'Dashboard',
     url: '/dashboard',
@@ -83,44 +79,65 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible='icon' className='transition-all duration-300'>
       <SidebarContent className='flex h-screen flex-col items-center justify-between overflow-x-hidden bg-zinc-100 align-middle dark:bg-neutral-950'>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu className='flex flex-col gap-4'>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.title}
-                    className='flex gap-2 text-lg focus:outline-none active:bg-transparent'
+        <SidebarMenu className='flex flex-col gap-3 p-3'>
+          <SidebarMenuItem key='home'>
+            <SidebarMenuButton
+              asChild
+              tooltip='Home'
+              className='flex gap-2 text-lg focus:outline-none active:bg-transparent'
+            >
+              <Link
+                href='/home'
+                className='flex items-center gap-2 hover:bg-neutral-200 hover:no-underline dark:hover:bg-neutral-800'
+              >
+                <Home className='dark:text-neutral-500' />
+                <span className='font-semibold transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0 dark:text-neutral-400'>
+                  Home
+                </span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarSeparator />
+
+          <SidebarGroupLabel className='text-md font-bold'>
+            Tools
+          </SidebarGroupLabel>
+          <div className='flex flex-col gap-4'>
+            {items.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.title}
+                  className='text-lg focus:outline-none active:bg-transparent'
+                >
+                  <Link
+                    href={item.url}
+                    className='flex items-center gap-2 hover:bg-neutral-200 hover:no-underline dark:hover:bg-neutral-800'
                   >
-                    <Link
-                      href={item.url}
-                      className='flex items-center gap-2 hover:bg-neutral-200 hover:no-underline dark:hover:bg-neutral-800'
-                    >
-                      <item.icon className='dark:text-neutral-500' />
-                      <span className='font-semibold transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0 dark:text-neutral-400'>
-                        {item.title}
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                    <item.icon className='dark:text-neutral-500' />
+                    <span className='font-semibold transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0 dark:text-neutral-400'>
+                      {item.title}
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </div>
+        </SidebarMenu>
 
         {user && (
-          <SidebarFooter className='mt-2 flex justify-center'>
+          <SidebarFooter className='p-2'>
             <DropdownMenu>
-              <DropdownMenuTrigger
-                className='hover:bg-neutral-200 hover:no-underline dark:text-neutral-300 dark:hover:bg-neutral-800'
-                asChild
-              >
+              <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
-                  tooltip={user.user_metadata.username || user.email}
-                  className='flex items-center justify-center gap-2 p-2'
+                  className='flex w-full items-center justify-center group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!pl-3.5'
+                  tooltip={
+                    user?.user_metadata?.username ||
+                    user?.identities?.[0]?.identity_data?.full_name ||
+                    'User'
+                  }
                 >
-                  <Avatar className='h-6 w-6 min-w-[24px] flex-shrink-0 overflow-hidden rounded-full'>
+                  <Avatar className='h-6 w-6 min-w-[24px] overflow-hidden rounded-full'>
                     <AvatarImage
                       src={
                         user.user_metadata.avatar_url ||
@@ -132,7 +149,8 @@ export function AppSidebar() {
                   <div className='flex items-center justify-between gap-2 overflow-hidden transition-all duration-300 group-data-[collapsible=icon]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:opacity-0'>
                     <div className='flex flex-col text-[0.8rem]'>
                       <span className='min-w-0 font-bold'>
-                        {user.user_metadata.username}
+                        {user.user_metadata.username ||
+                          user?.identities?.[0]?.identity_data?.full_name}
                       </span>
                       <span className='min-w-0'>{user.email}</span>
                     </div>
@@ -164,6 +182,7 @@ export function AppSidebar() {
           </SidebarFooter>
         )}
       </SidebarContent>
+      <SidebarRail />
     </Sidebar>
   );
 }

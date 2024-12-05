@@ -13,7 +13,7 @@ export function RootContent({ children }: RootContentProps) {
   const { isNightMode, toggleTheme } = useTheme();
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <div className='flex h-auto w-full'>
         <AppSidebar />
         <main className='m-0 flex w-full flex-col'>
