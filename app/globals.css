@@ -127,3 +127,13 @@
   border: 1px solid rgb(16 185 129) !important;
   border-radius: 6px !important;
 }
+
+::selection {
+  background-color: #10b780 !important;
+  color: black;
+}
+
+::-moz-selection {
+  background-color: #ffeb3b;
+  color: #00ff1e;
+}
