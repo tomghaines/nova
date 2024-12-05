@@ -6,9 +6,9 @@ import { NextRequest } from 'next/server';
 // Create a mock NextRequest object
 const createMockRequest = (body = {}) => {
   return {
-    json: jest.fn().mockResolvedValue(body),
+    json: vi.fn().mockResolvedValue(body),
     headers: {
-      get: jest.fn((header) => (header === 'Content-Type' ? 'application/json' : null)),
+      get: vi.fn((header) => (header === 'Content-Type' ? 'application/json' : null)),
     },
   };
 };

@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
+  console.log(req);
   try {
     const body = await req.json();
     const newsContent = body.newsContent;
     const url = new URL(req.url);
     const acceptHeader = req.headers.get('Accept');
+    console.log('acceptHeader', acceptHeader);
 
     console.log('Headers:', Array.from(req.headers.entries()));
     console.log('Parsed Body:', body);
@@ -56,7 +58,7 @@ export async function POST(req: Request) {
         'https://api.perplexity.ai/chat/completions',
         options
       );
-
+      console.log('line61', response);
       // if response error
       if (!response.ok) {
         const responseText = await response.text();
@@ -102,7 +104,7 @@ export async function POST(req: Request) {
 
     // format analysis based on header format
     // only accept json or html header format
-    if (!acceptHeader || (!acceptHeader.includes('application/json') && !acceptHeader.includes('text/html'))) {
+    if (acceptHeader && acceptHeader?.includes('application/json')) {
       return NextResponse.json({
         recommendations: analysis.choices[0]?.message?.content
       });
