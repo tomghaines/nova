@@ -20,7 +20,8 @@ export default function CatalystCalendar() {
 
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   const [visibleEvents, setVisibleEvents] = useState<number>(100);
-  const [sortDirection, setSortDirection] = useState<string>('asc');
+  const [startDateSort, setStartDateSort] = useState<string>('asc');
+  const [endDateSort, setEndDateSort] = useState<string>('asc');
   const [projectFilters, setProjectFilters] = useState<Set<string>>(new Set());
   const [loadingMore, setLoadingMore] = useState(false);
 
@@ -38,11 +39,37 @@ export default function CatalystCalendar() {
         : filtered;
 
     return [...withProjectFilter].sort((a, b) => {
-      const dateA = new Date(a.date_start).getTime();
-      const dateB = new Date(b.date_start).getTime();
-      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+      const startDateA = new Date(a.date_start).getTime();
+      const startDateB = new Date(b.date_start).getTime();
+      const endDateA = new Date(a.date_end).getTime();
+      const endDateB = new Date(b.date_end).getTime();
+
+      // Sort by start date first
+      if (startDateSort !== 'none') {
+        const startComparison =
+          startDateSort === 'asc'
+            ? startDateA - startDateB
+            : startDateB - startDateA;
+        if (startComparison !== 0) return startComparison;
+      }
+
+      // Then sort by end date
+      if (endDateSort !== 'none') {
+        return endDateSort === 'asc'
+          ? endDateA - endDateB
+          : endDateB - endDateA;
+      }
+
+      return 0;
     });
-  }, [events, activeFilters, projectFilters, sortDirection, tokenData]);
+  }, [
+    events,
+    activeFilters,
+    projectFilters,
+    startDateSort,
+    endDateSort,
+    tokenData
+  ]);
 
   const displayedEvents = useMemo(() => {
     if (activeFilters.size === 0) {
@@ -95,7 +122,8 @@ export default function CatalystCalendar() {
           events={events}
           activeFilters={activeFilters}
           setActiveFilters={setActiveFilters}
-          onSortChange={setSortDirection}
+          onStartDateSortChange={setStartDateSort}
+          onEndDateSortChange={setEndDateSort}
           tokenData={tokenData}
           projectFilters={projectFilters}
           setProjectFilter={setProjectFilters}

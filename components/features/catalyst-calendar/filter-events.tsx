@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Select } from '@radix-ui/themes';
 import { Badge } from '@radix-ui/themes';
 import { GrPowerReset } from 'react-icons/gr';
@@ -13,7 +13,8 @@ interface FilterEventsProps {
   events: CalendarEvent[];
   activeFilters: Set<string>;
   setActiveFilters: React.Dispatch<React.SetStateAction<Set<string>>>;
-  onSortChange: (direction: string) => void;
+  onStartDateSortChange: (direction: string) => void;
+  onEndDateSortChange: (direction: string) => void;
   tokenData: Record<string, Token>;
   projectFilters: Set<string>;
   setProjectFilter: React.Dispatch<React.SetStateAction<Set<string>>>;
@@ -24,10 +25,14 @@ export default function FilterEvents({
   tokenData,
   activeFilters,
   setActiveFilters,
-  onSortChange,
+  onStartDateSortChange,
+  onEndDateSortChange,
   projectFilters,
   setProjectFilter
 }: FilterEventsProps) {
+  const [startDateValue, setStartDateValue] = useState('asc');
+  const [endDateValue, setEndDateValue] = useState('asc');
+
   const handleFilterToggle = useCallback(
     (eventType: string) => {
       setActiveFilters((prev) => {
@@ -46,8 +51,16 @@ export default function FilterEvents({
   const resetFilters = useCallback(() => {
     setActiveFilters(new Set());
     setProjectFilter(new Set());
-    onSortChange('asc');
-  }, [setActiveFilters, setProjectFilter, onSortChange]);
+    setStartDateValue('asc');
+    setEndDateValue('asc');
+    onStartDateSortChange('asc');
+    onEndDateSortChange('asc');
+  }, [
+    setActiveFilters,
+    setProjectFilter,
+    onStartDateSortChange,
+    onEndDateSortChange
+  ]);
 
   const uniqueProjects = Array.from(
     new Set(events.map((event) => tokenData[event.coin_id]?.symbol))
@@ -69,9 +82,15 @@ export default function FilterEvents({
           <p>Reset Filters</p>
         </div>
       </div>
-      <div className='flex flex-col items-start gap-2'>
+      <div className='flex flex-col items-start gap-3'>
         <h3>Sort By</h3>
-        <Select.Root defaultValue='asc' onValueChange={onSortChange}>
+        <Select.Root
+          value={startDateValue}
+          onValueChange={(val) => {
+            setStartDateValue(val);
+            onStartDateSortChange(val);
+          }}
+        >
           <Select.Trigger className='h-8 w-full cursor-pointer border-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400'>
             Date Start
           </Select.Trigger>
@@ -81,6 +100,32 @@ export default function FilterEvents({
             </Select.Item>
             <Select.Item className='hover:bg-emerald-500' value='desc'>
               Date (Desc)
+            </Select.Item>
+            <Select.Item className='hover:bg-emerald-500' value='none'>
+              None
+            </Select.Item>
+          </Select.Content>
+        </Select.Root>
+
+        <Select.Root
+          value={endDateValue}
+          onValueChange={(val) => {
+            setEndDateValue(val);
+            onEndDateSortChange(val);
+          }}
+        >
+          <Select.Trigger className='h-8 w-full cursor-pointer border-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400'>
+            Date End
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item className='hover:bg-emerald-500' value='asc'>
+              Date (Asc)
+            </Select.Item>
+            <Select.Item className='hover:bg-emerald-500' value='desc'>
+              Date (Desc)
+            </Select.Item>
+            <Select.Item className='hover:bg-emerald-500' value='none'>
+              None
             </Select.Item>
           </Select.Content>
         </Select.Root>
