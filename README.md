@@ -1,9 +1,14 @@
-# birdy_ai
+<div align="center">
 
-![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)![Static Badge](https://img.shields.io/badge/RadixUI-262626?style=for-the-badge&logo=radixui&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)![Vitest](https://img.shields.io/badge/vitest-14b1ff?style=for-the-badge&logo=vitest&logoColor=white)![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+# birdy.ai
+![Static Badge](https://img.shields.io/badge/Next.js%20-%20%23000000?style=for-the-badge&logo=nextdotjs&logoColor=%23ffffff&link=https%3A%2F%2Fnextjs.org%2F)
+![React](https://img.shields.io/badge/react-%2320232a.svg?link=https://react.dev/&style=for-the-badge&logo=react&logoColor=%2361DAFB)![Static Badge](https://img.shields.io/badge/shadcn%20-%20%23212121?style=for-the-badge&logo=shadcnui&link=https%3A%2F%2Fui.shadcn.com%2F)![Static Badge](https://img.shields.io/badge/TypeScript%20-%20%233178C6?style=for-the-badge&logo=typescript&logoColor=%23ffffff&link=https%3A%2F%2Fwww.typescriptlang.org%2F)![Static Badge](https://img.shields.io/badge/Vitest%20-%20%23ACD268?style=for-the-badge&logo=vitest&logoColor=%23ffffff&link=https%3A%2F%2Fvitest.dev%2F)![Static Badge](https://img.shields.io/badge/tailwindcss%20-%20%2338B2AC?style=for-the-badge&logo=tailwindcss&logoColor=%23ffffff&link=https%3A%2F%2Ftailwindcss.com%2F)![Static Badge](https://img.shields.io/badge/Supabase%20-%20%233ECF8E?style=for-the-badge&logo=supabase&logoColor=%23ffffff&link=https%3A%2F%2Fsupabase.com%2F)
 
-## Installation
+</div>
+
+## Getting Started
+
+### Installation
 
 1. Clone the Repository:
 
@@ -18,7 +23,7 @@ cd birdy_ai
 npm install
 ```
 
-## Environment Variables
+### Environment Variables
 
 To configure the application, create and populate the environment variables:
 
@@ -30,12 +35,15 @@ touch .env.local
 
 2. Populate the new `.env.local` file with the following variables:
 
-| Variable                        | Description                    |
-| ------------------------------- | ------------------------------ |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase Project URL.     |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase Project API key. |
-| `OPENAI_KEY`                    | Your OpenAI API key.           |
-| `APIFY_TOKEN `                  | Your Apify API token.          |
+| Variable                        | Description                             |
+| ------------------------------- | ----------------------------------------|
+| `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase Project URL.              |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase Project API key.          |
+| `OPENAI_KEY`                    | Your OpenAI API key.                    |
+| `APIFY_TOKEN `                  | Your Apify API token.                   |
+| `COINDAR_API `                  | Your CoinDar API URL with access token. |
+| `MAILCHIMP_API_KEY `            | Your MailChimp API key.                 |
+| `MAILCHIMP_SERVER_PREFIX`       | Your MailChimp server prefix.           |
 
 ## Running the Project
 
@@ -58,3 +66,9 @@ You can access the appplication in your browser at http://localhost:3000.
 - `npm run test:ui`: Run the Vitest interactive testing UI.
 - `npm run test:watch`: Run Vitest testing suite in watch mode.
 - `npm run test:coverage`: Run the Vitest testing suite with coverage reporting.
+
+## Contributors
+- George Burt • [GitHub](https://github.com/georgeeburt) • [LinkedIn](https://www.linkedin.com/in/george-burt/)
+- Tom Haines • [GitHub](https://github.com/tomghaines) • [LinkedIn](https://www.linkedin.com/in/tom-haines-5755462b4/)
+- Kay Yu • [GitHub](https://github.com/kayyueth)
+- Mel Zhou • [GitHub](http://github.com/waterlily-lychi-zhou)
