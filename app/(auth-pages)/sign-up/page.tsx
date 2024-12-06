@@ -1,101 +1,51 @@
-import React from 'react';
-import { SubmitButton } from '@/components/ui/submit-button';
-import { TwitterSignUp } from '@/components/ui/twitter-sign-up';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { FormMessage, Message } from '@/components/form-message';
-import { signUpAction } from '@/app/actions';
+import { signUpAction } from "@/app/actions";
+import { FormMessage, Message } from "@/components/form-message";
+import { SubmitButton } from "@/components/submit-button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import { SmtpMessage } from "../smtp-message";
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
 }) {
   const searchParams = await props.searchParams;
-  if ('message' in searchParams) {
+  if ("message" in searchParams) {
     return (
-      <div className='flex h-screen w-full flex-1 items-center justify-center gap-2 p-4 sm:max-w-md'>
+      <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
         <FormMessage message={searchParams} />
       </div>
     );
   }
 
   return (
-    <div className='flex justify-center'>
-      <div className='w-full max-w-md rounded-lg p-6 shadow-md'>
-        <h1 className='text-2xl font-semibold text-gray-100'>Create Account</h1>
-        <p className='mt-2 text-sm text-gray-300'>
-          Sign up today and unlock a world of possibilities. Your adventure
-          begins here.
+    <>
+      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
+        <h1 className="text-2xl font-medium">Sign up</h1>
+        <p className="text-sm text text-foreground">
+          Already have an account?{" "}
+          <Link className="text-primary font-medium underline" href="/sign-in">
+            Sign in
+          </Link>
         </p>
-
-        <div className='mt-4'>
-          {/* Twitter SSO */}
-          <TwitterSignUp />
-        </div>
-
-        <div className='mt-6 flex items-center justify-center'>
-          <div className='w-full border-t border-gray-300'></div>
-          <span className='mx-4 text-sm text-gray-300'>OR</span>
-          <div className='w-full border-t border-gray-300'></div>
-        </div>
-
-        <form className='mt-6'>
-          {/* Username Input */}
-          <div className='mb-4'>
-            <Label
-              htmlFor='username'
-              className='block text-sm font-medium text-gray-300'
-            >
-              Username
-            </Label>
-            <Input
-              type='text'
-              id='username'
-              placeholder='Your username'
-              className='focus:ring-grey-500 focus:border-grey-500 mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 shadow-sm sm:text-sm'
-              required
-            />
-          </div>
-
-          {/* Email Input */}
-          <div className='mb-4'>
-            <Label
-              htmlFor='email'
-              className='block text-sm font-medium text-gray-300'
-            >
-              Email
-            </Label>
-            <Input type='email' id='email' placeholder='Enter email' required />
-          </div>
-
-          {/* Password Input */}
-          <div className='mb-4'>
-            <Label htmlFor='password'>Password</Label>
-            <Input
-              type='password'
-              id='password'
-              placeholder='Create a password'
-              minLength={6}
-              required
-            />
-          </div>
-
-          {/* Submit Button */}
-          <SubmitButton
-            formAction={signUpAction}
-            pendingText='Signing up...'
-            className='w-full'
-          >
-            Create Account
+        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+          <Label htmlFor="email">Email</Label>
+          <Input name="email" placeholder="you@example.com" required />
+          <Label htmlFor="password">Password</Label>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Your password"
+            minLength={6}
+            required
+          />
+          <SubmitButton formAction={signUpAction} pendingText="Signing up...">
+            Sign up
           </SubmitButton>
-        </form>
-
-        <p className='mt-6 text-center text-sm text-gray-300'>
-          Already have an account?{' '}
-          <a href='/sign-in' className='text-blue-600 hover:underline'>
-            Log in
-          </a>
-        </p>
-      </div>
-    </div>
+          <FormMessage message={searchParams} />
+        </div>
+      </form>
+      <SmtpMessage />
+    </>
   );
 }

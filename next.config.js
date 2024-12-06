@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    domains: ['coindar.org']
-  }
-};
+const nextConfig = {};
 
-export default nextConfig;
+module.exports = nextConfig;
