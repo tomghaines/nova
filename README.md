@@ -1,7 +1,13 @@
 <div align="center">
 
-# birdy.ai
-![Static Badge](https://img.shields.io/badge/Next.js%20-%20%23000000?style=for-the-badge&logo=nextdotjs&logoColor=%23ffffff&link=https%3A%2F%2Fnextjs.org%2F)![React](https://img.shields.io/badge/react-%2320232a.svg?link=https://react.dev/&style=for-the-badge&logo=react&logoColor=%2361DAFB)![Static Badge](https://img.shields.io/badge/shadcn%20-%20%23212121?style=for-the-badge&logo=shadcnui&link=https%3A%2F%2Fui.shadcn.com%2F)![Static Badge](https://img.shields.io/badge/TypeScript%20-%20%233178C6?style=for-the-badge&logo=typescript&logoColor=%23ffffff&link=https%3A%2F%2Fwww.typescriptlang.org%2F)![Static Badge](https://img.shields.io/badge/Vitest%20-%20%23ACD268?style=for-the-badge&logo=vitest&logoColor=%23ffffff&link=https%3A%2F%2Fvitest.dev%2F)![Static Badge](https://img.shields.io/badge/tailwindcss%20-%20%2338B2AC?style=for-the-badge&logo=tailwindcss&logoColor=%23ffffff&link=https%3A%2F%2Ftailwindcss.com%2F)![Static Badge](https://img.shields.io/badge/Supabase%20-%20%233ECF8E?style=for-the-badge&logo=supabase&logoColor=%23ffffff&link=https%3A%2F%2Fsupabase.com%2F)
+# Nova
+![Next](https://img.shields.io/badge/Next.js%20-%20%23000000?style=for-the-badge&logo=nextdotjs&logoColor=%23ffffff&link=https%3A%2F%2Fnextjs.org%2F)
+![React](https://img.shields.io/badge/react-%2320232a.svg?link=https://react.dev/&style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![ShadCN](https://img.shields.io/badge/shadcn%20-%20%23212121?style=for-the-badge&logo=shadcnui&link=https%3A%2F%2Fui.shadcn.com%2F)
+![TypeScript](https://img.shields.io/badge/TypeScript%20-%20%233178C6?style=for-the-badge&logo=typescript&logoColor=%23ffffff&link=https%3A%2F%2Fwww.typescriptlang.org%2F)
+![Vitest](https://img.shields.io/badge/Vitest%20-%20%23ACD268?style=for-the-badge&logo=vitest&logoColor=%23ffffff&link=https%3A%2F%2Fvitest.dev%2F)
+![Tailwind](https://img.shields.io/badge/tailwindcss%20-%20%2338B2AC?style=for-the-badge&logo=tailwindcss&logoColor=%23ffffff&link=https%3A%2F%2Ftailwindcss.com%2F)
+![Supabase](https://img.shields.io/badge/Supabase%20-%20%233ECF8E?style=for-the-badge&logo=supabase&logoColor=%23ffffff&link=https%3A%2F%2Fsupabase.com%2F)
 
 </div>
 
@@ -12,8 +18,8 @@
 1. Clone the Repository:
 
 ```bash
-git clone https://github.com/kayyueth/birdy_ai
-cd birdy_ai
+git clone https://github.com/tomghaines/nova
+cd nova
 ```
 
 2. Install Dependencies:
